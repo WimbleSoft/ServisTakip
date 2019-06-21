@@ -1,0 +1,5 @@
+.vs/*
+.git/*
+WebServer/obj/*
+WebServer/bin/*
+packages/*

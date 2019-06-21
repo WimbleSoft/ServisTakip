@@ -1,0 +1,111 @@
+﻿@model ServisTakip.Models.ViewModel
+@{
+    Layout = null;
+}
+<!--A Design by W3layouts
+Author: W3layout
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta required name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <meta required name="author" content="SirusYazilim">
+    <link rel="stylesheet" href="/Content/giris/css/style.css" />
+    <link rel="stylesheet" href="~/Content/bootstrap.css" />
+    <link rel="stylesheet" href="~/Scripts/plugins/select2/select2.min.css" />
+    <script type="text/javascript" src="/Content/giris/js/JFCore.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/jQuery/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/select2/select2.full.min.js"></script>
+
+    <!-- Set here the key for your domain in order to hide the watermark on the web server -->
+    <script type="text/javascript">
+        (function () {
+            JC.init({
+                domainKey: ''
+            });
+        })();
+    </script>
+
+</head>
+<body>
+    <div class="wrap">
+        <!-- tab style-1 -->
+        <div class="row">
+            <div class="grid_12 columns">
+                <div class="tab style-1">
+                    <dl>
+                        <dd class="users"><a class="user active" href="#tab1"> </a></dd>
+                        <dd class="messages"><a class="msg" href="#tab2"> </a></dd>
+                        <dd class="settings"><a class="setting" href="#tab3"> </a></dd>
+                        <dd class="likes"><a class="like" href="#tab4"> </a></dd>
+                    </dl>
+                    <ul>
+                        <li class="active">
+                            <h4>Firma Olarak Giriş Yap</h4>
+                            <div class="form">
+                                <form action="/Firma/FirmaGiris" method="post" role="form" enctype="multipart/form-data">
+                                    <input type="text" required name="firEmail" class="textbox" placeholder="Firma Email">
+                                    <input type="password" required name="firParola" class="password" placeholder="Firma Parola">
+                                    <input type="submit" value="Giriş Yap">
+                                </form>
+                            </div>
+                        </li>
+                        <li>
+                            <h4>Şoför Olarak Servise Giriş Yap</h4>
+                            <div class="form">
+                                <form action="/Home/SoforKayitOl" method="post" role="form" enctype="multipart/form-data">
+                                    <input type="text" required name="sofEmail" class="textbox" placeholder="Şoför Email">
+                                    <input type="password" required name="sofParola" class="password" placeholder="Şoför Parola">
+                                    <input type="text" required name="plaka" class="password" placeholder="Giriş Yapılacak Plaka">
+                                    <input type="submit" value="Giriş Yap">
+                                </form>
+                            </div>
+                            <div class="clear"> </div>
+                        </li>
+                        <li>
+                            <h4>Müdür Olarak Okula Giriş Yap</h4>
+                            <div class="form">
+                                <form action="/Okul/OkulGiris" method="post" role="form" enctype="multipart/form-data">
+                                    <input type="text" required name="mudurEmail" class="textbox" placeholder="Müdür Email">
+                                    <input type="password" required name="mudurParola" class="password" placeholder="Müdür Parola">
+                                    <input type="submit" value="Okula Giriş Yap">
+                                </form>
+                            </div>
+                        </li>
+                        <li>
+                            <h4>Veli Olarak Giriş Yap</h4>
+                            <div class="form">
+                                <form action="/Veli/VeliGiris" method="post" role="form" enctype="multipart/form-data">
+                                    <input type="text" required name="veliEmail" class="textbox" placeholder="Veli Email">
+                                    <input type="password" required name="veliParola" class="password" placeholder="Veli Parola">
+                                    <input type="submit" value="Veli Olarak Giriş Yap">
+                                </form>
+                            </div>
+                            <div class="clear"> </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('.select2').select2();
+        });
+    </script>
+    <div class="wrap">
+        <!--footer-->
+        <div class="footer">
+            <p>Tüm Hakkı Saklıdır <a target="_blank" href="http://www.sirusyazilim.com">Sirus Yazılım</a></p>
+        </div>
+        <div class="clear"> </div>
+    </div>
+</body>
+</html>

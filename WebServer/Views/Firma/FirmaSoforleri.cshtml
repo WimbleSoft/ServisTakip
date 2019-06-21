@@ -1,0 +1,128 @@
+﻿
+@{
+    ViewBag.Title = "Firma Şoförleri";
+    Layout = "~/Views/Shared/Firma_Layout.cshtml";
+}
+
+@model ServisTakip.Models.ViewModel
+<div id="content">
+    <script>
+        document.getElementById("firmasoforleri").className = "active";
+    </script>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                Firma Soforleri
+                @if (TempData["mesaj"] != null)
+                {
+                    <a class="btn btn-grad btn-md btn-info" value="@TempData["mesaj"]" onclick="$(this).remove()">@TempData["mesaj"]</a>
+                }
+            </h1>
+            <ol class="breadcrumb">
+                <li class="active"><a href="#"><i class="fa fa-dashboard"></i> Anasayfa</a></li>
+                <li><a href="#">Firma Soforleri</a></li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                    <div class="box">
+                        <div class="box-header">
+                            <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                                <div class="box box-default collapsed-box">
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title">Firmanıza Yeni Şoför Davet Edin</h3>
+                                        <div class="box-tools">
+                                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="box-body">
+                                        <div class="box-body">
+                                            <div class="form-group">
+                                                <form action="~/Firma/FirmaSoforEkle" method="post" role="form" enctype="multipart/form-data">
+                                                    <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                                        <label>Şoför</label>
+                                                        <select id="sofId" name="sofId" class="select2 form-control" required style="width:100% !important;">
+                                                            @foreach (var sofor in Model.Soforler.Where(x=>x.FirmaSoforleri.Count==0))
+                                                            {
+                                                                <option value="@sofor.sofId">@sofor.sofAd @sofor.sofSoyad | @sofor.Ilceler.ilce_ad - @sofor.Ilceler.Iller.il_Ad | @sofor.sofGsm</option>
+                                                            }
+                                                        </select>
+                                                    </div>
+
+                                                    <input name="firId" required type="text" hidden="hidden" id="firId" value="@((int)Session["firId"])">
+                                                    <div class="col-md-2 col-lg-2 col-xs-12 col-sm-12">
+                                                        <label>İşlemler</label>
+                                                        <button type="submit" class="btn btn-primary form-control">Şoförü Davet Et</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <div class="table-responsive">
+                                <table id="example1" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Şoför Adı Soyadı</th>
+                                            <th>Şoför Email</th>
+                                            <th>Şoför İkâmet Bölgesi</th>
+                                            <th>Şoför Gsm</th>
+                                            <th>İşlemler</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            int firId = (int)Session["firId"];
+                                        }
+                                        @foreach (var a in Model.FirmaSoforleri)
+                                        {
+                                            <tr>
+                                                <td>@a.sofId</td>
+                                                <td>@a.Soforler.sofAd @a.Soforler.sofSoyad</td>
+                                                <td>@a.Soforler.sofEmail</td>
+                                                <td>@a.Soforler.Ilceler.ilce_ad - @a.Soforler.Ilceler.Iller.il_Ad</td>
+                                                <td>@a.Soforler.sofGsm</td>
+                                                <td>
+                                                    <span class="button-group">
+                                                        <a href="/Firma/FirmaSoforSil?firId=@a.firId&firSoforId=@a.firSoforId" name="@a.sofId" onclick="confirm('Emin misiniz?')" class="btn btn-danger btn-md btn-grad fa fa-trash"></a>
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<script>
+    $(function () {
+        $('.table').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false
+        });
+    });
+    $(document).ready(function () {
+        $('.select2').select2();
+    });
+</script>

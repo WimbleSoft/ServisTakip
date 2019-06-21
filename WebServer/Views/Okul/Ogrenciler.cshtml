@@ -1,0 +1,380 @@
+﻿@{
+    ViewBag.Title = "Öğrenciler";
+    Layout = "~/Views/Shared/Okul_Layout.cshtml";
+    int okulId = (int)Session["okulId"];
+}
+@model ServisTakip.Models.ViewModel
+<div id="content">
+    <script>
+        document.getElementById("ogrenciler").className = "active";
+    </script>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                Ogrenciler
+                @if (TempData["mesaj"] != null)
+                {
+                    <a class="btn btn-grad btn-md btn-info" value="@TempData["mesaj"]" onclick="$(this).remove()">@TempData["mesaj"]</a>
+                }
+            </h1>
+            <ol class="breadcrumb">
+                <li class="active"><a href="#"><i class="fa fa-dashboard"></i> Anasayfa</a></li>
+                <li><a href="#">Ogrenciler</a></li>
+            </ol>
+        </section>
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                    <div class="box">
+                        <div class="box-header">
+                            <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                                <div class="box box-default collapsed-box">
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title">Yeni Öğrenci Ekle</h3>
+                                        <div class="box-tools">
+                                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="box-body">
+                                        <div class="box-body">
+                                            <div class="form-group">
+                                                <form action="~/Okul/OgrenciEkle" method="post" role="form" enctype="multipart/form-data">
+                                                    <input name="okulId" id="okulId" required type="text" hidden="hidden" value="@((int)Session["okulId"])">
+                                                    <div class="col-md-2 col-lg-2 col-xs-12 col-sm-12">
+                                                        <label>Öğrenci TC NO</label>
+                                                        <input name="ogrTCno" id="ogrTCno" required type="text" class="form-control" placeholder="Öğrenci T.C. NO'sunu Girin">
+                                                    </div>
+                                                    <div class="col-md-2 col-lg-2 col-xs-12 col-sm-12">
+                                                        <label>Öğrenci Adı</label>
+                                                        <input name="ogrAd" id="ogrAd" required type="text" class="form-control" placeholder="Öğrenci Adını Girin">
+                                                    </div>
+                                                    <div class="col-md-2 col-lg-2 col-xs-12 col-sm-12">
+                                                        <label>Öğrenci Soyadı</label>
+                                                        <input name="ogrSoyad" id="ogrSoyad" required type="text" class="form-control" placeholder="Öğrenci Soyadını Girin">
+                                                    </div>
+                                                    <div class="col-md-2 col-lg-2 col-xs-12 col-sm-12">
+                                                        <label>Öğrenci GSM</label>
+                                                        <input name="ogrGsm" id="ogrGsm" required type="tel" class="form-control" placeholder="Öğrenci GSM Numarasını Girin">
+                                                    </div>
+                                                    <div class="col-md-2 col-lg-2 col-xs-12 col-sm-12">
+                                                        <label>Öğrenci No</label>
+                                                        <input name="ogrenciNo" id="ogrenciNo" required type="text" class="form-control" placeholder="Öğrenci Numarasını Girin">
+                                                    </div>
+                                                    
+                                                    <div class="col-md-3 col-lg-3 col-xs-12 col-sm-12">
+                                                        <label>Öğrenci Adresi</label>
+                                                        <input name="ogrAdres" id="ogrAdres" required type="text" class="form-control" placeholder="Öğrenci Adresini Girin">
+                                                    </div>
+                                                    <div class="col-md-3 col-lg-3 col-xs-12 col-sm-12">
+                                                        <label>İlçe / İl</label>
+                                                        <select name="ilce_Id" id="ilce_Id" class="select2 form-control" style="width:100% !important;">
+                                                            @foreach (var il in Model.Iller)
+                                                            {
+                                                                <optgroup label="@il.il_Ad">
+                                                                    @foreach (var ilce in Model.Ilceler.Where(x => x.il_id == il.il_id))
+                                                                    {
+                                                                        <option value="@ilce.ilce_id">@ilce.ilce_ad</option>
+                                                                    }
+                                                                </optgroup>
+                                                            }
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-2 col-lg-2 col-xs-12 col-sm-12">
+                                                        <label>Adres GeoX</label>
+                                                        <input name="geoX" id="geoX" required type="text" class="form-control" placeholder="Gps(X) Konum Verisini Girin">
+                                                    </div>
+                                                    <div class="col-md-2 col-lg-2 col-xs-12 col-sm-12">
+                                                        <label>Adres GeoY</label>
+                                                        <input name="geoY" id="geoY" required type="text" class="form-control" placeholder="Gps(Y) Konum Verisini Girin">
+                                                    </div>
+                                                    <div class="col-md-2 col-lg-2 col-xs-12 col-sm-12">
+                                                        <label>İşlemler</label>
+                                                        <button type="submit" class="btn btn-primary form-control">Öğrenci Ekle</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <div class="table-responsive">
+                                <table id="ogrencilistesi" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Öğrenci Ad Soyad</th>
+                                            <th>Öğrenci TC No</th>
+                                            <th>Öğrenci Okul No</th>
+                                            <th>Öğrenci Velisi</th>
+                                            <th>İşlemler</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var ogrenci in Model.Ogrenciler)
+                                    {
+                                    <tr>
+                                        <td>@ogrenci.ogrId</td>
+                                        <td>@ogrenci.ogrAd @ogrenci.ogrSoyad</td>
+                                        <td>@ogrenci.ogrTCno</td>
+                                        <td>@ogrenci.ogrenciNo</td>
+                                        <td>
+                                            @{
+                                                    if (ogrenci.OgrenciVelileri.Count > 0)
+                                                    {
+                                            <text>
+                                                @ogrenci.OgrenciVelileri.First().Veliler.veliAd @ogrenci.OgrenciVelileri.First().Veliler.veliSoyad
+                                            </text>
+                                                    }
+                                                    else
+                                                    {
+                                            <text>
+                                                Velisi Yoktur.
+                                            </text>
+                                                    }
+                                        }
+                                    </td>
+                                    <td>
+                                        <span class="button-group">
+                                            <!--<a href="/Okul/OgrenciDetay?okulId=@((int)Session["okulId"])&ogrId=@ogrenci.ogrId" class="btn btn-info btn-md btn-grad fa fa-plus"></a>-->
+                                            <button type="button" class="btn btn-primary fa fa-users" data-toggle="modal" data-target="#ogrenciVelileri_@ogrenci.ogrId"></button>
+                                            <button type="button" class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="#ogrenciDuzenle_@ogrenci.ogrId"></button>
+                                            <a href="/Okul/OgrenciSil?okulId=@((int)Session["okulId"])&ogrId=@ogrenci.ogrId" name="@ogrenci.ogrId" onclick="return confirm('Emin Misiniz?')" class="btn btn-danger btn-md btn-grad fa fa-trash"></a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                    }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        @foreach (var ogrenci in Model.Ogrenciler)
+                        {
+                            <!-- ÖĞRENCİ VELİ DÜZENLEME -->
+                            <div class="modal fade bs-example-modal-lg" id="ogrenciVelileri_@ogrenci.ogrId" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title" id="myModalLabel">Öğrenci Veli Bilgisi Düzenle</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <form action="/Okul/OgrenciVelisiAta" method="post" enctype="application/x-www-form-urlencoded">
+                                                    <div class="form-group"><div class="col-md-12 col-lg-12 col-xs-12 col-sm-12"><label>Var olan veliyi bu öğrenciye atamak için Veli Email Adresi'ni giriniz.</label></div></div>
+                                                    <hr>
+                                                    <div class="form-group">
+                                                        <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                                            <label>Veli Adı</label>
+                                                            <input name="veliEmail" required type="text" class="form-control" placeholder="Veli Emaili Girin">
+                                                            <input name="ogrId" required type="text" hidden="hidden" value="@ogrenci.ogrId">
+                                                            <input name="okulId" required type="text" hidden="hidden" value="@Session["okulId"]">
+                                                        </div>
+                                                        <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                                            <label>İşlemler</label>
+                                                            <button type="submit" name="@ogrenci.ogrId" onclick="return confirm('Doğru email adresi girdiğinizden emin misiniz?')" class="btn btn-warning btn-md btn-grad form-control">Veli Ata</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="row">
+                                                <form action="/Okul/OgrenciVelisiEkle" method="post" enctype="application/x-www-form-urlencoded">
+                                                    <div class="form-group"><div class="col-md-12 col-lg-12 col-xs-12 col-sm-12"><label>Yeni veli oluştur ve bu öğrenciye ata.</label></div></div>
+                                                    <hr>
+                                                    <div class="form-group">
+                                                        <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                                            <label>Veli Adı</label>
+                                                            <input name="veliAd" required type="text" class="form-control" placeholder="Veli Adını Girin">
+                                                            <input name="ogrId"  required type="text"  hidden="hidden" value="@ogrenci.ogrId">
+                                                            <input name="okulId" required type="text" hidden="hidden" value="@Session["okulId"]">
+                                                        </div>
+                                                        <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                                            <label>Veli Soyadı</label>
+                                                            <input name="veliSoyad" required type="text" class="form-control" placeholder="Veli Soyadını Girin">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                                            <label>Veli Gsm</label>
+                                                            <input name="veliGsm" required type="tel" class="form-control" placeholder="Veli GSM Numarasını Girin">
+                                                        </div>
+                                                        <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                                            <label>Veli Email</label>
+                                                            <input name="veliEmail" required type="email" class="form-control" placeholder="Veli Email Adresini Girin">
+                                                        </div>
+                                                        <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                                            <label>Veli Adres</label>
+                                                            <textarea name="veliAdres" required type="text" class="form-control" placeholder="Veli Adresini Girin"></textarea>
+                                                        </div>
+                                                        <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                                            <label>İlçe / İl</label>
+                                                            <select name="ilce_Id" class="select2 form-control" style="width:100% !important;">
+                                                                @foreach (var il in Model.Iller)
+                                                                {
+                                                                    <optgroup label="@il.il_Ad">
+                                                                        @foreach (var ilce in Model.Ilceler.Where(x => x.il_id == il.il_id))
+                                                                        {
+                                                                            <option value="@ilce.ilce_id">@ilce.ilce_ad</option>
+                                                                        }
+                                                                    </optgroup>
+                                                                }
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                                            <label>İşlemler</label>
+                                                            <div class="row">
+                                                                <div class="col-md-6 col-lg-6 col-xs-6 col-sm-6">
+                                                                    <button type="button" class="btn btn-default btn-md btn-grad form-control " data-dismiss="modal">İptal</button>
+                                                                </div>
+                                                                <div class="col-md-6 col-lg-6 col-xs-6 col-sm-6">
+                                                                    <button type="submit" name="@ogrenci.ogrId" class="btn btn-warning btn-md btn-grad form-control">Veli Ekle</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="table-responsive">
+                                                    <table id="example1" class="table table-bordered table-striped table-responsive">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Id</th>
+                                                                <th>Veli Ad Soyad</th>
+                                                                <th>Veli GSM</th>
+                                                                <th>Veli Email</th>
+                                                                <th>İşlemler</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var ogrenciVelisi in Model.OgrenciVelileri.Where(x => x.ogrId == ogrenci.ogrId))
+                                                            {
+                                                                <tr>
+                                                                    <td>@ogrenciVelisi.ogrVeliId</td>
+                                                                    <td>@ogrenciVelisi.Veliler.veliAd @ogrenciVelisi.Veliler.veliSoyad</td>
+                                                                    <td>@ogrenciVelisi.Veliler.veliGsm</td>
+                                                                    <td>@ogrenciVelisi.Veliler.veliEmail</td>
+                                                                    <td>
+                                                                        <span class="button-group">
+                                                                            <a href="/Okul/OgrenciVelisiSil?okulId=@((int)Session["okulId"])&ogrVeliId=@ogrenciVelisi.ogrVeliId" onclick="return confirm('Emin Misiniz?')" class="btn btn-danger btn-md btn-grad fa fa-trash"></a>
+                                                                        </span>
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        @foreach (var ogrenci in Model.Ogrenciler)
+                        {
+                            <!-- ÖĞRENCİ DÜZENLEME -->
+                            <div class="modal fade bs-example-modal-lg" id="ogrenciDuzenle_@ogrenci.ogrId" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title" id="myModalLabel">Öğrenci Düzenle</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <form action="~/Okul/OgrenciGuncelle" method="post" role="form" enctype="multipart/form-data">
+                                                    <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                                        <label>Öğrenci TC NO</label>
+                                                        <input name="ogrTCno" required type="text"  class="form-control" placeholder="Öğrenci TC NO'sunu Girin" value="@ogrenci.ogrTCno">
+                                                        <input name="okulId" required type="text" hidden="hidden" value="@((int)Session["okulId"])">
+                                                        <input name="ogrId" required type="text" hidden="hidden" value="@ogrenci.ogrId">
+                                                    </div>
+                                                    <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                                        <label>Öğrenci Adı</label>
+                                                        <input name="ogrAd" required type="text" class="form-control" placeholder="Öğrenci Adı" value="@ogrenci.ogrAd">
+                                                    </div>
+                                                    <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                                        <label>Öğrenci Soyadı</label>
+                                                        <input name="ogrSoyad" required type="text" class="form-control" placeholder="Öğrenci Soyadı" value="@ogrenci.ogrSoyad">
+                                                    </div>
+                                                    <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                                        <label>Öğrenci GSM</label>
+                                                        <input name="ogrGsm" required type="text" class="form-control" placeholder="Öğrenci GSM" value="@ogrenci.ogrGsm">
+                                                    </div>
+                                                    <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                                        <label>Öğrenci No</label>
+                                                        <input name="ogrNo" required type="text" class="form-control" placeholder="Öğrenci Numarası" value="@ogrenci.ogrenciNo">
+                                                    </div>
+                                                    <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                                        <label>İlçe / İl</label>
+                                                        <select name="ilce_Id" id="ilce_Id_@ogrenci.ilce_id" class="select2 form-control" style="width:100% !important;">
+                                                            @foreach (var il in Model.Iller)
+                                                            {
+                                                                <optgroup label="@il.il_Ad">
+                                                                    @foreach (var ilce in Model.Ilceler.Where(x => x.il_id == il.il_id))
+                                                                    {
+                                                                        <option value="@ilce.ilce_id">@ilce.ilce_ad</option>
+                                                                    }
+                                                                </optgroup>
+                                                            }
+                                                        </select>
+                                                        <script>
+                                                            $("#ilce_Id_@ogrenci.ilce_id").val("@ogrenci.ilce_id");
+                                                        </script>
+                                                    </div>
+                                                    <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                                        <label>Öğrenci Adresi</label>
+                                                        <input name="ogrAdres" required type="text" class="form-control" placeholder="Öğrenci Adresi" value="@ogrenci.ogrAdres">
+                                                    </div>
+                                                    <div class="col-md-3 col-lg-3 col-xs-12 col-sm-12">
+                                                        <label>Adres GeoX</label>
+                                                        <input name="geoX" required type="text" class="form-control" placeholder="Gps(X) Konum Verisini girin" value="@ogrenci.geoX">
+                                                    </div>
+                                                    <div class="col-md-3 col-lg-3 col-xs-12 col-sm-12">
+                                                        <label>Adres GeoY</label>
+                                                        <input name="geoY" required type="text" class="form-control" placeholder="Gps(Y) Konum Verisini girin" value="@ogrenci.geoY">
+                                                    </div>
+                                                    <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                                                        <label>İşlemler</label>
+                                                        <button type="submit" class="btn btn-primary form-control">Öğrenci Güncelle</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<script>
+    $(function () {
+        $('#ogrencilistesi').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": true,
+            "scrollX": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false
+        });
+    });
+</script>

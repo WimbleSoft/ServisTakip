@@ -1,0 +1,195 @@
+﻿@{
+    ViewBag.Title = "Veliler";
+    Layout = "~/Views/Shared/Okul_Layout.cshtml";
+    int okulId = (int)Session["okulId"];
+}
+@model ServisTakip.Models.ViewModel
+<div id="content">
+    <script>
+        document.getElementById("veliler").className = "active";
+    </script>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                Veliler
+                @if (TempData["mesaj"] != null)
+                {
+                    <a class="btn btn-grad btn-md btn-info" value="@TempData["mesaj"]" onclick="$(this).remove()">@TempData["mesaj"]</a>
+                }
+            </h1>
+            <ol class="breadcrumb">
+                <li class="active"><a href="#"><i class="fa fa-dashboard"></i> Anasayfa</a></li>
+                <li><a href="#">Veliler</a></li>
+            </ol>
+        </section>
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                    <div class="box">
+                        <div class="box-header">
+                            <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                                <div class="box box-default collapsed-box">
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title">Yeni Veli Ekle</h3>
+                                        <div class="box-tools">
+                                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="box-body">
+                                        <div class="box-body">
+                                            <div class="form-group">
+                                                <form action="~/Okul/VeliEkle" method="post" role="form" enctype="multipart/form-data">
+                                                    <input name="okulId" id="okulId" required type="text" hidden="hidden" value="@((int)Session["okulId"])">
+                                                    <div class="col-md-2 col-lg-2 col-xs-12 col-sm-12">
+                                                        <label>Veli Adı</label>
+                                                        <input name="veliAd" id="veliAd" required type="text" class="form-control" placeholder="Veli Adını Girin">
+                                                    </div>
+                                                    <div class="col-md-2 col-lg-2 col-xs-12 col-sm-12">
+                                                        <label>Veli Soyadı</label>
+                                                        <input name="veliSoyad" id="veliSoyad" required type="text" class="form-control" placeholder="Veli Soyadını Girin">
+                                                    </div>
+                                                    <div class="col-md-2 col-lg-2 col-xs-12 col-sm-12">
+                                                        <label>Veli GSM</label>
+                                                        <input name="veliGsm" id="veliGsm" required type="tel" class="form-control" placeholder="Veli GSM Numarasını Girin">
+                                                    </div>
+                                                    <div class="col-md-2 col-lg-2 col-xs-12 col-sm-12">
+                                                        <label>Veli Email</label>
+                                                        <input name="veliEmail" id="veliEmail" required type="email" class="form-control" placeholder="Veli Email Adresini Girin">
+                                                    </div>
+                                                    <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                                        <label>İlçe / İl</label>
+                                                        <select name="ilce_Id" id="ilce_Id" class="select2 form-control" style="width:100% !important;">
+                                                            @foreach (var il in Model.Iller)
+                                                            {
+                                                                <optgroup label="@il.il_Ad">
+                                                                    @foreach (var ilce in Model.Ilceler.Where(x => x.il_id == il.il_id))
+                                                                    {
+                                                                        <option value="@ilce.ilce_id">@ilce.ilce_ad</option>
+                                                                    }
+                                                                </optgroup>
+                                                            }
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                                        <label>Veli Adresi</label>
+                                                        <input name="veliAdres" id="veliAdres" required type="text" class="form-control" placeholder="Veli Adresini Girin">
+                                                    </div>
+                                                    <div class="col-md-2 col-lg-2 col-xs-12 col-sm-12">
+                                                        <label>İşlemler</label>
+                                                        <button type="submit" class="btn btn-primary form-control">Veli Ekle</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <div class="table-responsive">
+                                <table id="example1" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Veli Id</th>
+                                            <th>Veli Ad Soyad</th>
+                                            <th>Veli GSM</th>
+                                            <th>Veli Email</th>
+                                            <th>Veli Adres</th>
+                                            <th>İşlemler</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var veli in Model.OgrenciVelileri.Where(x=>x.Ogrenciler.okulId==ViewBag.okulId))
+                                        {
+                                            <tr>
+                                                <td>@veli.veliId</td>
+                                                <td>@veli.Veliler.veliAd @veli.Veliler.veliSoyad</td>
+                                                <td>@veli.Veliler.veliGsm</td>
+                                                <td>@veli.Veliler.veliEmail</td>
+                                                <td>@veli.Veliler.veliAdres</td>
+                                                <td>
+                                                    <span class="button-group">
+                                                        <button type="button" class="btn @if (veli.Veliler.OgrenciVelileri.Count > 0) { <text>btn-success fa fa-users</text> } else { <text>btn-danger fa fa-ban</text>}" data-toggle="modal" data-target="#veliOgrencileri_@veli.veliId"></button>
+                                                        <a href="/Okul/VeliSil?okulId=@((int)Session["okulId"])&veliId=@veli.veliId" name="@veli.veliId" onclick="return confirm('Emin Misiniz?')" class="btn btn-danger btn-md btn-grad fa fa-trash"></a>
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        @foreach (var veliOgrencileri in Model.OgrenciVelileri)
+                        {
+                            <!-- VELİ ÖĞRENCİLERİ LİSTELE -->
+                            <div class="modal fade bs-example-modal-lg" id="veliOgrencileri_@veliOgrencileri.veliId" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title" id="myModalLabel">Veli Öğrencilerini Listele</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="table-responsive">
+                                                    <table id="example1" class="table table-bordered table-striped table-responsive">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Id</th>
+                                                                <th>Öğrenci Ad Soyad</th>
+                                                                <th>Öğrenci TC No</th>
+                                                                <th>Öğrenci No</th>
+                                                                <th>Öğrenci X,Y</th>
+                                                                <th>İşlemler</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var veliOgrencisi in Model.Ogrenciler.Where(x => x.ogrId == veliOgrencileri.ogrId))
+                                                            {
+                                                                <tr>
+                                                                    <td>@veliOgrencisi.ogrId</td>
+                                                                    <td>@veliOgrencisi.ogrAd @veliOgrencisi.ogrSoyad</td>
+                                                                    <td>@veliOgrencisi.ogrTCno</td>
+                                                                    <td>@veliOgrencisi.ogrenciNo</td>
+                                                                    <td>@veliOgrencisi.geoX , @veliOgrencisi.geoY</td>
+                                                                    <td>
+                                                                        <span class="button-group">
+                                                                            <a href="/Okul/OgrenciDetay?okulId=@((int)Session["okulId"])&ogrId=@veliOgrencisi.ogrId" class="btn btn-info btn-md btn-grad fa fa-plus"></a>
+                                                                        </span>
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<script>
+    $(function () {
+        $('#example1').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": true,
+            "scrollX": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false
+        });
+    });
+</script>

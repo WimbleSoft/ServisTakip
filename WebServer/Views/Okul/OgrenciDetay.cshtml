@@ -1,0 +1,168 @@
+﻿@{
+    ViewBag.Title = "Ogrenci Detay";
+    Layout = "~/Views/Shared/Okul_Layout.cshtml";
+    int okulId = (int)Session["okulId"];
+}
+@model ServisTakip.Models.ViewModel
+<script src="http://api-maps.yandex.com/2.1/?lang=en_RU" type="text/javascript"></script>
+<script src="http://yandex.st/jquery/2.2.3/jquery.min.js" type="text/javascript"></script>
+<div id="content">
+    <script>
+        document.getElementById("ogrenciler").className = "active";
+    </script>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                @Model.Ogrenciler.First().ogrAd @Model.Ogrenciler.First().ogrSoyad | @Model.Ogrenciler.First().ogrTCno Öğrenci Detayları
+                @if (TempData["mesaj"] != null)
+                {
+                    if (TempData["btn-Renk"] != null)
+                    {
+                        <a class="btn btn-grad btn-md @TempData["btn-Renk"]" value="@TempData["mesaj"]" onclick="$(this).remove()">@TempData["mesaj"]</a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-grad btn-md btn-info" value="@TempData["mesaj"]" onclick="$(this).remove()">@TempData["mesaj"]</a>
+                    }
+                }
+            </h1>
+            <ol class="breadcrumb">
+                <li class="active"><a href="#"><i class="fa fa-dashboard"></i> Anasayfa</a></li>
+                <li><a href="#">Öğrenci Detay</a></li>
+            </ol>
+        </section>
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                    <div class="box">
+                        <div class="box-header">
+                            <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                                <div class="box box-default collapsed-box">
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title"></h3>
+                                        <div class="box-tools">
+                                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="box-body">
+                                        <div class="box-body">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @{
+                            int ogrId = (int)ViewBag.ogrId;
+                        }
+                        <div class="box-body">
+                            <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                                <div id="map" style="width: 600px; height: 400px"></div>
+                                <div id="list"></div>
+                                @foreach (var ogrenci in Model.Ogrenciler.Where(x => x.ogrId == ogrId))
+                                {
+                                    foreach (var servistekiOgrenci in Model.ServistekiOgrenciler.Where(x => x.ogrId == ogrenci.ogrId))
+                                    {
+                                        foreach (var okulServisi in Model.OkulServisleri.Where(x => x.okulServisId == servistekiOgrenci.okulServisId))
+                                        {
+
+                                        }
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<script>
+function getLatLng() {
+    $.ajax({
+        url: '/Okul/ServisKonumGetir',
+        type: 'post',
+        async: false,
+        dataType: 'json',
+        data: { servisId: @ViewBag.servisId, okulId: @okulId },
+        success: function (servisKonum) {
+            if (servisKonum != -1 || servisKonum != 1) {
+                return servisKonum;
+            }
+            else if(servisKonum == 1) {
+                return "@ViewBag.okulLatitude, @ViewBag.okulLongitude";
+            }
+            else if(servisKonum == -1) {
+                return alertLoginHatasi();
+            }
+        }
+    });
+    };
+</script>
+<script>
+    ymaps.ready(init);
+    function init() {
+        var myMap = new ymaps.Map("map",
+            {
+                center: [@ViewBag.servisLatitude, @ViewBag.servisLongitude],
+                zoom: 13,
+                controls: []
+            });
+        myMap.geoObjects.add(new ymaps.Placemark([@ViewBag.servisLatitude, @ViewBag.servisLongitude], {}, {
+            preset: 'islands#glyphIcon',
+            // Defining the glyph icon name.
+            iconGlyph: 'transfer',
+            // Defining the glyph icon color.
+            iconGlyphColor: 'blue',
+            // Defining the placemark color.
+            iconColor: 'blue'
+        }));
+        ymaps.route([
+            /*İLK NOKTA OKUL*/
+            [@ViewBag.okulLatitude, @ViewBag.okulLongitude]
+            @foreach (var servistekiOgrenci in Model.ServistekiOgrenciler.Where(x => x.okulServisId == Model.ServistekiOgrenciler.Find(y => y.ogrId == ogrId).okulServisId))
+            {
+                <text>, [@servistekiOgrenci.Ogrenciler.geoX, @servistekiOgrenci.Ogrenciler.geoY]</text>
+            }
+        ]).then(function (route) {
+            myMap.geoObjects.add(route);
+
+            var points = route.getWayPoints(),
+                lastPoint = points.getLength() - 1;
+
+            points.options.set('preset', 'islands#redStretchyIcon');
+            points.get(0).properties.set('iconContent', '@Model.Okullar.First().okulAdi');
+
+            @{int count = 0; }
+            @foreach(var servistekiOgrenci in Model.ServistekiOgrenciler.Where(x => x.okulServisId == Model.ServistekiOgrenciler.Find(y=>y.ogrId==ogrId).okulServisId))
+                {
+                    count++;
+                    <text>
+                        points.get(@count).properties.set('iconContent', '@servistekiOgrenci.Ogrenciler.ogrAd @servistekiOgrenci.Ogrenciler.ogrSoyad');
+                    </text>
+                }
+        }, function (error) {
+            alert('An error occurred: ' + error.message);
+        });
+    };
+</script>
+
+<script>
+    $(function () {
+        $('.table').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": true,
+            "scrollX": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false
+        });
+    });
+</script>

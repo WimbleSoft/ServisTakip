@@ -1,0 +1,81 @@
+﻿
+@{
+    ViewBag.Title = "Okulunuza Ait Şoförlerin Listesi";
+    Layout = "~/Views/Shared/Okul_Layout.cshtml";
+    int okulId = (int)Session["okulId"];
+}
+@model ServisTakip.Models.ViewModel
+<div id="content">
+    <script>
+        document.getElementById("servissoforleri").className = "active";
+    </script>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                Servis Şoförleri
+                @if (TempData["mesaj"] != null)
+                {
+                    <a class="btn btn-grad btn-md btn-info" value="@TempData["mesaj"]" onclick="$(this).remove()">@TempData["mesaj"]</a>
+                }
+            </h1>
+            <ol class="breadcrumb">
+                <li class="active"><a href="#"><i class="fa fa-dashboard"></i> Anasayfa</a></li>
+                <li><a href="#">Servis Şoförleri</a></li>
+            </ol>
+        </section>
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                    <div class="box">
+                        <div class="box-body">
+                            <div class="table-responsive">
+                                <table id="example1" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Şoför Ad Soyad</th>
+                                            <th>Şoför Email</th>
+                                            <th>Şoför GSM</th>
+                                            <th>Plaka</th>
+                                            <th>Firma</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var servisSoforu in Model.ServisSoforleri.Where(x => x.Servisler.OkulServisleri.Where(y => y.okulId == okulId).Count() != 0))
+                                        {
+                                            <tr>
+                                                <td>@servisSoforu.servisSoforId</td>
+                                                <td>@servisSoforu.Soforler.sofAd @servisSoforu.Soforler.sofSoyad</td>
+                                                <td>@servisSoforu.Soforler.sofEmail</td>
+                                                <td>@servisSoforu.Soforler.sofGsm</td>
+                                                <td><a href="/Okul/OkulServisleri" class="btn btn-info">@servisSoforu.Servisler.plaka</a></td>
+                                                <td>@Model.FirmaServisleri.Where(x => x.servisId == servisSoforu.servisId).First().Firmalar.firAd</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<script>
+    $(function () {
+        $('.table').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": true,
+            "scrollX": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false
+        });
+    });
+</script>

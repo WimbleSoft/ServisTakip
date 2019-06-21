@@ -1,0 +1,520 @@
+﻿@model ServisTakip.Models.ViewModel
+@{
+    ViewBag.Title = "Servisler";
+    Layout = "~/Views/Shared/Veli_Layout.cshtml";
+    int veliId = (int)Session["veliId"];
+}
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAUBCKr51YLstskfNjTe82C0nIVdG9Tde4&callback=initMap">
+</script>
+
+<div id="content">
+    <script>
+            document.getElementById("servisler").className = "active";
+    </script>
+    
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>Servisler</h1>
+            <ol class="breadcrumb">
+                <li class="active"><a href="#"><i class="fa fa-dashboard"></i> Anasayfa </a></li>
+                <li><a href="#">Servisler</a></li>
+            </ol>
+        </section>
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h2 class="box-title">Servisler</h2>
+                        </div>
+                        <div class="box-body">
+                            <div class="table-responsive">
+                                <table id="example1" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>PLAKA</th>
+                                            <th>SON MUAYENE TARİHİ</th>
+                                            <th>AKTİF Mİ</th>
+                                            <th>FİRMA</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var ogrenciVeli in Model.OgrenciVelileri.Where(x => x.veliId == veliId))
+                                    {
+                                        foreach (var servistekiOgrenciler in Model.ServistekiOgrenciler.Where(x => x.ogrId == ogrenciVeli.ogrId))
+                                        {
+                                    <tr>
+                                        <td>@servistekiOgrenciler.OkulServisleri.Servisler.plaka</td>
+                                        <td>
+                                            @if (servistekiOgrenciler.OkulServisleri.Servisler.sonMuayeneTarih.HasValue)
+                                                    {
+                                                    <text>@servistekiOgrenciler.OkulServisleri.Servisler.sonMuayeneTarih.Value.Date</text>
+                                                    }
+                                                    else
+                                                    {
+                                                    <text>Belirtilmedi</text>
+                                                    }
+                                        </td>
+                                        <td>
+                                            @if (servistekiOgrenciler.OkulServisleri.Servisler.aktifMi)
+                                                    {
+                                                    <text>Aktif</text>
+                                                    }
+                                                    else
+                                                    {
+                                                    <text>Aktif Değil</text>
+                                                    }
+                                        </td>
+                                        <td>
+                                            @if (Model.FirmaServisleri.Where(x => x.servisId == servistekiOgrenciler.OkulServisleri.Servisler.servisId).Count() > 0)
+                                                    {
+                                                    <text>@servistekiOgrenciler.OkulServisleri.Servisler.FirmaServisleri.First().Firmalar.firAd | @servistekiOgrenciler.OkulServisleri.Servisler.FirmaServisleri.First().Firmalar.firTel</text>
+                                                    }
+                                                    else
+                                                    {
+                                                    <text>Firmasız Servis.</text>
+                                                    }
+                                        </td>
+                                    </tr>
+                                        }
+
+                                    }
+                                    </tbody>
+                                </table>
+                            </div>
+                                @foreach (var ogrenciVelileri in Model.OgrenciVelileri.Where(x => x.veliId == veliId))
+                                {
+                                    <div class="modal fade bs-example-modal-lg" id="myModalAnlikDurum_@ogrenciVelileri.ogrId" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <form role="form" method="post" enctype="multipart/form-data" action="">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                        <h4 class="modal-title" id="myModalLabel">Öğrenci Anlık Durum</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="form-group">
+                                                            <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                                                                <label>Öğrenci Ad Soyad :</label>
+                                                            </div>
+                                                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                                <label>@ogrenciVelileri.Ogrenciler.ogrAd @ogrenciVelileri.Ogrenciler.ogrSoyad</label>
+                                                            </div>
+                                                            <div class="col-md-2 col-lg-2 col-sm-12 col-xs-12">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                                                                <label>Haraket Durumu :</label>
+                                                            </div>
+                                                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                                <label>haraketDurum</label>
+                                                            </div>
+                                                            <div class="col-md-2 col-lg-2 col-sm-12 col-xs-12">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                                                                <label>Borç Durumu :</label>
+                                                            </div>
+                                                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                                @if (Model.Faturalar.Where(x => x.ogrId == ogrenciVelileri.ogrId && x.kayitTarihi.Year == DateTime.Now.Year && x.kayitTarihi.Month == DateTime.Now.Month).Count() > 0)
+                                                                {
+                                                                    foreach (var fatura in Model.Faturalar.Where(x => x.ogrId == ogrenciVelileri.ogrId && x.kayitTarihi.Year == DateTime.Now.Year && x.kayitTarihi.Month == DateTime.Now.Month))
+                                                                    {
+                                                                        if (fatura.Odemeler.Count > 0)
+                                                                        {
+                                                                    <label>
+                                                                        Ödendi
+                                                                    </label>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                    <label>@fatura.ServistekiOgrenciler.ucret</label>
+                                                                        }
+                                                                    <label>
+                                                                        Fark @(fatura.ServistekiOgrenciler.ucret - fatura.Odemeler.Sum(x => x.miktar))
+                                                                    </label>
+                                                                    }
+                                                                }
+                                                                else
+                                                                {
+                                                                    <label>Borç Atanmadı.</label>
+                                                                }
+                                                            </div>
+                                                            <div class="col-md-2 col-lg-2 col-sm-12 col-xs-12">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                                                                <label>Okul</label>
+                                                            </div>
+                                                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                                <label>@ogrenciVelileri.Ogrenciler.Okullar.okulAdi</label>
+                                                            </div>
+                                                            <div class="col-md-2 col-lg-2 col-sm-12 col-xs-12">
+                                                            </div>
+                                                        </div>
+
+                                                        <hr>
+                                                        <div class="form-group">
+                                                            <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                                                                <label>Servis Takibi</label>
+                                                            </div>
+                                                            <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                                                <div id="map" name="map" style="width: 400px;height: 400px;"></div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Kapat</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                @foreach (var ogrenciVelileri in Model.OgrenciVelileri.Where(x => x.veliId == veliId))
+                                {
+                                    <div class="modal fade bs-example-modal-lg" id="myModalOgrenciDuzenle_@ogrenciVelileri.ogrId" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <form role="form" method="post" enctype="multipart/form-data" action="/Veli/OgrenciGuncelle">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                        <h4 class="modal-title" id="myModalLabel">Öğrenci Düzenle</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="form-group">
+                                                            <input name="ogrId" type="text" id="ogrId" hidden="hidden" value="@ogrenciVelileri.ogrId">
+                                                            <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                                                <label>Öğrenci Ad :</label>
+                                                                <input name="ogrAd" type="text" id="ogrAd" class="form-control" value="@ogrenciVelileri.Ogrenciler.ogrAd" readonly />
+                                                            </div>
+                                                            <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                                                <label>Öğrenci Soyad :</label>
+                                                                <input name="ogrSoyad" type="text" id="ogrSoyad" class="form-control" value="@ogrenciVelileri.Ogrenciler.ogrSoyad" readonly />
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                                                <label>TC Kimlik No :</label>
+                                                                <input name="ogrTCno" type="text" id="ogrTCno" class="form-control" value="@ogrenciVelileri.Ogrenciler.ogrTCno" readonly />
+                                                            </div>
+                                                            <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                                                <label>Öğrenci GSM :</label>
+                                                                <input name="ogrGsm" type="text" id="ogrGsm" class="form-control" value="@ogrenciVelileri.Ogrenciler.ogrGsm" required placeholder="Öğrenci GSM no Girin" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                                                <label>Adres :</label>
+                                                                <input name="ogrAdres" type="text" class="form-control" value="@ogrenciVelileri.Ogrenciler.ogrAdres" required>
+                                                            </div>
+                                                            <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                                                <label>İlçe / İl</label>
+                                                                <select name="ilce_Id" id="ilce_Id_@ogrenciVelileri.Ogrenciler.ilce_id" class="select2 form-control" style="width:100% !important;">
+                                                                    @foreach (var il in Model.Iller)
+                                                                {
+                                                                <optgroup label="@il.il_Ad">
+                                                                    @foreach (var ilce in Model.Ilceler.Where(x => x.il_id == il.il_id))
+                                                                        {
+                                                                        <option value="@ilce.ilce_id">@ilce.ilce_ad</option>
+                                                                        }
+                                                                </optgroup>
+                                                                }
+                                                                </select>
+                                                                <script>
+                                                            $("#ilce_Id_@ogrenciVelileri.Ogrenciler.ilce_id").val("@ogrenciVelileri.Ogrenciler.ilce_id");
+                                                                </script>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                                                <label>GeoX :</label>
+                                                                <input name="geoX" type="text" id="geoX" class="form-control" value="@ogrenciVelileri.Ogrenciler.geoX" required placeholder="Format: 00.000000" />
+                                                            </div>
+                                                            <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                                                <label>GeoY :</label>
+                                                                <input name="geoY" type="text" id="geoY" class="form-control" value="@ogrenciVelileri.Ogrenciler.geoY" required placeholder="Format: 00.000000" />
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <div class="form-group">
+                                                            <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">İptal</button>
+                                                            </div>
+                                                            <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                                                <button type="submit" class="btn btn-warning">Kaydet</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                @foreach (var ogrenciVelileri in Model.OgrenciVelileri.Where(x => x.veliId == veliId))
+                                {
+                                    <div class="modal fade bs-example-modal-lg" id="myModalDetay_@ogrenciVelileri.ogrId" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <form role="form" method="post" enctype="multipart/form-data" action="">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                        <h4 class="modal-title" id="myModalLabel">Öğrenci Detay</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="form-group">
+                                                            <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                                                <label>Öğrenci Ad :</label>
+                                                                <label>@ogrenciVelileri.Ogrenciler.ogrAd</label>
+                                                            </div>
+                                                            <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                                                <label>Öğrenci Soyad :</label>
+                                                                <label>@ogrenciVelileri.Ogrenciler.ogrSoyad</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                                                <label>TC Kimlik No :</label>
+                                                                <label>@ogrenciVelileri.Ogrenciler.ogrTCno</label>
+                                                            </div>
+                                                            <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                                                <label>Öğrenci GSM :</label>
+                                                                <label>@ogrenciVelileri.Ogrenciler.ogrGsm</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                                                <label>Adres :</label>
+                                                                <label>@ogrenciVelileri.Ogrenciler.ogrAdres</label>
+                                                            </div>
+                                                            <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                                                <label>İlçe / İl :</label>
+                                                                <label>@ogrenciVelileri.Ogrenciler.Ilceler.ilce_ad / @ogrenciVelileri.Ogrenciler.Ilceler.Iller.il_Ad</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                                                <label>Okul :</label>
+                                                                <label>@ogrenciVelileri.Ogrenciler.Okullar.okulAdi</label>
+                                                            </div>
+                                                            <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                                                <label>Öğrenci Okul No :</label>
+                                                                <label>@ogrenciVelileri.Ogrenciler.ogrenciNo</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                                                <label>Okul Adres :</label>
+                                                                <label>@ogrenciVelileri.Ogrenciler.Okullar.okulAdres</label>
+                                                            </div>
+                                                            <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                                                <label>Okul Tel :</label>
+                                                                <label>@ogrenciVelileri.Ogrenciler.Okullar.okulTel</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            @{
+                                                            if (ogrenciVelileri.Ogrenciler.Okullar.Mudurler != null)
+                                                            {
+                                                                foreach (var mudur in ogrenciVelileri.Ogrenciler.Okullar.Mudurler)
+                                                                {
+                                                        <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                                            <label>Okul Müdürü :</label>
+                                                            <label>@mudur.mudurAd @mudur.mudurSoyad</label>
+                                                        </div>
+                                                        <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                                            <label>Müdür Tel No :</label>
+                                                            <label>@mudur.mudurTelefon</label>
+                                                        </div>
+                                                                }
+
+                                                            }
+                                                            else
+                                                            {
+                                                        <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                                            <label>Okul Müdürü :</label>
+                                                            <label>Okul Müdürü Atanmamıştır</label>
+                                                        </div>
+                                                        <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                                            <label>Müdür Tel No :</label>
+                                                            <label>Okul Müdürü Atanmamıştır</label>
+                                                        </div>
+                                                            }
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <div class="form-group">
+                                                            <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Kapat</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                @foreach (var ogrenciVelileri in Model.OgrenciVelileri.Where(x => x.veliId == veliId))
+                                {
+                                    <div class="modal fade bs-example-modal-lg" id="myModalFaturalar_@ogrenciVelileri.ogrId" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <form role="form" method="post" enctype="multipart/form-data" action="">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                        <h4 class="modal-title" id="myModalLabel">Öğrenci Fatura Bilgileri</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="form-group">
+                                                            <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                                                <label>Öğrenci Ad :</label>
+                                                                <label>@ogrenciVelileri.Ogrenciler.ogrAd</label>
+                                                            </div>
+                                                            <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                                                <label>Öğrenci Soyad :</label>
+                                                                <label>@ogrenciVelileri.Ogrenciler.ogrSoyad</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                                                                <label>Fatura Bilgileri :</label>
+                                                                <label>@DateTime.Now.Month / @DateTime.Now.Year</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                                                                <label></label>
+                                                                <table id="" class="table table-bordered table-striped">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>FATURA ID</th>
+                                                                            <th>SERVİS PLAKA</th>
+                                                                            <th>KULLANIM DURUMU</th>
+                                                                            <th>FATURA KAYIT TARİHİ</th>
+                                                                            <th>İŞLEMLER</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        @foreach (var fatura in Model.Faturalar.Where(x => x.ogrId == ogrenciVelileri.ogrId))
+                                                                    {
+                                                                    <tr>
+                                                                        <td>@fatura.faturaId</td>
+                                                                        <td>@fatura.OkulServisleri.Servisler.plaka</td>
+                                                                        <td>
+                                                                            @if (fatura.kullanimDurumu)
+                                                                                {
+                                                                                <text>Kullanılıyor</text>
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                <text>Kullanılmıyor</text>
+                                                                                }
+                                                                        </td>
+                                                                        <td>@fatura.kayitTarihi</td>
+                                                                        <td><a class="btn btn-success fa fa-credit-card" href="/Veli/ServisOdemeAl?faturaId=@fatura.faturaId"></a></td>
+                                                                    </tr>
+                                                                    }
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <div class="form-group">
+                                                            <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Kapat</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- /.content -->
+    </div>
+</div>
+<script>
+    var googleMap;
+    var googleMarker;
+    function initMap() {
+        var map = new google.maps.Map(document.getElementsByName('map')[0], {
+            zoom: 11,
+            center: { lat: 60.6060, lng: 60.6060 }
+
+        });
+        var marker = new google.maps.Marker({
+            position: { lat: 60.6060, lng: 60.6060 },
+            map: map,
+            title: 'Servis'
+        });
+        googleMap = map;
+        googleMarker = marker;
+    };
+</script>
+<script>
+    function haritaYukle(servisId, servisPlaka) {
+        setInterval(function () {
+            $.ajax({
+            url: '/Veli/ServisKonumGetir',
+            type: 'post',
+            async: false,
+            dataType: 'json',
+            data: { servisId: servisId, veliId: @((int)Session["veliId"]) },
+            success:
+                function (servisKonum)
+                {
+                    if (servisKonum != -1 || servisKonum != 1) {
+                        googleMap.setCenter(new google.maps.LatLng({ lat: parseFloat(servisKonum.lat), lng: parseFloat(servisKonum.lng) }));
+                        googleMarker.setMap(null);
+                        googleMarker = new google.maps.Marker({
+                            position: { lat: parseFloat(servisKonum.lat), lng: parseFloat(servisKonum.lng) },
+                            map: googleMap,
+                            title: servisPlaka
+                        });
+                    }
+                    else if (servisKonum == 1) {
+                        googleMap.setCenter(new google.maps.LatLng({ lat: parseFloat(0), lng: parseFloat(0) }));
+                        alertHata();
+                    }
+                    else if (servisKonum == -1) {
+                        return alertLoginHatasi();
+                    }
+                }
+            });
+        },3000);
+    };
+
+</script>
+<script>
+    $(function () {
+        $('#example1').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": true,
+            "scrollX": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false
+        });
+    });
+</script>

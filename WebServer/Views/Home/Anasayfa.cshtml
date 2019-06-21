@@ -1,0 +1,148 @@
+﻿
+@{
+    ViewBag.Title = "ServisteTakip - Servis Kullanan Öğrencileri Takip Sistemi";
+    Layout = "~/Views/Shared/anasayfa_Layout.cshtml";
+}
+<section class="page1">
+    <!-- Huge Title centered -->
+    <div class="huge-title">
+        <div class="logo-phone centered"><img alt="SERVİSTETAKİP" src="/Content/anasayfa/img/logo-phone.png"></div>  <!-- This Logo is only displayed on Tablet/iPhone !-->
+        <h2>Çocuklarımız Bizimle Daima Güvende.</h2>
+    </div>
+    <!-- Little text on bottom with arrow -->
+    <div class="go-down">
+        <p>Uygulamamız ile tanışın.</p>
+        <img src="/Content/anasayfa/img/go-down.png" alt="Go Down">
+    </div>
+</section>
+
+<!-- END HEADER ############################################### -->
+<!-- BEGIN CONTAINER ############################################### -->
+
+<div id="container" class="container">
+
+    <!-- FIRST SECTION ############################################### -->
+
+    <section class="cbp-so-section page2">
+        <div class="row">
+            <div class="six columns article make-it-appear-left">
+                <!-- Title -->
+                <h3>Aklınız Serviste Kalmasın</h3>
+                <!-- Content -->
+                <p>Servis kullanan çocuklarımızın sürekli takibi ve güvenliği için bu sistemi geliştirdik. <b>ServisteTakip</b> Okul servisinin rotalarını takip eder, şoför hakkında yasal bilgileri tutar ve geçmişe dönük arşivleme sistemi ile servis kullanımında kolaylıklar sağlar.</p>
+                <div class="space"></div>
+                <!-- Ico of Brand -->
+                <ul class="brand">
+                    <li>
+                        <!-- There's a tooltip on the first icon -->
+                        <a class="has-tooltip" href="#">
+                            <span class="tooltip"><span>Android Uygulamamıza Ulaşabilirsiniz.</span></span>
+                            <img src="/Content/anasayfa/img/android.png" alt="Android Ico">
+                        </a>
+                    </li>
+                    <li><img src="/Content/anasayfa/img/windows.png" style="opacity:0.2;" alt="Windows Ico"></li>
+                </ul>
+            </div>
+            <!-- Image from right -->
+            <div class="iphone make-it-appear-right">
+                <img src="/Content/anasayfa/img/iphone.png" alt="EXEMPLE">
+            </div>
+        </div> <!-- End row div -->
+    </section>
+    <!-- END FIRST SECTION ############################################### -->
+    <!-- SECOND SECTION ############################################### -->
+
+    <section class="cbp-so-section page3">
+        <div class="row">
+            <!-- Article on right -->
+            <div class="twelve columns article centered make-it-appear-top">
+                <!-- Title -->
+                <h3>Güvenlik Önce Gelir</h3>
+                <!-- Content -->
+                <p>Uygulamamızı geliştirirken MEB okullarının tecrübeli şoförleri ile çalıştık. <b>ServisteTakip</b> gerçek uygulama sahalarında test edilerek geliştirildi.</p>
+                <div class="space"></div>
+                <!-- Exemple of Button with a Border -->
+
+            </div>
+            <!-- Block left Slider -->
+            <div class="twelve columns slider-mac">
+
+                <!-- Drag it icon on click effect -->
+                <div id="dragit"><img src="/Content/anasayfa/img/drag-it.png" alt="Drag it"></div>
+                <!-- Carousel of Image -->
+                <div id="template-2" class="owl-carousel">
+                    <div class="item"><img src="/Content/anasayfa/img/slider1.png" alt="EXEMPLE"></div>
+                    <div class="item"><img src="/Content/anasayfa/img/slider2.png" alt="EXEMPLE"></div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <!-- END SECOND SECTION ############################################### -->
+    <!-- TIRTH SECTION ############################################### -->
+
+    <section class="cbp-so-section page4">
+        <div class="row">
+            <!-- Left Side -->
+            <div class="six columns make-it-appear-left">
+                <div class="space"></div>
+                <!-- Title -->
+                <h4>Her şeyi düşünürken tasarımı da unutmadık.</h4>
+                <!-- Content -->
+                <p>Uygulamamızı geliştirirken ince detayları ekleyip gerekli olan tüm işçilikleri eklerken her kullanıcının rahatlıkla kullanabileceği bir tasarım geliştirmeyi de unutmadık.</p>
+                <div class="space"></div>
+                <img src="/Content/anasayfa/img/ipad.png" alt="EXEMPLE">
+            </div>
+
+            <!-- Right Side -->
+
+            <div class="six columns make-it-appear-right">
+                <img src="/Content/anasayfa/img/ipad.png" alt="EXEMPLE">
+                <div class="space"></div>
+
+                <!-- Title -->
+                <h4>Kayıt Olun & Hemen Kullanın</h4>
+                <!-- Content -->
+                <p>Çocuğunuzun öğrencisi olduğu okul sistemimize geçtiği anda kayıt olun ve tüm özelliklerimizi kullanmaya başlayın.</p>
+
+            </div>
+        </div> <!-- End row div -->
+
+    </section>
+    <!-- END TIRTH SECTION ############################################### -->
+    <!-- SUBSCRIBE SECTION ############################################### -->
+
+    <section class="cbp-so-section page5">
+
+        <div id="signup" class="row">
+            <!-- Article centered on the Page -->
+            <div class="article twelve columns centered make-it-appear-top">
+                <img src="/Content/anasayfa/img/appstore.png" alt="appstore">
+                <div class="space"></div>
+                <!-- Title -->
+                <h4>Subscribe to our newsletter and stay updated on the release</h4>
+                <!-- Content -->
+                <!-- Begin the Form -->
+                <form action="form_sender.php" method="post">
+                    <!-- Input of E-Mail -->
+                    <div class="seven columns">
+                        <input name="email" class="email" type="text" placeholder="Your E-Mail">
+                    </div>
+                    <!-- Send Button -->
+                    <div class="five columns">
+                        <button name="send" type="submit" class="button">Notify Me</button>
+                    </div>
+                    <!-- End of the Form -->
+                </form>
+                <!-- Text Promise we do not spam -->
+                <p class="spam">We use MailChimp for a perfect mailing list.</p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- END SUBSCRIBE SECTION ############################################### -->
+
+</div> <!-- end of container -->

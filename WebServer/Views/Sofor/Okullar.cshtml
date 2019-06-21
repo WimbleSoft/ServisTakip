@@ -1,0 +1,37 @@
+﻿@model ServisTakip.Models.ViewModel
+@{
+    ViewBag.Title = "Okullar";
+    Layout = "~/Views/Shared/Sofor_Layout.cshtml";
+}
+<div id="content">
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper bg-black">
+        <!-- Main content -->
+        <section class="content">
+            <div class="row" style="margin:10px !important; margin-bottom:30px!important;">
+                <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                    <h2>OKULLAR</h2>
+                    <div class="table-responsive">
+                        <table id="example1" class="table table-condensed" style="font-size:28px !important;">
+                            <tbody>
+                                @foreach (var okulServisi in Model.OkulServisleri)
+                                {
+                                    <tr>
+                                        <td>@okulServisi.Okullar.okulAdi</td>
+                                        <td>@okulServisi.Okullar.Ilceler.ilce_ad / @okulServisi.Okullar.Ilceler.Iller.il_Ad</td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <a href="/Sofor/Servis?okulServisId=@okulServisi.okulServisId&okuldanEveEvdenOkula=0" style="font-size:24px !important;" class="btn btn-grad btn-success">Okuldan Servis Başlat</a>
+                                                <a href="/Sofor/Servis?okulServisId=@okulServisi.okulServisId&okuldanEveEvdenOkula=1" style="font-size:24px !important;" class="btn btn-grad btn-primary">Okula Servis Başlat</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

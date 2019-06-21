@@ -1,0 +1,815 @@
+﻿@model ServisTakip.Models.ViewModel
+@{
+    ViewBag.Title = "Servis";
+    Layout = "~/Views/Shared/Sofor_Layout.cshtml";
+}
+<script src="http://api-maps.yandex.com/2.1/?lang=en_RU" type="text/javascript"></script>
+
+<div id="content">
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper bg-black">
+        <style>
+            .simge {
+                width: 30% !important;
+                text-align: center !important;
+                padding-top: 20px !important;
+                padding-bottom: 20px !important;
+                font-size: 80px !important;
+                height: 120px !important;
+                border-top-left-radius: 120px !important;
+                border-bottom-left-radius: 120px !important;
+                border-top-right-radius: 75px !important;
+                border-bottom-right-radius: 75px !important;
+            }
+            .buton {
+                width:70% !important; 
+                text-align:center !important; 
+                margin-top: 20px !important; 
+                margin-bottom: 20px !important; 
+                font-size:40px !important; 
+                height:80px  !important;
+            }
+            td {
+                border-top: unset !important;
+                font-size: 34px !important;
+            }
+        </style>
+        <!-- Main content -->
+        <section class="content">
+            <div class="row" style="margin:10px !important; margin-bottom:30px!important;">
+                <div class="col-md-3 col-lg-3 col-xs-12 col-sm-12" style="text-align:right; font-size:24px;">
+                    @if (ViewBag.okuldanEveEvdenOkula == 1){
+                        <text><a style="color:dodgerblue !important;">Evlerden</a></text>
+                    }
+                    else{
+                        <text><a style="color:forestgreen !important;">@Model.Okullar.First().okulAdi</a></text>
+                    }
+                </div>
+                <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12" style="text-align:center; font-size:24px;">
+                    @if (ViewBag.okuldanEveEvdenOkula == 1)
+                    {
+                        
+                        <text><a style="color:dodgerblue !important;">@Model.Okullar.First().okulAdi</a></text>
+                    }
+                    else
+                    {
+                        <text><a style="color:forestgreen !important;">Okulundan</a></text>
+}
+                </div>
+                <div class="col-md-3 col-lg-3 col-xs-12 col-sm-12" style="text-align:left; font-size:24px;">
+                   @if (ViewBag.okuldanEveEvdenOkula == 1)
+                   {
+                       <text><a style="color:dodgerblue !important;">Okuluna</a></text>
+                   }
+                   else
+                   {
+                        <text><a style="color:forestgreen !important;">Evlere</a></text>
+                   }
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 col-lg-3 col-xs-12 col-sm-12" style="text-align:center; font-size:24px;">
+                    <span>Şoför: @Session["sofAd"] @Session["sofSoyad"]</span>
+                </div>
+                <div class="col-md-3 col-lg-3 col-xs-12 col-sm-12" style="text-align:center; font-size:30px; border-right:1px solid #9b9b9b;">
+                    <span id="tarihsaat">@DateTime.Now.ToShortDateString() - @DateTime.Now.ToShortTimeString()</span>
+                    <script>
+                        setInterval( //TARİH SAAT AYARLAR
+                            function () {
+                                var date = new Date();
+                                var dateDay = date.getDate();
+                                var dateMonth = date.getMonth() + 1;
+                                var timeHours = date.getHours();
+                                var timeMinutes = date.getMinutes();
+                                if (date.getDate() <= 9) dateDay = "0" + dateDay;
+                                if (date.getMonth() + 1 <= 9) dateMonth = "0" + dateMonth;
+                                if (date.getHours() <= 9) timeHours = "0" + timeHours;
+                                if (date.getMinutes() <= 9) timeMinutes = "0" + timeMinutes;
+                                $("#tarihsaat").empty();
+                                $("#tarihsaat").append(dateDay + '.' + dateMonth + '.' + date.getFullYear()  + ' - ' + timeHours + ':' + timeMinutes);
+                            }, 1000);
+                    </script>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12" style="text-align:center; font-size:30px; border-left:1px solid #9b9b9b;">
+                    ÖĞRENCİ LİSTESİ
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12" style="border-right:1px solid #9b9b9b;">
+                    <div class="row" style="margin: unset !important; margin-top:25px !important;">
+                        <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                            <div class="btn-group-vertical">
+                                <div class="btn">
+                                    <div class="btn-group" style="width:100% !important; height:120px !important;">
+                                        <a class="btn bg-gray fa fa-map-marker simge" data-toggle="modal" data-target="#navigasyon"></a>
+                                        <a class="btn bg-gray buton" data-toggle="modal" data-target="#navigasyonModal"> NAVİGASYONU AÇ&nbsp;&nbsp;&nbsp; </a>
+                                    </div>
+                                </div>
+                                <div class="btn">
+                                    <div class="btn-group" style="width:100% !important; height:120px !important;">
+                                        <a class="btn bg-gray fa fa-users simge" data-toggle="modal" data-target="#ogrenciAyarlariModal"></a>
+                                        <a class="btn bg-gray buton" data-toggle="modal" data-target="#ogrenciAyarlariModal"> ÖĞRENCİ AYARLARI&nbsp;&nbsp;&nbsp;  </a>
+                                    </div>
+                                </div>
+                                <div class="btn">
+                                    <div class="btn-group" style="width:100% !important; height:120px !important;">
+                                        <a class="btn bg-gray fa fa-gears simge" data-toggle="modal" data-target="#servisAyarlariModal"></a>
+                                        <a class="btn bg-gray buton"             data-toggle="modal" data-target="#servisAyarlariModal"> SERVİS AYARLARI&nbsp;&nbsp;&nbsp; </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12" style="height:425px !important; border-left:1px solid #9b9b9b;">
+                    <div class="row" style="margin: unset !important; margin-top:25px !important;">
+                        <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                            <table id="example1" class="table table-condensed table-responsive" style="font-size:34px !important;">
+                                <tbody>
+                                    @foreach (var servistekiOgrenci in Model.ServistekiOgrenciler)
+                                    {
+                                        <tr>
+                                            <td colspan="2">@servistekiOgrenci.Ogrenciler.ogrAd @servistekiOgrenci.Ogrenciler.ogrSoyad</td>
+                                            <td> </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <a style="font-size:24px !important;" class="btn btn-transparent"
+                                                   onclick="ogrAdresMarkerDegistir(parseFloat(@(servistekiOgrenci.Ogrenciler.geoX)), parseFloat(@(servistekiOgrenci.Ogrenciler.geoY)),'@(servistekiOgrenci.Ogrenciler.ogrAd)', '@(servistekiOgrenci.Ogrenciler.ogrSoyad)',parseFloat(@(servistekiOgrenci.ogrId)) )"
+                                                   data-toggle="modal" data-target="#ogrenciBilgi_@servistekiOgrenci.ogrId">Bilgileri Göster</a>
+                                            </td>
+                                            <td style="float:right;">
+                                                <div>
+
+
+                                                    @{
+                                                        if (ViewBag.okuldanEveEvdenOkula == 1)
+                                                        {//Eğer evden okula servis açılmışsa
+                                                            if (Model.IndiBindiler.Where(x => x.servistekiOgrenciId == servistekiOgrenci.servistekiOgrenciId && x.okuldanEveEvdenOkula == 1 && x.bindiTarihi.Date == DateTime.Now.Date).Count() == 0 && Model.IndiBindiler.Where(x => x.servistekiOgrenciId == servistekiOgrenci.servistekiOgrenciId && x.okuldanEveEvdenOkula == 0 && x.bindiTarihi.Date == DateTime.Now.Date).Count() == 0)
+                                                            {//Bugün hiç evden çıkış yoksa
+                                                                <a style="font-size:18px !important; color:forestgreen;" class="btn btn-default btn-sm"
+                                                                    href="/Sofor/ServiseBindir?servistekiOgrenciId=@servistekiOgrenci.servistekiOgrenciId&okulServisId=@servistekiOgrenci.okulServisId&okuldanEveEvdenOkula=1">
+                                                                    Evden Okula Servise Bindir <i class="fa fa-arrow-circle-o-up"></i>
+                                                                </a>
+                                                            }
+                                                            if (Model.IndiBindiler.Where(x => x.servistekiOgrenciId == servistekiOgrenci.servistekiOgrenciId && x.okuldanEveEvdenOkula == 1 && x.bindiTarihi.Date == DateTime.Now.Date).Count() == 0 && Model.IndiBindiler.Where(x => x.servistekiOgrenciId == servistekiOgrenci.servistekiOgrenciId && x.okuldanEveEvdenOkula == 0 && x.bindiTarihi.Date == DateTime.Now.Date && x.indiTarihi.Date != DateTime.Now.Date).Count() == 1)
+                                                            {//Bugün hiç evden çıkış yoksa
+                                                                <a style="font-size:18px !important;" class="btn btn-info btn-sm">
+                                                                    Sabah Servis Kullanmadan Okuldan Eve Yola Çıktı <i class="fa fa-times"></i>
+                                                                </a>
+                                                            }
+                                                            if (Model.IndiBindiler.Where(x => x.servistekiOgrenciId == servistekiOgrenci.servistekiOgrenciId && x.okuldanEveEvdenOkula == 1 && x.bindiTarihi.Date == DateTime.Now.Date).Count() == 0 && Model.IndiBindiler.Where(x => x.servistekiOgrenciId == servistekiOgrenci.servistekiOgrenciId && x.okuldanEveEvdenOkula == 0 && x.bindiTarihi.Date == DateTime.Now.Date && x.indiTarihi.Date == DateTime.Now.Date).Count() == 1)
+                                                            {//Bugün hiç evden çıkış yoksa
+                                                                <a style="font-size:18px !important;" class="btn btn-info btn-sm">
+                                                                    Sabah Servis Kullanmadı Okuldan Eve Vardı <i class="fa fa-times"></i>
+                                                                </a>
+                                                            }
+                                                            if (Model.IndiBindiler.Where(x => x.servistekiOgrenciId == servistekiOgrenci.servistekiOgrenciId && x.okuldanEveEvdenOkula == 1 && x.bindiTarihi.Date == DateTime.Now.Date && x.indiTarihi.Date != DateTime.Now.Date).Count() == 1)
+                                                            {//servise binmişse ve henüz inmemişse servistedir ve servisten okula inmelidir
+                                                                <a style="font-size:18px !important;" class="btn btn-default btn-sm"
+                                                                   href="/Sofor/ServistenIndir?servistekiOgrenciId=@servistekiOgrenci.servistekiOgrenciId&okulServisId=@servistekiOgrenci.okulServisId&okuldanEveEvdenOkula=1">
+                                                                    Servisten Okula İndir <i class="fa fa-arrow-circle-o-down"></i>
+                                                                </a>
+                                                            }
+                                                            if (Model.IndiBindiler.Where(x => x.servistekiOgrenciId == servistekiOgrenci.servistekiOgrenciId && x.okuldanEveEvdenOkula == 1 && x.bindiTarihi.Date == DateTime.Now.Date && x.indiTarihi.Date == DateTime.Now.Date).Count() == 1)
+                                                            {//servise binmişse ve inmişse okuldadır ve evden okula yönünde başka işlem yapılamamalıdır
+                                                                <a style="font-size:18px !important;" class="btn btn-info btn-sm">
+                                                                    Okulda <i class="fa fa-building"></i>
+                                                                </a>
+                                                            }
+                                                        }
+                                                        else if (ViewBag.okuldanEveEvdenOkula == 0)
+                                                        {//Eğer okuldan eve servis açılmışsa
+                                                            if (Model.IndiBindiler.Where(x => x.servistekiOgrenciId == servistekiOgrenci.servistekiOgrenciId && x.okuldanEveEvdenOkula == 1 && x.bindiTarihi.Date == DateTime.Now.Date && x.indiTarihi.Date == DateTime.Now.Date).Count() == 1)
+                                                            {//evden çıktı okula indi ise sabah servis kullanmıştır okuldan eve servise binebilir
+                                                                <a style="font-size:18px !important; color:forestgreen;" class="btn btn-default btn-sm"
+                                                                    href="/Sofor/ServiseBindir?servistekiOgrenciId=@servistekiOgrenci.servistekiOgrenciId&okulServisId=@servistekiOgrenci.okulServisId&okuldanEveEvdenOkula=0">
+                                                                    Evden Servisle Geldi, Okuldan Servise Bindir <i class="fa fa-arrow-circle-o-up"></i>
+                                                                </a>
+                                                            }
+                                                            
+                                                            if (Model.IndiBindiler.Where(x => x.servistekiOgrenciId == servistekiOgrenci.servistekiOgrenciId && x.okuldanEveEvdenOkula == 1 && x.bindiTarihi.Date == DateTime.Now.Date && x.indiTarihi.Date != DateTime.Now.Date).Count() == 1)
+                                                            {//evden okula çıkış var ama iniş yok
+                                                                <a style="font-size:18px !important;" class="btn btn-info btn-sm">
+                                                                    Henüz Serviste, Okula İnmedi <i class="fa fa-arrow-circle-o-up"></i>
+                                                                </a>
+                                                            }
+                                                            if (Model.IndiBindiler.Where(x => x.servistekiOgrenciId == servistekiOgrenci.servistekiOgrenciId && x.okuldanEveEvdenOkula == 0 && x.bindiTarihi.Date == DateTime.Now.Date && x.indiTarihi.Date != DateTime.Now.Date).Count() == 1)
+                                                            {//servise binmişse ve henüz inmemişse servistedir ve servisten eve inmelidir
+                                                                <a style="font-size:18px !important;" class="btn btn-default btn-sm"
+                                                                    href="/Sofor/ServistenIndir?servistekiOgrenciId=@servistekiOgrenci.servistekiOgrenciId&okulServisId=@servistekiOgrenci.okulServisId&okuldanEveEvdenOkula=0">
+                                                                    Servisten Eve İndir <i class="fa fa-arrow-circle-o-down"></i>
+                                                                </a>
+                                                            }
+                                                            if (Model.IndiBindiler.Where(x => x.servistekiOgrenciId == servistekiOgrenci.servistekiOgrenciId && x.okuldanEveEvdenOkula == 1 && x.bindiTarihi.Date == DateTime.Now.Date).Count() == 0 && Model.IndiBindiler.Where(x => x.servistekiOgrenciId == servistekiOgrenci.servistekiOgrenciId && x.okuldanEveEvdenOkula == 0 && x.bindiTarihi.Date == DateTime.Now.Date).Count() == 0)
+                                                            {//evden okula hiç çıkmadıysa sabah servis kullanmamıştır ve okuldan eve servise binebilir
+                                                                <a style="font-size:18px !important; color:forestgreen;" class="btn btn-default btn-sm"
+                                                                   href="/Sofor/ServiseBindir?servistekiOgrenciId=@servistekiOgrenci.servistekiOgrenciId&okulServisId=@servistekiOgrenci.okulServisId&okuldanEveEvdenOkula=0">
+                                                                    Evden Servise Binmedi, Servise Bindir <i class="fa fa-arrow-circle-o-up"></i>
+                                                                </a>
+                                                            }
+                                                            if (Model.IndiBindiler.Where(x => x.servistekiOgrenciId == servistekiOgrenci.servistekiOgrenciId && x.okuldanEveEvdenOkula == 0 && x.bindiTarihi.Date == DateTime.Now.Date && x.indiTarihi.Date == DateTime.Now.Date).Count() == 1 && Model.IndiBindiler.Where(x => x.servistekiOgrenciId == servistekiOgrenci.servistekiOgrenciId && x.okuldanEveEvdenOkula == 1 && x.bindiTarihi.Date == DateTime.Now.Date).Count() == 0)
+                                                            {//servise binmişse ve inmişse evdedir ve okuldan eve yönünde başka işlem yapılamamalıdır
+                                                                <a style="font-size:18px !important;" class="btn btn-warning btn-sm">
+                                                                    Evden Servise Binmedi, Eve Servisten İndi <i class="fa fa-home"></i>
+                                                                </a>
+                                                            }
+                                                            if (Model.IndiBindiler.Where(x => x.servistekiOgrenciId == servistekiOgrenci.servistekiOgrenciId && x.okuldanEveEvdenOkula == 0 && x.bindiTarihi.Date == DateTime.Now.Date && x.indiTarihi.Date == DateTime.Now.Date).Count() == 1 && Model.IndiBindiler.Where(x => x.servistekiOgrenciId == servistekiOgrenci.servistekiOgrenciId && x.okuldanEveEvdenOkula == 1 && x.bindiTarihi.Date == DateTime.Now.Date && x.indiTarihi.Date == DateTime.Now.Date).Count() == 1)
+                                                            {//servise binmişse ve inmişse evdedir ve okuldan eve yönünde başka işlem yapılamamalıdır
+                                                                <a style="font-size:18px !important;" class="btn btn-info btn-sm">
+                                                                    Evden Servise Bindi, Eve Servisten İndi <i class="fa fa-home"></i>
+                                                                </a>
+                                                            }
+                                                        }
+                                                    }
+
+                                                    @{ 
+                                                        if (ViewBag.okuldanEveEvdenOkula == 0)
+                                                        {
+
+                                                        }
+                                                    }
+                                                </div>
+                                            </td>
+                                        </tr>
+                                      }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12" style="border-right:1px solid #9b9b9b;">
+                    <div class="row" style="margin: unset !important; margin-top:25px !important;">
+                        <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                            <p>@DateTime.Now.Year &copy; <a>Sirus Yazılım<i class="fa fa-world"></i></a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12" style="height:425px !important; border-left:1px solid #9b9b9b;">
+                    <div class="row" style="margin: unset !important; margin-top:25px !important;">
+                        <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <style>
+            label{
+                font-size:24px !important;
+            }
+            span{
+                font-size:24px !important;
+            }
+        </style>
+        @foreach (var servistekiOgrenci in Model.ServistekiOgrenciler)
+        {
+            <div class="modal fade bs-example-modal-lg" id="ogrenciBilgi_@servistekiOgrenci.ogrId" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content bg-black">
+                        <div class="modal-header">
+                            <button type="button" class="close btn btn-xs btn-danger" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                    <div class="form-group">
+                                        <div id="OgrAdresMap_@servistekiOgrenci.ogrId" style="width:100% !important; height:400px !important;">
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                    <div class="form-group">
+                                        <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                                            <label>Öğrenci:</label>
+                                            <span>@servistekiOgrenci.Ogrenciler.ogrAd @servistekiOgrenci.Ogrenciler.ogrSoyad</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                                            <label>Veli:</label>
+                                            @if (servistekiOgrenci.Ogrenciler.OgrenciVelileri.Count > 0)
+                                            {
+                                                <span>@servistekiOgrenci.Ogrenciler.OgrenciVelileri.First().Veliler.veliAd @servistekiOgrenci.Ogrenciler.OgrenciVelileri.First().Veliler.veliSoyad</span>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                                            <label>Okul :</label>
+                                            <span>@servistekiOgrenci.Ogrenciler.Okullar.okulAdi</span>
+                                        </div>
+                                        <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                                            <label>Öğrenci Okul No :</label>
+                                            <span>@servistekiOgrenci.Ogrenciler.ogrenciNo</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                                            <label>Borç Durumu:</label>
+                                            @if (Model.Faturalar.Where(x => x.ogrId == servistekiOgrenci.ogrId && x.kayitTarihi.Year == DateTime.Now.Year && x.kayitTarihi.Month == DateTime.Now.Month).Count() > 0)
+                                            {
+                                                foreach (var fatura in Model.Faturalar.Where(x => x.ogrId == servistekiOgrenci.ogrId && x.kayitTarihi.Year == DateTime.Now.Year && x.kayitTarihi.Month == DateTime.Now.Month))
+                                                {
+                                                    if (fatura.Odemeler.Sum(x=>x.miktar) == fatura.faturaTutari)
+                                                    {
+                                                        <span style="color:forestgreen;">Ödendi</span>
+                                                    }
+                                                    else if(fatura.Odemeler.Sum(x => x.miktar) > fatura.faturaTutari)
+                                                    {
+                                                        <span style="color:steelblue;">@((int)(fatura.Odemeler.Sum(x => x.miktar)-fatura.faturaTutari)) TL Fazla ödendi</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span style="color:red;">@((int)(fatura.faturaTutari - fatura.Odemeler.Sum(x => x.miktar))) TL</span>
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <span>Borç Atanmadı.</span>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                    <label>Adres :</label>
+                                    <span>@servistekiOgrenci.Ogrenciler.ogrAdres</span>
+                                </div>
+                                <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                    <label>İlçe / İl :</label>
+                                    <span>@servistekiOgrenci.Ogrenciler.Ilceler.ilce_ad / @servistekiOgrenci.Ogrenciler.Ilceler.Iller.il_Ad</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="row">
+                                <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                                    <div class="form-group">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Kapat</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="modal fade bs-example-modal-lg" id="navigasyonModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document" style="width:1200px !important;">
+                <div class="modal-content bg-black" >
+                    <div class="modal-header">
+                        <button type="button" class="close btn btn-xs btn-primary" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="navigasyon" style="height:620px !important; width:100% !important;"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="form-group">
+                            <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Kapat</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade bs-example-modal-lg" id="ogrenciAyarlariModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content bg-black">
+                    <div class="modal-header">
+                        <button type="button" class="close btn btn-xs btn-primary" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h3 class="modal-title" id="myModalLabel">Öğrenci Ayarları</h3>
+                    </div>
+                    <div class="modal-body">
+                        <div class="box box-default collapsed-box">
+                            <div class="box-header bg-gray-active">
+                                <button type="button" class="btn btn-default btn-lg" data-widget="collapse">
+                                    <i class="fa fa-plus"></i> Servise Öğrenci Ekle
+                                </button>
+                            </div>
+                            <div class="box-body bg-gray-active">
+                                <form action="~/Sofor/ServistekiOgrenciEkle" method="post" role="form" enctype="multipart/form-data">
+                                    <input name="okulServisId" required type="text" id="okulServisId" hidden="hidden" value="@ViewBag.okulServisId">
+                                    <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                                        <label>Okul</label>
+                                        <select id="okulId" name="okulId" class="select2 form-control" required style="width:100% !important;">
+                                            @foreach (var okulServisi in Model.OkulServisleri.Where(x => x.servisId == ViewBag.servisId))
+                                            {
+                                                foreach (var okul in Model.Okullar.Where(x => x.okulId == okulServisi.okulId))
+                                                {
+                                                    <option value="@okul.okulId">@okul.okulAdi | @okul.Ilceler.ilce_ad / @okul.Ilceler.Iller.il_Ad</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                        <label>Öğrenci Adı</label>
+                                        <input name="ogrAd" required type="text"            id="ogrAd"          class="form-control" placeholder="Öğrenci Adını Girin">
+                                    </div>
+                                    <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                        <label>Öğrenci Soyadı</label>
+                                        <input name="ogrSoyad" required type="text"         id="ogrSoyad"       class="form-control" placeholder="Öğrenci Soyadını Girin">
+                                    </div>
+                                    <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                        <label>Öğrenci TC No</label>
+                                        <input name="ogrTCno" required type="text"          id="ogrTCno"        class="form-control" placeholder="Öğrenci TC Kimlik No Girin">
+                                    </div>
+                                    <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                        <label>Servise Kayıt Tarihi</label>
+                                        <input name="kayitTarihi" required type="datetime"  id="kayitTarihi"    class="form-control" placeholder="" value="@DateTime.Now">
+                                    </div>
+                                    <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                        <label>Eve Teslim Zamanı</label>
+                                        <input name="teslimZamani" required type="time"     id="teslimZamani"   class="form-control" placeholder="Eve bırakılma saati">
+                                    </div>
+                                    <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                        <label>Evden Alım Zamanı</label>
+                                        <input name="alimZamani" required type="time"       id="alimZamani"     class="form-control" placeholder="Evden alınma saati">
+                                    </div>
+                                    <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                        <label>Ücret</label>
+                                        <input name="ucret" required type="text"            id="ucret"          class="form-control" placeholder="Aylık Servis Ücreti (TL)">
+                                    </div>
+                                    <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                        <label>Öğretim Türü</label>
+                                        <select name="ogretimTuru" required                 id="ogretimTuru"    class="form-control">
+                                            <option selected value="1">Sabahçı</option>
+                                            <option value="2">Öğlenci</option>
+                                            <option value="0">Tam Gün</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                        <label>İşlemler</label>
+                                        <div class="btn-group">
+                                            <button type="submit" class="btn btn-primary">Öğrenciyi Ekle</button>
+                                            <button type="reset" class="btn btn-warning">Temizle</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <table id="example1" class="table table-responsive" style="font-size:26px !important;">
+                            <tbody>
+                                @foreach (var servistekiOgrenci in Model.ServistekiOgrenciler)
+                                {
+                                    <tr>
+                                        <td>
+                                            <div aria-expanded="true" class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                @servistekiOgrenci.Ogrenciler.ogrAd @servistekiOgrenci.Ogrenciler.ogrSoyad
+                                            </div>
+                                            <div aria-expanded="true" class="col-md-3 col-lg-3 col-sm-12 col-xs-12">
+                                                <a href="#tr_@servistekiOgrenci.servistekiOgrenciId" data-toggle="collapse" class="btn btn-sm btn-transparent" style="font-size:24px !important;">
+                                                    <i class="fa fa-plus"></i> Düzenle
+                                                </a>
+                                            </div>
+                                            <div aria-expanded="true" class="col-md-3 col-lg-3 col-sm-12 col-xs-12">
+                                                <a style="font-size:24px !important;" class="btn btn-success btn-sm">Geliyor</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr id="tr_@servistekiOgrenci.servistekiOgrenciId" class="body collapse">
+                                        <td>
+                                            <form action="~/Sofor/ServistekiOgrenciGuncelle" method="post" role="form" enctype="multipart/form-data">
+                                                <input name="servistekiOgrenciId" required type="text" hidden="hidden" value="@servistekiOgrenci.servistekiOgrenciId">
+                                                <input name="okulServisId" required type="text" hidden="hidden" value="@servistekiOgrenci.okulServisId">
+
+                                                <div class="col-md-2 col-lg-2 col-sm-12 col-xs-12">
+                                                    <span>Teslim</span>
+                                                    <input name="teslimZamani" required type="time" id="teslimZamani" class="form-control" placeholder="Eve bırakılma saati" value="@servistekiOgrenci.teslimZamani">
+                                                </div>
+                                                <div class="col-md-2 col-lg-2 col-sm-12 col-xs-12">
+                                                    <span>Alım Saat</span>
+                                                    <input name="alimZamani" required type="time" id="alimZamani" class="form-control" placeholder="Evden alınma saati" value="@servistekiOgrenci.alimZamani">
+                                                </div>
+                                                <div class="col-md-2 col-lg-2 col-sm-12 col-xs-12">
+                                                    <span>Ücret</span>
+                                                    <input name="ucret" required type="text" id="ucret" class="form-control" placeholder="Aylık Servis Ücreti (TL)" value="@servistekiOgrenci.ucret">
+                                                </div>
+                                                <div class="col-md-2 col-lg-2 col-sm-12 col-xs-12">
+                                                    <span>Öğretim</span>
+                                                    <select name="ogretimTuru" required id="ogretimTuru_@servistekiOgrenci.servistekiOgrenciId" class="form-control">
+                                                        <option value="1">Sabahçı</option>
+                                                        <option value="2">Öğlenci</option>
+                                                        <option value="0">Tam Gün</option>
+                                                    </select>
+                                                    <script>
+                                                        $('#ogretimTuru_@servistekiOgrenci.servistekiOgrenciId').val(@servistekiOgrenci.ogretimTuru);
+                                                    </script>
+                                                </div>
+                                                <div  class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                                                    <span>İşlem</span>
+                                                    <br>
+                                                    <div class="btn-group">
+                                                        <button type="submit" class="btn btn-md btn-info">Güncelle</button>
+                                                        <a href="/Sofor/ServistekiOgrenciSil?servistekiOgrenciId=@servistekiOgrenci.servistekiOgrenciId&sofId=@((int)Session["sofId"])&okulServisId=@ViewBag.okulServisId" class="btn btn-md btn-danger" onclick="return confirm('Öğrenciyi servisten kaldırmak istediğinize emin misiniz?')">Öğrenci Sil</a>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                  }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="form-group">
+                            <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Kapat</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade bs-example-modal-lg" id="servisAyarlariModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content bg-black">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="box box-default collapsed-box">
+                                <div class="box-header bg-gray-active" style="text-align:center;">
+                                    <button type="button" style="font-size:36px !important" class="btn btn-default btn-lg" data-widget="collapse">Aylık Ödemeleri İşaretle</button>
+                                </div>
+                                <div class="box-body bg-gray-active">
+                                    <div class="row">
+                                        <form action="~/Sofor/AylikFaturaCikart" method="post" role="form" enctype="multipart/form-data">
+                                            <input name="okulServisId" required type="text" id="okulServisId" hidden="hidden" value="@ViewBag.okulServisId"/>
+                                            <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                                                <h4 style="color:red;">Bu ay fatura çıkartılmamış öğrenciler listeleniyor.</h4>
+                                                <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                                                    <select multiple="multiple" name="servistekiOgrIdleri" class="form-control">
+                                                        @foreach (var ogrenci in Model.ServistekiOgrenciler.Where(x => x.Faturalar.Where(y => y.kayitTarihi.Month == DateTime.Now.Month && y.kayitTarihi.Year == DateTime.Now.Year).Count() == 0))
+                                                        {
+                                                            <option value="@ogrenci.servistekiOgrenciId">@ogrenci.Ogrenciler.ogrAd @ogrenci.Ogrenciler.ogrSoyad | @ogrenci.Ogrenciler.ogrAdres @ogrenci.Ogrenciler.Ilceler.ilce_ad / @ogrenci.Ogrenciler.Ilceler.Iller.il_Ad</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                                                    <div class="btn-group">
+                                                        <button type="submit" class="btn btn-primary">Öğrenciye Fatura Çıkart</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="row">
+                                        <form action="~/Sofor/AylikOdemeAl" method="post" role="form" enctype="multipart/form-data">
+                                            <input name="okulServisId" required type="text" id="okulServisId" hidden="hidden" value="@ViewBag.okulServisId">
+                                            <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                                                <h4 style="color:red;">Bu ay faturası olup ücretinin tamamı ödenmemiş öğrenciler listeleniyor.</h4>
+                                                <div class="col-md-9 col-lg-9 col-xs-12 col-sm-12">
+                                                    <select name="servistekiOgrenciId" class="form-control">
+                                                        @foreach (var servistekiOgrenci in Model.ServistekiOgrenciler.Where(x=>x.Faturalar.Sum(y=>y.faturaTutari) > x.Faturalar.Sum(y=>y.Odemeler.Sum(z=>z.miktar)) ))
+                                                        {
+                                                            <option value="@servistekiOgrenci.servistekiOgrenciId">
+                                                                @servistekiOgrenci.Ogrenciler.ogrAd @servistekiOgrenci.Ogrenciler.ogrSoyad
+                                                                | 
+                                                                Aylık Borç: @((servistekiOgrenci.Faturalar.Where(x=>x.kayitTarihi.Month==DateTime.Now.Month && x.kayitTarihi.Year == DateTime.Now.Year).Sum(x=>x.faturaTutari)-Model.Odemeler.Where(x=>x.Faturalar.kayitTarihi.Month == DateTime.Now.Month && x.Faturalar.kayitTarihi.Year == DateTime.Now.Year && x.Faturalar.servistekiOgrenciId==servistekiOgrenci.servistekiOgrenciId && x.odemeTarihi.Month == DateTime.Now.Month && x.odemeTarihi.Year == DateTime.Now.Year).Sum(x=>x.miktar)).ToString("C"))
+                                                                |
+                                                                Genel Borç: @((Model.Faturalar.Where(x=>x.servistekiOgrenciId==servistekiOgrenci.servistekiOgrenciId).Sum(x=>x.faturaTutari)-servistekiOgrenci.Faturalar.Sum(y=>y.Odemeler.Sum(z=>z.miktar))    ).ToString("C"))
+                                                                |
+                                                                @servistekiOgrenci.Ogrenciler.ogrAdres
+                                                            </option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-3 col-lg-3 col-xs-12 col-sm-12">
+                                                    <input name="ucret" class="form-control" required type="text" placeholder="Ödenen Ücret (TL)" >
+                                                </div>
+                                                <br>
+                                                <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                                                    <div class="btn-group">
+                                                        <button type="submit" class="btn btn-primary">Ödeme Al</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="box box-default collapsed-box">
+                                <div class="box-header bg-gray-active" style="text-align:center;">
+                                    <button type="button" style="font-size:36px !important" class="btn btn-default btn-lg" data-widget="collapse">Önceki Ödemeleri Göster</button>
+                                </div>
+                                <div class="box-body bg-gray-active">
+                                    <table id="oncekiodemeler" class="table table-responsive" style="font-size:18px !important;">
+                                        <thead>
+                                            <tr>
+                                                <th>Öğrenci Adı Soyadı</th>
+                                                <th>Fatura Tarihi</th>
+                                                <th>Ödeme Tarihi</th>
+                                                <th>Ödeme Miktarı</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var odeme in Model.Odemeler)
+                                            {
+                                                <tr>
+                                                    <td style="font-size:16px !important;">@odeme.Faturalar.Ogrenciler.ogrAd @odeme.Faturalar.Ogrenciler.ogrSoyad</td>
+                                                    <td style="font-size:16px !important;">@odeme.Faturalar.kayitTarihi.ToShortDateString()</td>
+                                                    <td style="font-size:16px !important;">@odeme.odemeTarihi.ToShortDateString()</td>
+                                                    <td style="font-size:16px !important;">@odeme.miktar.ToString("C")L</td>
+                                                </tr>
+                                             }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <div class="form-group">
+                            <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Kapat</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var map = null;
+    var marker = null;
+    var ogrAdresGoogleMap = null;
+    var ogrAdresGoogleMarker = null;
+    function initMap() {
+       
+    };
+    function ogrAdresMarkerDegistir(latitude, longitude, ogrAd, ogrSoyad, ogrId) {
+        $('#OgrAdresMap_' + ogrId).empty();
+        
+        map = new ymaps.Map('OgrAdresMap_'+ogrId,
+            {
+                center: [latitude, longitude],
+                zoom: 15,
+                controls: []
+            });
+        map.geoObjects.add(
+            new ymaps.GeoObject({
+                // The geometry description.
+                geometry: {
+                    type: "Point",
+                    coordinates: [latitude, longitude]
+                },
+                // Properties.
+                properties: {
+                    // The placemark content.
+                    iconContent: ogrAd + ' ' + ogrSoyad
+                }
+            }, {
+                    /**
+                     * Options.
+                     * The placemark's icon will stretch to fit its contents.
+                     */
+                    preset: 'islands#redStretchyIcon',
+                    // The placemark can be dragged.
+                    draggable: false
+                })
+
+        );
+
+    };
+
+</script>
+<script>
+function getLatLng() {
+    $.ajax({
+        url: '/Sofor/ServisKonumGetir',
+        type: 'post',
+        async: false,
+        dataType: 'json',
+        data: { servisId: @((int)Session["servisId"]), sofId: @((int)Session["sofId"]) },
+        success: function (servisKonum) {
+            if (servisKonum != -1 || servisKonum != 1) {
+                return servisKonum;
+            }
+            else if(servisKonum == 1) {
+                return "@ViewBag.okulLatitude, @ViewBag.okulLongitude";
+            }
+            else if(servisKonum == -1) {
+                return alertLoginHatasi();
+            }
+        }
+    });
+    };
+</script>
+<script>
+    ymaps.ready(init);
+    var myMap = null;
+    var placemarq = null;
+    function init() {
+        myMap = new ymaps.Map("navigasyon",
+            {
+                center: [@ViewBag.latitude, @ViewBag.longitude],
+                zoom: 18,
+                controls: []
+            });
+        placemarq = new ymaps.Placemark([@ViewBag.latitude, @ViewBag.longitude], {}, {
+            preset: 'islands#blueGlyphIcon',
+            // Defining the glyph icon name.
+            iconGlyph: 'eye-open',
+            // Defining the glyph icon color.
+            iconGlyphColor: 'blue'
+
+        });
+        myMap.geoObjects.add(placemarq);
+
+        ymaps.route([
+            /*İLK NOKTA OKUL*/
+            [@ViewBag.okulLatitude, @ViewBag.okulLongitude]
+            @foreach (var servistekiOgrenci in Model.ServistekiOgrenciler)
+            {
+                <text>, [@servistekiOgrenci.Ogrenciler.geoX, @servistekiOgrenci.Ogrenciler.geoY]</text>
+            }
+        ]).then(function (route) {
+            myMap.geoObjects.add(route);
+
+            var points = route.getWayPoints(),
+                lastPoint = points.getLength() - 1;
+
+            points.options.set('preset', 'islands#redStretchyIcon');
+            points.get(0).properties.set('iconContent', '@Model.Okullar.First().okulAdi');
+
+            @{int count = 0; }
+            @foreach(var servistekiOgrenci in Model.ServistekiOgrenciler)
+            {
+                count++;
+                <text>
+                    points.get(@count).properties.set('iconContent', '@servistekiOgrenci.Ogrenciler.ogrAd @servistekiOgrenci.Ogrenciler.ogrSoyad');
+                </text>
+            }
+        }, function (error) {
+            alert('An error occurred: ' + error.message);
+        });
+    };
+    setInterval(function () {
+        myMap.geoObjects.remove(placemarq);
+        placemarq = null;
+        $.ajax({
+        url: '/Sofor/ServisKonumGetir',
+        type: 'post',
+        async: false,
+        dataType: 'json',
+        data: { servisId: @((int)Session["servisId"]), sofId: @((int)Session["sofId"]) },
+        success: function (servisKonum) {
+            if (servisKonum != -1 || servisKonum != 1) {
+                    placemarq = new ymaps.Placemark([servisKonum.lat, servisKonum.lng], {}, {
+                    preset: 'islands#blueGlyphIcon',
+                    // Defining the glyph icon name.
+                    iconGlyph: 'eye-open',
+                    // Defining the glyph icon color.
+                    iconGlyphColor: 'blue'
+
+                });
+                    myMap.setCenter([servisKonum.lat, servisKonum.lng]);
+            }
+            else if(servisKonum == 1) {
+                placemarq = new ymaps.Placemark([@ViewBag.latitude, @ViewBag.longitude], {}, {
+                    preset: 'islands#blueGlyphIcon',
+                    // Defining the glyph icon name.
+                    iconGlyph: 'eye-open',
+                    // Defining the glyph icon color.
+                    iconGlyphColor: 'blue'
+
+                });
+                myMap.setCenter([@ViewBag.latitude, @ViewBag.longitude]);
+            }
+            else if(servisKonum == -1) {
+                return alertLoginHatasi();
+            }
+        }
+    });
+
+        myMap.geoObjects.add(placemarq);
+    }, 3000);
+</script>
+<script>
+    $(function () {
+        $('#oncekiodemeler').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": true,
+            "ordering": true,
+            "info": false,
+            "autoWidth": false
+        });
+    });
+    $(document).ready(function () {
+        $('.select2').select2();
+    });
+</script>

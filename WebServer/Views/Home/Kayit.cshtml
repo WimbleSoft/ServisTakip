@@ -1,0 +1,195 @@
+﻿@model ServisTakip.Models.ViewModel
+@{
+    Layout = null;
+}
+<!--A Design by W3layouts
+Author: W3layout
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta required name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <meta required name="author" content="SirusYazilim">
+    <link rel="stylesheet" href="/Content/giris/css/style.css" />
+    <link rel="stylesheet" href="~/Content/bootstrap.css" />
+    <link rel="stylesheet" href="~/Scripts/plugins/select2/select2.min.css" />
+    <script type="text/javascript" src="/Content/giris/js/JFCore.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/jQuery/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/select2/select2.full.min.js"></script>
+
+    <!-- Set here the key for your domain in order to hide the watermark on the web server -->
+    <script type="text/javascript">
+			(function() {
+				JC.init({
+					domainKey: ''
+				});
+				})();
+    </script>
+
+</head>
+<body>
+    <div class="wrap">
+        <!-- tab style-1 -->
+        <div class="row">
+            <div class="grid_12 columns">
+                <div class="tab style-1">
+                    <dl>
+                        <dd class="users"><a class="user active" href="#tab1"> </a></dd>
+                        <dd class="messages"><a class="msg" href="#tab2"> </a></dd>
+                        <dd class="settings"><a class="setting" href="#tab3"> </a></dd>
+                        <dd class="likes"><a class="like" href="#tab4"> </a></dd>
+                    </dl>
+                    <ul>
+                        <li class="active">
+                            <h4>Firma Kaydı</h4>
+                            <div class="form">
+                                <form action="/Home/FirmaKayitOl" method="post" role="form" enctype="multipart/form-data">
+                                    <input type="text" required name="firAd" class="active textbox" placeholder="Firma Adı">
+                                    <input type="text" required name="firEmail" class="textbox" placeholder="Firma Email">
+                                    <input type="text" required name="firParola" class="password" placeholder="Firma Parola">
+                                    <input type="text" required name="firYetkiliAdSoyad" class="textbox" placeholder="Firma Yetkili Adı Soyadı">
+                                    <input type="text" required name="firTel" class="textbox" placeholder="Firma Telefon">
+                                    <input type="text" required name="firFax" class="textbox" placeholder="Firma Fax">
+                                    <input type="text" required name="firAdres" class="textbox" placeholder="Firma Adres">
+                                    <select required name="ilce_id" class="select2 form-control" style="width:100% !important;">
+                                        @foreach (var il in Model.Iller)
+                                        {
+                                            <optgroup label="@il.il_Ad">
+                                                @foreach (var ilce in Model.Ilceler.Where(x => x.il_id == il.il_id))
+                                                {
+                                                    <option value="@ilce.ilce_id">@ilce.ilce_ad</option>
+                                                }
+                                            </optgroup>
+                                        }
+                                    </select>
+                                    <input type="submit" value="Firma Adıyla Kayıt Ol">
+                                </form>
+                            </div>
+                        </li>
+                        <li>
+                            <h4>Şoför Kaydı</h4>
+                            <div class="form">
+                                <form action="/Home/SoforKayitOl" method="post" role="form" enctype="multipart/form-data">
+                                    <input type="text" required name="sofAd" class="active textbox" placeholder="Şoför Adı">
+                                    <input type="text" required name="sofSoyad" class="textbox" placeholder="Şoför Soyadı">
+                                    <input type="text" required name="sofEmail" class="textbox" placeholder="Şoför Email">
+                                    <input type="text" required name="sofParola" class="password" placeholder="Şoför Parola">
+                                    <input type="text" required name="sofGsm" class="textbox" placeholder="Şoför Telefon">
+                                    <input type="text" required name="sofAdres" class="textbox" placeholder="Şoför Adres">
+                                    <select required name="ilce_id" class="select2 form-control" style="width:100% !important;">
+                                        @foreach (var il in Model.Iller)
+                                        {
+                                            <optgroup label="@il.il_Ad">
+                                                @foreach (var ilce in Model.Ilceler.Where(x => x.il_id == il.il_id))
+                                                {
+                                                    <option value="@ilce.ilce_id">@ilce.ilce_ad</option>
+                                                }
+                                            </optgroup>
+                                        }
+                                    </select>
+                                    <input type="submit" value="Şoför Olarak Kayıt Ol">
+                                </form>
+                            </div>
+                            <div class="clear"> </div>
+                        </li>
+                        <li>
+                            <h4>Müdür Olarak Okul Kaydı Yap</h4>
+                            <div class="form">
+                                <form action="/Home/OkulKayitOl" method="post" role="form" enctype="multipart/form-data">
+                                    <input type="text" required name="mudurAd" class="active textbox" placeholder="Müdür Adı">
+                                    <input type="text" required name="mudurSoyad" class="textbox" placeholder="Müdür Soyadı">
+                                    <input type="text" required name="mudurEmail" class="textbox" placeholder="Müdür Email">
+                                    <input type="text" required name="mudurParola" class="password" placeholder="Müdür Parola">
+                                    <input type="text" required name="mudurTelefon" class="textbox" placeholder="Müdür Telefon">
+                                    <div class="clear"> </div>
+                                    <input type="text" required name="okulAdi" class="textbox" placeholder="Okul Adı">
+                                    <input type="text" required name="okulMail" class="textbox" placeholder="Okul Email">
+                                    <input type="text" required name="okulTel" class="textbox" placeholder="Okul Telefon">
+                                    <input type="text" required name="okulAdres" class="textbox" placeholder="Okul Adres">
+                                    Okul İlçe/İl
+                                    <select required name="ilce_id" class="select2 form-control" style="width:100% !important;">
+                                        @foreach (var il in Model.Iller)
+                                        {
+                                            <optgroup label="@il.il_Ad">
+                                                @foreach (var ilce in Model.Ilceler.Where(x => x.il_id == il.il_id))
+                                                {
+                                                    <option value="@ilce.ilce_id">@ilce.ilce_ad</option>
+                                                }
+                                            </optgroup>
+                                        }
+                                    </select>
+                                    <br><br>
+                                    Okul Türü
+                                    <select required name="okulTurId" class="select2 form-control" style="width:100% !important;">
+                                        @foreach (var okulTuru in Model.OkulTurleri)
+                                        {
+                                            <option value="@okulTuru.okulTurId">@okulTuru.okulTuru</option>
+                                        }
+                                    </select>
+                                    <br><br>
+                                    Okul Cinsi
+                                    <select required name="okulCinsId" class="select2" style="width:100% !important;">
+                                        @foreach (var okulCinsi in Model.OkulCinsleri)
+                                        {
+                                            <option value="@okulCinsi.okulCinsId">@okulCinsi.okulCinsi</option>
+                                        }
+                                    </select>
+                                    <input type="text" name="latitude" class="textbox" placeholder="Okul Harita X Konumu">
+                                    <input type="text" name="longitude" class="textbox cke_required" placeholder="Okul Harita Y Konumu">
+
+                                    <input type="submit" value="Okula Müdür Olarak Kayıt Ol">
+                                </form>
+                            </div>
+                        </li>
+                        <li>
+                            <h4>Veli Olarak Kayıt Ol</h4>
+                            <div class="form">
+                                <form action="/Home/VeliKayitOl" method="post" role="form" enctype="multipart/form-data">
+                                    <input type="text" required name="veliAd" class="active textbox" placeholder="Veli Adı">
+                                    <input type="text" required name="veliSoyad" class="textbox" placeholder="Veli Soyadı">
+                                    <input type="text" required name="veliEmail" class="textbox" placeholder="Veli Email">
+                                    <input type="text" min="6" required name="veliParola" class="password" placeholder="Veli Parola">
+                                    <input type="text" required name="veliGsm" class="textbox" placeholder="Veli GSM">
+                                    <input type="text" required name="veliAdres" class="textbox" placeholder="Veli Adres">
+                                    <select required name="ilce_id" class="select2 form-control" style="width:100% !important;">
+                                        @foreach (var il in Model.Iller)
+                                        {
+                                            <optgroup label="@il.il_Ad">
+                                                @foreach (var ilce in Model.Ilceler.Where(x => x.il_id == il.il_id))
+                                                {
+                                                    <option value="@ilce.ilce_id">@ilce.ilce_ad</option>
+                                                }
+                                            </optgroup>
+                                        }
+                                    </select>
+                                    <input type="submit" value="Veli Olarak Kayıt Ol">
+                                </form>
+                            </div>
+                            <div class="clear"> </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('.select2').select2();
+        });
+    </script>
+    <div class="wrap">
+        <!--footer-->
+        <div class="footer">
+            <p>Tüm Hakkı Saklıdır <a target="_blank" href="http://www.sirusyazilim.com">Sirus Yazılım</a></p>
+        </div>
+        <div class="clear"> </div>
+    </div>
+</body>
+</html>

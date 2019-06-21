@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="10203e0ffcb745a19012875e6a1ddaa9" Name="Diagram1">
+        <EntityTypeShape EntityType="ServisSistemModel.Duraklar" Width="1.5" PointX="7.5" PointY="17.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ServisSistemModel.Faturalar" Width="1.5" PointX="17.75" PointY="18" IsExpanded="true" />
+        <EntityTypeShape EntityType="ServisSistemModel.Firmalar" Width="1.5" PointX="5.25" PointY="13.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ServisSistemModel.FirmaServisleri" Width="1.5" PointX="7.5" PointY="13.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ServisSistemModel.FirmaSoforleri" Width="1.5" PointX="7.5" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ServisSistemModel.Ilceler" Width="1.5" PointX="3" PointY="17.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ServisSistemModel.Iller" Width="1.5" PointX="0.75" PointY="17.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ServisSistemModel.IndiBindiler" Width="1.5" PointX="23" PointY="18.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ServisSistemModel.Mudurler" Width="1.5" PointX="12.5" PointY="17.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ServisSistemModel.Odemeler" Width="1.5" PointX="20" PointY="22.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ServisSistemModel.Ogrenciler" Width="1.5" PointX="5.25" PointY="17.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ServisSistemModel.OgrenciVelileri" Width="1.5" PointX="7.5" PointY="24.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ServisSistemModel.OkulCinsleri" Width="1.5" PointX="8" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ServisSistemModel.Okullar" Width="1.5" PointX="10.25" PointY="16.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ServisSistemModel.OkulServisleri" Width="1.5" PointX="15.5" PointY="17.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ServisSistemModel.OkulTurleri" Width="1.5" PointX="8" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="ServisSistemModel.Rotalar" Width="1.5" PointX="17.75" PointY="14.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ServisSistemModel.Servisler" Width="1.5" PointX="5.25" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ServisSistemModel.ServisSoforleri" Width="1.5" PointX="7.5" PointY="27.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ServisSistemModel.ServistekiOgrenciler" Width="1.5" PointX="20.75" PointY="17.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ServisSistemModel.Soforler" Width="1.5" PointX="5.25" PointY="27.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ServisSistemModel.Veliler" Width="1.5" PointX="5.25" PointY="31.125" IsExpanded="true" />
+        <AssociationConnector Association="ServisSistemModel.FK_Duraklar_Ogrenciler" ManuallyRouted="false" />
+        <AssociationConnector Association="ServisSistemModel.FK_Duraklar_Rotalar" ManuallyRouted="false" />
+        <AssociationConnector Association="ServisSistemModel.FK_Faturalar_Ogrenciler" ManuallyRouted="false" />
+        <AssociationConnector Association="ServisSistemModel.FK_Faturalar_OkulServisleri" ManuallyRouted="false" />
+        <AssociationConnector Association="ServisSistemModel.FK_Faturalar_ServistekiOgrenciler" ManuallyRouted="false" />
+        <AssociationConnector Association="ServisSistemModel.FK_Odemeler_Faturalar" ManuallyRouted="false" />
+        <AssociationConnector Association="ServisSistemModel.FK_Firmalar_Ilceler" ManuallyRouted="false" />
+        <AssociationConnector Association="ServisSistemModel.FK_FirmaServisleri_Firmalar" ManuallyRouted="false" />
+        <AssociationConnector Association="ServisSistemModel.FK_FirmaSoforleri_Firmalar" ManuallyRouted="false" />
+        <AssociationConnector Association="ServisSistemModel.FK_FirmaServisleri_Servisler" ManuallyRouted="false" />
+        <AssociationConnector Association="ServisSistemModel.FK_FirmaSoforleri_Soforler" ManuallyRouted="false" />
+        <AssociationConnector Association="ServisSistemModel.FK_Ilceler_Iller" ManuallyRouted="false" />
+        <AssociationConnector Association="ServisSistemModel.FK_Ogrenciler_Ilceler" ManuallyRouted="false" />
+        <AssociationConnector Association="ServisSistemModel.FK_Okullar_Ilceler" ManuallyRouted="false" />
+        <AssociationConnector Association="ServisSistemModel.FK_Soforler_Ilceler" ManuallyRouted="false" />
+        <AssociationConnector Association="ServisSistemModel.FK_Veliler_Ilceler" ManuallyRouted="false" />
+        <AssociationConnector Association="ServisSistemModel.FK_IndiBindiler_ServistekiOgrenciler" ManuallyRouted="false" />
+        <AssociationConnector Association="ServisSistemModel.FK_Mudurler_Okullar" ManuallyRouted="false" />
+        <AssociationConnector Association="ServisSistemModel.FK_Ogrenciler_Okullar" ManuallyRouted="false" />
+        <AssociationConnector Association="ServisSistemModel.FK_OgrenciVelileri_Ogrenciler" ManuallyRouted="false" />
+        <AssociationConnector Association="ServisSistemModel.FK_ServistekiOgrenciler_Ogrenciler" ManuallyRouted="false" />
+        <AssociationConnector Association="ServisSistemModel.FK_OgrenciVelileri_Veliler" ManuallyRouted="false" />
+        <AssociationConnector Association="ServisSistemModel.FK_Okullar_OkulCinsleri" ManuallyRouted="false" />
+        <AssociationConnector Association="ServisSistemModel.FK_Okullar_OkulTurleri" ManuallyRouted="false" />
+        <AssociationConnector Association="ServisSistemModel.FK_OkulServisleri_Okullar" ManuallyRouted="false" />
+        <AssociationConnector Association="ServisSistemModel.FK_Rotalar_Okullar" ManuallyRouted="false" />
+        <AssociationConnector Association="ServisSistemModel.FK_OkulServisleri_Servisler" ManuallyRouted="false" />
+        <AssociationConnector Association="ServisSistemModel.FK_Rotalar_OkulServisleri" ManuallyRouted="false" />
+        <AssociationConnector Association="ServisSistemModel.FK_ServistekiOgrenciler_OkulServisleri" ManuallyRouted="false" />
+        <AssociationConnector Association="ServisSistemModel.FK_ServisSoforleri_Servisler" ManuallyRouted="false" />
+        <AssociationConnector Association="ServisSistemModel.FK_ServisSoforleri_Soforler" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
