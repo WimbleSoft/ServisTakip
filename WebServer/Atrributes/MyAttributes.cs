@@ -14,7 +14,7 @@ namespace ServisTakip.Attributes
         {
             // action çalışmadan önce yapılacak işlemler
 
-            var servisSistem = new ServisSistemEntities();
+            var servisSistem = new ServisTakipEntities();
 
 
             if (HttpContext.Current.Session["firmaLogin"] == null || HttpContext.Current.Session["GirilenYer"].ToString() != "Firma")
@@ -47,7 +47,7 @@ namespace ServisTakip.Attributes
         {
             // action çalışmadan önce yapılacak işlemler
 
-            var servisSistem = new ServisSistemEntities();
+            var servisSistem = new ServisTakipEntities();
 
 
             if (HttpContext.Current.Session["okulLogin"] == null || HttpContext.Current.Session["GirilenYer"].ToString() != "Okul")
@@ -81,7 +81,7 @@ namespace ServisTakip.Attributes
         {
             // action çalışmadan önce yapılacak işlemler
 
-            var servisSistem = new ServisSistemEntities();
+            var servisSistem = new ServisTakipEntities();
 
 
             if (HttpContext.Current.Session["soforLogin"] == null || HttpContext.Current.Session["GirilenYer"].ToString() != "Sofor")
@@ -114,7 +114,7 @@ namespace ServisTakip.Attributes
         {
             // action çalışmadan önce yapılacak işlemler
 
-            var servisSistem = new ServisSistemEntities();
+            var servisSistem = new ServisTakipEntities();
 
 
             if (HttpContext.Current.Session["veliLogin"] == null || HttpContext.Current.Session["GirilenYer"].ToString() != "Veli")

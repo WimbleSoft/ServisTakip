@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ServisSistemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="ServisTakipModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Duraklar">
           <Key>
             <PropertyRef Name="durakId" />
@@ -218,6 +218,16 @@
           <Property Name="sofGsm" Type="nvarchar" MaxLength="15" Nullable="false" />
           <Property Name="sofAdres" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="ilce_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="Veliler">
           <Key>
@@ -604,7 +614,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="ServisSistemModelStoreContainer">
+        <EntityContainer Name="ServisTakipModelStoreContainer">
           <EntitySet Name="Duraklar" EntityType="Self.Duraklar" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Faturalar" EntityType="Self.Faturalar" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Firmalar" EntityType="Self.Firmalar" Schema="dbo" store:Type="Tables" />
@@ -626,6 +636,7 @@
           <EntitySet Name="ServisSoforleri" EntityType="Self.ServisSoforleri" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ServistekiOgrenciler" EntityType="Self.ServistekiOgrenciler" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Soforler" EntityType="Self.Soforler" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Veliler" EntityType="Self.Veliler" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Duraklar_Ogrenciler" Association="Self.FK_Duraklar_Ogrenciler">
             <End Role="Ogrenciler" EntitySet="Ogrenciler" />
@@ -756,7 +767,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="ServisSistemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="ServisTakipModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Duraklar">
           <Key>
             <PropertyRef Name="durakId" />
@@ -1030,6 +1041,16 @@
           <NavigationProperty Name="FirmaSoforleri" Relationship="Self.FK_FirmaSoforleri_Soforler" FromRole="Soforler" ToRole="FirmaSoforleri" />
           <NavigationProperty Name="Ilceler" Relationship="Self.FK_Soforler_Ilceler" FromRole="Soforler" ToRole="Ilceler" />
           <NavigationProperty Name="ServisSoforleri" Relationship="Self.FK_ServisSoforleri_Soforler" FromRole="Soforler" ToRole="ServisSoforleri" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="Veliler">
           <Key>
@@ -1418,7 +1439,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="ServisSistemEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="ServisTakipEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Duraklar" EntityType="Self.Duraklar" />
           <EntitySet Name="Faturalar" EntityType="Self.Faturalar" />
           <EntitySet Name="Firmalar" EntityType="Self.Firmalar" />
@@ -1440,6 +1461,7 @@
           <EntitySet Name="ServisSoforleri" EntityType="Self.ServisSoforleri" />
           <EntitySet Name="ServistekiOgrenciler" EntityType="Self.ServistekiOgrenciler" />
           <EntitySet Name="Soforler" EntityType="Self.Soforler" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="Veliler" EntityType="Self.Veliler" />
           <AssociationSet Name="FK_Duraklar_Ogrenciler" Association="Self.FK_Duraklar_Ogrenciler">
             <End Role="Ogrenciler" EntitySet="Ogrenciler" />
@@ -1571,9 +1593,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="ServisSistemModelStoreContainer" CdmEntityContainer="ServisSistemEntities">
+        <EntityContainerMapping StorageEntityContainer="ServisTakipModelStoreContainer" CdmEntityContainer="ServisTakipEntities">
           <EntitySetMapping Name="Duraklar">
-            <EntityTypeMapping TypeName="ServisSistemModel.Duraklar">
+            <EntityTypeMapping TypeName="ServisTakipModel.Duraklar">
               <MappingFragment StoreEntitySet="Duraklar">
                 <ScalarProperty Name="durakId" ColumnName="durakId" />
                 <ScalarProperty Name="rotaId" ColumnName="rotaId" />
@@ -1582,7 +1604,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Faturalar">
-            <EntityTypeMapping TypeName="ServisSistemModel.Faturalar">
+            <EntityTypeMapping TypeName="ServisTakipModel.Faturalar">
               <MappingFragment StoreEntitySet="Faturalar">
                 <ScalarProperty Name="faturaId" ColumnName="faturaId" />
                 <ScalarProperty Name="ogrId" ColumnName="ogrId" />
@@ -1595,7 +1617,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Firmalar">
-            <EntityTypeMapping TypeName="ServisSistemModel.Firmalar">
+            <EntityTypeMapping TypeName="ServisTakipModel.Firmalar">
               <MappingFragment StoreEntitySet="Firmalar">
                 <ScalarProperty Name="firId" ColumnName="firId" />
                 <ScalarProperty Name="firAd" ColumnName="firAd" />
@@ -1610,7 +1632,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="FirmaServisleri">
-            <EntityTypeMapping TypeName="ServisSistemModel.FirmaServisleri">
+            <EntityTypeMapping TypeName="ServisTakipModel.FirmaServisleri">
               <MappingFragment StoreEntitySet="FirmaServisleri">
                 <ScalarProperty Name="firmaServisId" ColumnName="firmaServisId" />
                 <ScalarProperty Name="firId" ColumnName="firId" />
@@ -1619,7 +1641,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="FirmaSoforleri">
-            <EntityTypeMapping TypeName="ServisSistemModel.FirmaSoforleri">
+            <EntityTypeMapping TypeName="ServisTakipModel.FirmaSoforleri">
               <MappingFragment StoreEntitySet="FirmaSoforleri">
                 <ScalarProperty Name="firSoforId" ColumnName="firSoforId" />
                 <ScalarProperty Name="firId" ColumnName="firId" />
@@ -1628,7 +1650,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Ilceler">
-            <EntityTypeMapping TypeName="ServisSistemModel.Ilceler">
+            <EntityTypeMapping TypeName="ServisTakipModel.Ilceler">
               <MappingFragment StoreEntitySet="Ilceler">
                 <ScalarProperty Name="ilce_id" ColumnName="ilce_id" />
                 <ScalarProperty Name="ilce_ad" ColumnName="ilce_ad" />
@@ -1637,7 +1659,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Iller">
-            <EntityTypeMapping TypeName="ServisSistemModel.Iller">
+            <EntityTypeMapping TypeName="ServisTakipModel.Iller">
               <MappingFragment StoreEntitySet="Iller">
                 <ScalarProperty Name="il_id" ColumnName="il_id" />
                 <ScalarProperty Name="il_Ad" ColumnName="il_Ad" />
@@ -1645,7 +1667,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="IndiBindiler">
-            <EntityTypeMapping TypeName="ServisSistemModel.IndiBindiler">
+            <EntityTypeMapping TypeName="ServisTakipModel.IndiBindiler">
               <MappingFragment StoreEntitySet="IndiBindiler">
                 <ScalarProperty Name="indiBindiId" ColumnName="indiBindiId" />
                 <ScalarProperty Name="servistekiOgrenciId" ColumnName="servistekiOgrenciId" />
@@ -1656,7 +1678,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Mudurler">
-            <EntityTypeMapping TypeName="ServisSistemModel.Mudurler">
+            <EntityTypeMapping TypeName="ServisTakipModel.Mudurler">
               <MappingFragment StoreEntitySet="Mudurler">
                 <ScalarProperty Name="mudurId" ColumnName="mudurId" />
                 <ScalarProperty Name="mudurAd" ColumnName="mudurAd" />
@@ -1669,7 +1691,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Odemeler">
-            <EntityTypeMapping TypeName="ServisSistemModel.Odemeler">
+            <EntityTypeMapping TypeName="ServisTakipModel.Odemeler">
               <MappingFragment StoreEntitySet="Odemeler">
                 <ScalarProperty Name="odemeId" ColumnName="odemeId" />
                 <ScalarProperty Name="faturaId" ColumnName="faturaId" />
@@ -1679,7 +1701,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Ogrenciler">
-            <EntityTypeMapping TypeName="ServisSistemModel.Ogrenciler">
+            <EntityTypeMapping TypeName="ServisTakipModel.Ogrenciler">
               <MappingFragment StoreEntitySet="Ogrenciler">
                 <ScalarProperty Name="ogrId" ColumnName="ogrId" />
                 <ScalarProperty Name="ogrTCno" ColumnName="ogrTCno" />
@@ -1696,7 +1718,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="OgrenciVelileri">
-            <EntityTypeMapping TypeName="ServisSistemModel.OgrenciVelileri">
+            <EntityTypeMapping TypeName="ServisTakipModel.OgrenciVelileri">
               <MappingFragment StoreEntitySet="OgrenciVelileri">
                 <ScalarProperty Name="ogrVeliId" ColumnName="ogrVeliId" />
                 <ScalarProperty Name="ogrId" ColumnName="ogrId" />
@@ -1705,7 +1727,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="OkulCinsleri">
-            <EntityTypeMapping TypeName="ServisSistemModel.OkulCinsleri">
+            <EntityTypeMapping TypeName="ServisTakipModel.OkulCinsleri">
               <MappingFragment StoreEntitySet="OkulCinsleri">
                 <ScalarProperty Name="okulCinsId" ColumnName="okulCinsId" />
                 <ScalarProperty Name="okulCinsi" ColumnName="okulCinsi" />
@@ -1713,7 +1735,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Okullar">
-            <EntityTypeMapping TypeName="ServisSistemModel.Okullar">
+            <EntityTypeMapping TypeName="ServisTakipModel.Okullar">
               <MappingFragment StoreEntitySet="Okullar">
                 <ScalarProperty Name="okulId" ColumnName="okulId" />
                 <ScalarProperty Name="okulAdi" ColumnName="okulAdi" />
@@ -1729,7 +1751,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="OkulServisleri">
-            <EntityTypeMapping TypeName="ServisSistemModel.OkulServisleri">
+            <EntityTypeMapping TypeName="ServisTakipModel.OkulServisleri">
               <MappingFragment StoreEntitySet="OkulServisleri">
                 <ScalarProperty Name="okulServisId" ColumnName="okulServisId" />
                 <ScalarProperty Name="okulId" ColumnName="okulId" />
@@ -1738,7 +1760,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="OkulTurleri">
-            <EntityTypeMapping TypeName="ServisSistemModel.OkulTurleri">
+            <EntityTypeMapping TypeName="ServisTakipModel.OkulTurleri">
               <MappingFragment StoreEntitySet="OkulTurleri">
                 <ScalarProperty Name="okulTurId" ColumnName="okulTurId" />
                 <ScalarProperty Name="okulTuru" ColumnName="okulTuru" />
@@ -1746,7 +1768,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Rotalar">
-            <EntityTypeMapping TypeName="ServisSistemModel.Rotalar">
+            <EntityTypeMapping TypeName="ServisTakipModel.Rotalar">
               <MappingFragment StoreEntitySet="Rotalar">
                 <ScalarProperty Name="rotaId" ColumnName="rotaId" />
                 <ScalarProperty Name="okulServisId" ColumnName="okulServisId" />
@@ -1755,7 +1777,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Servisler">
-            <EntityTypeMapping TypeName="ServisSistemModel.Servisler">
+            <EntityTypeMapping TypeName="ServisTakipModel.Servisler">
               <MappingFragment StoreEntitySet="Servisler">
                 <ScalarProperty Name="servisId" ColumnName="servisId" />
                 <ScalarProperty Name="plaka" ColumnName="plaka" />
@@ -1770,7 +1792,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ServisSoforleri">
-            <EntityTypeMapping TypeName="ServisSistemModel.ServisSoforleri">
+            <EntityTypeMapping TypeName="ServisTakipModel.ServisSoforleri">
               <MappingFragment StoreEntitySet="ServisSoforleri">
                 <ScalarProperty Name="servisSoforId" ColumnName="servisSoforId" />
                 <ScalarProperty Name="servisId" ColumnName="servisId" />
@@ -1780,7 +1802,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ServistekiOgrenciler">
-            <EntityTypeMapping TypeName="ServisSistemModel.ServistekiOgrenciler">
+            <EntityTypeMapping TypeName="ServisTakipModel.ServistekiOgrenciler">
               <MappingFragment StoreEntitySet="ServistekiOgrenciler">
                 <ScalarProperty Name="servistekiOgrenciId" ColumnName="servistekiOgrenciId" />
                 <ScalarProperty Name="ogrId" ColumnName="ogrId" />
@@ -1794,7 +1816,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Soforler">
-            <EntityTypeMapping TypeName="ServisSistemModel.Soforler">
+            <EntityTypeMapping TypeName="ServisTakipModel.Soforler">
               <MappingFragment StoreEntitySet="Soforler">
                 <ScalarProperty Name="sofId" ColumnName="sofId" />
                 <ScalarProperty Name="sofAd" ColumnName="sofAd" />
@@ -1807,8 +1829,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="ServisTakipModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Veliler">
-            <EntityTypeMapping TypeName="ServisSistemModel.Veliler">
+            <EntityTypeMapping TypeName="ServisTakipModel.Veliler">
               <MappingFragment StoreEntitySet="Veliler">
                 <ScalarProperty Name="veliId" ColumnName="veliId" />
                 <ScalarProperty Name="veliAd" ColumnName="veliAd" />

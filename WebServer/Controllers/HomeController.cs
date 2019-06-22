@@ -10,7 +10,7 @@ namespace ServisTakip.Controllers
 {
     public class HomeController : Controller
     {
-        public ServisSistemEntities db = new ServisSistemEntities();
+        public ServisTakipEntities db = new ServisTakipEntities();
         // GET: Home
         public ActionResult Anasayfa()
         {

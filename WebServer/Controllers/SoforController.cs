@@ -12,7 +12,7 @@ namespace ServisTakip.Controllers
 {
     public class SoforController : Controller
     {
-        public ServisSistemEntities db = new ServisSistemEntities();
+        public ServisTakipEntities db = new ServisTakipEntities();
 
         public ActionResult Cikis(SoforGirisModel LoginModel)
         {

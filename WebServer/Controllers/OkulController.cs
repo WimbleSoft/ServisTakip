@@ -13,7 +13,7 @@ namespace ServisTakip.Controllers
 {
     public class OkulController : Controller
     {
-        public ServisSistemEntities db = new ServisSistemEntities();
+        public ServisTakipEntities db = new ServisTakipEntities();
 
         [Attributes.OkulRoleControl]
         public async Task<bool> Email(EmailFormModel model)

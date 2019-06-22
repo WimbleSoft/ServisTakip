@@ -13,14 +13,11 @@ namespace ServisTakip
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class ServisSistemEntities : DbContext
+    public partial class ServisTakipEntities : DbContext
     {
-        public ServisSistemEntities()
-            : base("name=ServisSistemEntities")
+        public ServisTakipEntities()
+            : base("name=ServisTakipEntities")
         {
-
-            Database.Connection.ConnectionString = Database.Connection.ConnectionString.Replace("yyyyy", "yyyyy");
-            Database.Connection.ConnectionString = Database.Connection.ConnectionString.Replace("xxxxx", "yyyyy");
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -49,6 +46,7 @@ namespace ServisTakip
         public virtual DbSet<ServisSoforleri> ServisSoforleri { get; set; }
         public virtual DbSet<ServistekiOgrenciler> ServistekiOgrenciler { get; set; }
         public virtual DbSet<Soforler> Soforler { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Veliler> Veliler { get; set; }
     }
 }

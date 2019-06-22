@@ -8,6 +8,7 @@ namespace ServisTakip
         // For more information on bundling, visit https://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
+            /*
             bundles.Add(new StyleBundle("~/bundles/yon/css").Include(
                       "~/Scripts/bootstrap/css/bootstrap.min.css",
                       "~/Scripts/plugins/font-awesome/css/font-awesome.css",
@@ -46,6 +47,7 @@ namespace ServisTakip
                       "~/Scripts/dist/js/app.min.js",
                       "~/Scripts/dist/js/demo.js"
                       ));
+            */
         }
     }
 }

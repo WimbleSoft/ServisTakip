@@ -10,7 +10,7 @@ namespace ServisTakip.Controllers
 {
     public class VeliController : Controller
     {
-        public ServisSistemEntities db = new ServisSistemEntities();
+        public ServisTakipEntities db = new ServisTakipEntities();
 
         #region // Sayfa Çağırımları
         public ActionResult Cikis(VeliGirisModel LoginModel)

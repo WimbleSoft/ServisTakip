@@ -10,7 +10,7 @@ namespace ServisTakip.Controllers
 {
     public class FirmaController : Controller
     {
-        public ServisSistemEntities db = new ServisSistemEntities();
+        public ServisTakipEntities db = new ServisTakipEntities();
         
 
         public ActionResult Cikis(FirmaGirisModel LoginModel)

@@ -63,37 +63,6 @@ $(document).ready(function () { // Document ready
     })();
 
 
-
-
-/*-----------------------------------------------------------------------------------*/
-    /*	02. FLEXSLIDER - TESTIMONIAL
-/*-----------------------------------------------------------------------------------*/
-
-
-    $('#slider1').flexslider({
-        animation: "fade",
-        directionNav: false,
-        controlNav: false,
-        smoothHeight: true,
-        animationLoop: true,
-        slideshowSpeed: 3000,
-        slideToStart: 0,
-    });
-
-    $('#slider2').flexslider({
-        animation: "slide",
-        directionNav: true,
-        controlNav: false,
-        smoothHeight: true,
-        animationLoop: true,
-        sync: "#slider1",
-        slideshowSpeed: 3000,
-        slideToStart: 0,
-    });
-
-
-
-
 /*-----------------------------------------------------------------------------------*/
     /*	03. Share Button hover
 /*-----------------------------------------------------------------------------------*/
@@ -273,11 +242,11 @@ $(document).ready(function () { // Document ready
 
             var videobackground = new $.backgroundVideo($('.page1'), {
                 "align": "centerXY",
-                "width": 1280,
-                "height": 720,
-                "path": "http://www.baribal.be/exho/video/", /* Folder wich contain the mp4, ogg and webm video */
-                "filename": "desktop",
-                "types": ["mp4", "ogg", "webm"]
+                "width": 1920,
+                "height": 1080,
+                "path": "https://mfatihsaglam.me/", /* Folder wich contain the mp4, ogg and webm video */
+                "filename": "Cool_kids",
+                "types": ["webm"]
             });
 
         }
