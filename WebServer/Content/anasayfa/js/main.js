@@ -244,8 +244,8 @@ $(document).ready(function () { // Document ready
                 "align": "centerXY",
                 "width": 1920,
                 "height": 1080,
-                "path": "https://mfatihsaglam.me/", /* Folder wich contain the mp4, ogg and webm video */
-                "filename": "Cool_kids",
+                "path": "https://www.videvo.net/videvo_files/converted/2012_09/preview/", /* Folder wich contain the mp4, ogg and webm video */
+                "filename": "hd0451.mov57425",
                 "types": ["webm"]
             });
 
