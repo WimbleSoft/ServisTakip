@@ -25,10 +25,12 @@ namespace ServisTakip
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Araclar> Araclar { get; set; }
+        public virtual DbSet<AracSoforleri> AracSoforleri { get; set; }
         public virtual DbSet<Duraklar> Duraklar { get; set; }
         public virtual DbSet<Faturalar> Faturalar { get; set; }
+        public virtual DbSet<FirmaAraclari> FirmaAraclari { get; set; }
         public virtual DbSet<Firmalar> Firmalar { get; set; }
-        public virtual DbSet<FirmaServisleri> FirmaServisleri { get; set; }
         public virtual DbSet<FirmaSoforleri> FirmaSoforleri { get; set; }
         public virtual DbSet<Ilceler> Ilceler { get; set; }
         public virtual DbSet<Iller> Iller { get; set; }
@@ -42,11 +44,8 @@ namespace ServisTakip
         public virtual DbSet<OkulServisleri> OkulServisleri { get; set; }
         public virtual DbSet<OkulTurleri> OkulTurleri { get; set; }
         public virtual DbSet<Rotalar> Rotalar { get; set; }
-        public virtual DbSet<Servisler> Servisler { get; set; }
-        public virtual DbSet<ServisSoforleri> ServisSoforleri { get; set; }
         public virtual DbSet<ServistekiOgrenciler> ServistekiOgrenciler { get; set; }
         public virtual DbSet<Soforler> Soforler { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Veliler> Veliler { get; set; }
     }
 }

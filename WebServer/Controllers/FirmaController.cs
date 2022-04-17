@@ -10,19 +10,19 @@ namespace ServisTakip.Controllers
 {
     public class FirmaController : Controller
     {
-        public ServisTakipEntities db = new ServisTakipEntities();
+        public ServisTakipEntities db = new();
         
 
         public ActionResult Cikis(FirmaGirisModel LoginModel)
         {
-            FirmaCookieControl firmaCookie = new FirmaCookieControl();
+            FirmaCookieControl firmaCookie = new();
             firmaCookie.CookieSil();
             Session.RemoveAll();
             return RedirectToAction("FirmaGiris", "Firma");
         }
         public ActionResult FirmaGiris(FirmaGirisModel LoginModel)
         {
-            FirmaCookieControl firCookie = new FirmaCookieControl();
+            FirmaCookieControl firCookie = new();
             
             if (firCookie.CookieGetir() != null)
             {
@@ -33,7 +33,7 @@ namespace ServisTakip.Controllers
                     if (firma != null)
                     {
                         firCookie.CookieSil();
-                        Firmalar firmaBilgisi = new Firmalar
+                        Firmalar firmaBilgisi = new()
                         {
                             firAd = firma.firAd,
                             firEmail = firma.firEmail,
@@ -71,7 +71,7 @@ namespace ServisTakip.Controllers
                     if (firma != null)
                     {
                         firCookie.CookieSil();
-                        Firmalar firmaBilgisi = new Firmalar
+                        Firmalar firmaBilgisi = new()
                         {
                             firAd = firma.firAd,
                             firEmail = firma.firEmail,
@@ -114,30 +114,21 @@ namespace ServisTakip.Controllers
             int firId = Convert.ToInt32(Session["firId"]);
             if (true == Convert.ToBoolean(Session["firmaLogin"]))
             {
-                ViewModel vm = new ViewModel
+                ViewModel vm = new()
                 {
-                    //Duraklar = db.Duraklar.Where(x=>x.Ogrenciler.ServistekiOgrenciler.Servisler.FirmaServisleri.Where(z => z.firId == firId).Count() > 0).ToList(),
-                    //Faturalar = db.Faturalar.Where(x=>x.Servisler.FirmaServisleri.Where(y=>y.firId==firId).Count()>0).ToList(),
                     Firmalar = db.Firmalar.Where(x => x.firId == firId).ToList(),
                     FirmaSoforleri = db.FirmaSoforleri.Where(x => x.firId == firId).ToList(),
                     Ilceler = db.Ilceler.ToList(),
                     Iller = db.Iller.ToList(),
-                    //IndiBindiler = db.IndiBindiler.Where(x=>x.ServistekiOgrenciler.Servisler.FirmaServisleri.Where(y=>y.firId==firId).Count()>0).ToList(),
                     Mudurler = db.Mudurler.ToList(),
-                    //Odemeler = db.Odemeler.Where(x=>x.Faturalar.Servisler.FirmaServisleri.Where(y=>y.firId == firId).Count()>0).ToList(),
-                    //Ogrenciler = db.Ogrenciler.Where(y => y.ServistekiOgrenciler.Servisler.FirmaServisleri.Where(z => z.firId == firId).Count() > 0).ToList(),
-                    //OgrenciVelileri = db.OgrenciVelileri.Where(y => y.Ogrenciler.ServistekiOgrenciler.Servisler.FirmaServisleri.Where(z=>z.firId == firId).Count()>0).ToList(),
                     OkulCinsleri = db.OkulCinsleri.ToList(),
                     OkulTurleri = db.OkulTurleri.ToList(),
-                    Okullar = db.Okullar/*.Where(x=>x.OkulServisleri.Where(y=>y.Servisler.FirmaServisleri.Where(z=>z.firId==firId).Count()>0).Count() > 0)*/.ToList(),
+                    Okullar = db.Okullar/*.Where(x=>x.OkulServisleri.Where(y=>y.Araclar.FirmaAraclari.Where(z=>z.firId==firId).Count()>0).Count() > 0)*/.ToList(),
                     OkulServisleri = db.OkulServisleri.ToList(),
-                    //Rotalar = db.Rotalar.Where(x => x.Okullar.OkulServisleri.Where(y => y.Servisler.FirmaServisleri.Where(z => z.firId == firId).Count() > 0).Count() > 0).ToList(),
-                    Servisler = db.Servisler.ToList(),
-                    //ServistekiOgrenciler = db.ServistekiOgrenciler.ToList(),
-                    ServisSoforleri = db.ServisSoforleri.ToList(),
+                    Araclar = db.Araclar.ToList(),
+                    AracSoforleri = db.AracSoforleri.ToList(),
                     Soforler = db.Soforler.ToList(),
-                    FirmaServisleri = db.FirmaServisleri.ToList()
-                    //Veliler = db.Veliler.Where(x=>x.OgrenciVelileri.Where(y=>y.Ogrenciler.ServistekiOgrenciler.Servisler.FirmaServisleri.Where(z => z.firId == firId).Count() > 0).Count()>0).ToList()
+                    FirmaAraclari = db.FirmaAraclari.ToList()
                 };
                 return View(vm);
             }
@@ -150,30 +141,21 @@ namespace ServisTakip.Controllers
             int firId = (int)Session["firId"];
             if (true == (bool)Session["firmaLogin"])
             {
-                ViewModel vm = new ViewModel
+                ViewModel vm = new()
                 {
-                    //Duraklar = db.Duraklar.Where(x=>x.Ogrenciler.ServistekiOgrenciler.Servisler.FirmaServisleri.Where(z => z.firId == firId).Count() > 0).ToList(),
-                    //Faturalar = db.Faturalar.Where(x=>x.Servisler.FirmaServisleri.Where(y=>y.firId==firId).Count()>0).ToList(),
                     Firmalar = db.Firmalar.Where(x => x.firId == firId).ToList(),
                     FirmaSoforleri = db.FirmaSoforleri.Where(x => x.firId == firId).ToList(),
                     Ilceler = db.Ilceler.ToList(),
                     Iller = db.Iller.ToList(),
-                    //IndiBindiler = db.IndiBindiler.Where(x=>x.ServistekiOgrenciler.Servisler.FirmaServisleri.Where(y=>y.firId==firId).Count()>0).ToList(),
                     Mudurler = db.Mudurler.ToList(),
-                    //Odemeler = db.Odemeler.Where(x=>x.Faturalar.Servisler.FirmaServisleri.Where(y=>y.firId == firId).Count()>0).ToList(),
-                    //Ogrenciler = db.Ogrenciler.Where(y => y.ServistekiOgrenciler.Servisler.FirmaServisleri.Where(z => z.firId == firId).Count() > 0).ToList(),
-                    //OgrenciVelileri = db.OgrenciVelileri.Where(y => y.Ogrenciler.ServistekiOgrenciler.Servisler.FirmaServisleri.Where(z=>z.firId == firId).Count()>0).ToList(),
                     OkulCinsleri = db.OkulCinsleri.ToList(),
                     OkulTurleri = db.OkulTurleri.ToList(),
-                    Okullar = db.Okullar/*.Where(x=>x.OkulServisleri.Where(y=>y.Servisler.FirmaServisleri.Where(z=>z.firId==firId).Count()>0).Count() > 0)*/.ToList(),
+                    Okullar = db.Okullar/*.Where(x=>x.OkulServisleri.Where(y=>y.Araclar.FirmaAraclari.Where(z=>z.firId==firId).Count()>0).Count() > 0)*/.ToList(),
                     OkulServisleri = db.OkulServisleri.ToList(),
-                    //Rotalar = db.Rotalar.Where(x => x.Okullar.OkulServisleri.Where(y => y.Servisler.FirmaServisleri.Where(z => z.firId == firId).Count() > 0).Count() > 0).ToList(),
-                    Servisler = db.Servisler.ToList(),
-                    //ServistekiOgrenciler = db.ServistekiOgrenciler.ToList(),
-                    ServisSoforleri = db.ServisSoforleri.ToList(),
+                    Araclar = db.Araclar.ToList(),
+                    AracSoforleri = db.AracSoforleri.ToList(),
                     Soforler = db.Soforler.ToList(),
-                    FirmaServisleri = db.FirmaServisleri.ToList()
-                    //Veliler = db.Veliler.Where(x=>x.OgrenciVelileri.Where(y=>y.Ogrenciler.ServistekiOgrenciler.Servisler.FirmaServisleri.Where(z => z.firId == firId).Count() > 0).Count()>0).ToList()
+                    FirmaAraclari = db.FirmaAraclari.ToList()
                 };
                 return View(vm);
             }
@@ -182,12 +164,12 @@ namespace ServisTakip.Controllers
         }
 
         [Attributes.FirmaRoleControl]
-        public ActionResult Servisler()
+        public ActionResult Araclar()
         {
             int firId = Convert.ToInt32(Session["firId"]);
             if (true == Convert.ToBoolean(Session["firmaLogin"]))
             {
-                ViewModel vm = new ViewModel
+                ViewModel vm = new()
                 {
                     Firmalar = db.Firmalar.Where(x => x.firId == firId).ToList(),
                     FirmaSoforleri = db.FirmaSoforleri.Where(x => x.firId == firId).ToList(),
@@ -197,10 +179,10 @@ namespace ServisTakip.Controllers
                     OkulTurleri = db.OkulTurleri.ToList(),
                     Okullar = db.Okullar.ToList(),
                     OkulServisleri = db.OkulServisleri.ToList(),
-                    Servisler = db.Servisler.ToList(),
-                    ServisSoforleri = db.ServisSoforleri.ToList(),
+                    Araclar = db.Araclar.ToList(),
+                    AracSoforleri = db.AracSoforleri.ToList(),
                     Soforler = db.Soforler.ToList(),
-                    FirmaServisleri = db.FirmaServisleri.Where(x=>x.firId==firId).ToList()
+                    FirmaAraclari = db.FirmaAraclari.Where(x=>x.firId==firId).ToList()
                 };
                 return View(vm);
             }
@@ -214,30 +196,21 @@ namespace ServisTakip.Controllers
             int firId = (int)Session["firId"];
             if (true == (bool)Session["firmaLogin"])
             {
-                ViewModel vm = new ViewModel
+                ViewModel vm = new()
                 {
-                    //Duraklar = db.Duraklar.Where(x=>x.Ogrenciler.ServistekiOgrenciler.Servisler.FirmaServisleri.Where(z => z.firId == firId).Count() > 0).ToList(),
-                    //Faturalar = db.Faturalar.Where(x=>x.Servisler.FirmaServisleri.Where(y=>y.firId==firId).Count()>0).ToList(),
                     Firmalar = db.Firmalar.Where(x=>x.firId==firId).ToList(),
                     FirmaSoforleri = db.FirmaSoforleri.Where(x=>x.firId == firId).ToList(),
                     Ilceler = db.Ilceler.ToList(),
                     Iller = db.Iller.ToList(),
-                    //IndiBindiler = db.IndiBindiler.Where(x=>x.ServistekiOgrenciler.Servisler.FirmaServisleri.Where(y=>y.firId==firId).Count()>0).ToList(),
                     Mudurler = db.Mudurler.ToList(),
-                    //Odemeler = db.Odemeler.Where(x=>x.Faturalar.Servisler.FirmaServisleri.Where(y=>y.firId == firId).Count()>0).ToList(),
-                    //Ogrenciler = db.Ogrenciler.Where(y => y.ServistekiOgrenciler.Servisler.FirmaServisleri.Where(z => z.firId == firId).Count() > 0).ToList(),
-                    //OgrenciVelileri = db.OgrenciVelileri.Where(y => y.Ogrenciler.ServistekiOgrenciler.Servisler.FirmaServisleri.Where(z=>z.firId == firId).Count()>0).ToList(),
                     OkulCinsleri = db.OkulCinsleri.ToList(),
                     OkulTurleri = db.OkulTurleri.ToList(),
-                    Okullar = db.Okullar.Where(x=>x.okulId!=0)/*.Where(x=>x.OkulServisleri.Where(y=>y.Servisler.FirmaServisleri.Where(z=>z.firId==firId).Count()>0).Count() > 0)*/.ToList(),
+                    Okullar = db.Okullar.Where(x=>x.okulId!=0)/*.Where(x=>x.OkulServisleri.Where(y=>y.Araclar.FirmaAraclari.Where(z=>z.firId==firId).Count()>0).Count() > 0)*/.ToList(),
                     OkulServisleri = db.OkulServisleri.ToList(),
-                    //Rotalar = db.Rotalar.Where(x => x.Okullar.OkulServisleri.Where(y => y.Servisler.FirmaServisleri.Where(z => z.firId == firId).Count() > 0).Count() > 0).ToList(),
-                    Servisler = db.Servisler.ToList(),
-                    //ServistekiOgrenciler = db.ServistekiOgrenciler.ToList(),
-                    ServisSoforleri = db.ServisSoforleri.ToList(),
+                    Araclar = db.Araclar.ToList(),
+                    AracSoforleri = db.AracSoforleri.ToList(),
                     Soforler = db.Soforler.ToList(),
-                    FirmaServisleri = db.FirmaServisleri.ToList()
-                    //Veliler = db.Veliler.Where(x=>x.OgrenciVelileri.Where(y=>y.Ogrenciler.ServistekiOgrenciler.Servisler.FirmaServisleri.Where(z => z.firId == firId).Count() > 0).Count()>0).ToList()
+                    FirmaAraclari = db.FirmaAraclari.ToList()
                 };
                 return View(vm);
             }
@@ -251,30 +224,21 @@ namespace ServisTakip.Controllers
             int firId = Convert.ToInt32(Session["firId"]);
             if (true == Convert.ToBoolean(Session["firmaLogin"]))
             {
-                ViewModel vm = new ViewModel
+                ViewModel vm = new()
                 {
-                    //Duraklar = db.Duraklar.Where(x=>x.Ogrenciler.ServistekiOgrenciler.Servisler.FirmaServisleri.Where(z => z.firId == firId).Count() > 0).ToList(),
-                    //Faturalar = db.Faturalar.Where(x=>x.Servisler.FirmaServisleri.Where(y=>y.firId==firId).Count()>0).ToList(),
                     Firmalar = db.Firmalar.Where(x => x.firId == firId).ToList(),
                     FirmaSoforleri = db.FirmaSoforleri.Where(x => x.firId == firId).ToList(),
                     Ilceler = db.Ilceler.ToList(),
                     Iller = db.Iller.ToList(),
-                    //IndiBindiler = db.IndiBindiler.Where(x=>x.ServistekiOgrenciler.Servisler.FirmaServisleri.Where(y=>y.firId==firId).Count()>0).ToList(),
                     Mudurler = db.Mudurler.ToList(),
-                    //Odemeler = db.Odemeler.Where(x=>x.Faturalar.Servisler.FirmaServisleri.Where(y=>y.firId == firId).Count()>0).ToList(),
-                    //Ogrenciler = db.Ogrenciler.Where(y => y.ServistekiOgrenciler.Servisler.FirmaServisleri.Where(z => z.firId == firId).Count() > 0).ToList(),
-                    //OgrenciVelileri = db.OgrenciVelileri.Where(y => y.Ogrenciler.ServistekiOgrenciler.Servisler.FirmaServisleri.Where(z=>z.firId == firId).Count()>0).ToList(),
                     OkulCinsleri = db.OkulCinsleri.ToList(),
                     OkulTurleri = db.OkulTurleri.ToList(),
-                    Okullar = db.Okullar/*.Where(x=>x.OkulServisleri.Where(y=>y.Servisler.FirmaServisleri.Where(z=>z.firId==firId).Count()>0).Count() > 0)*/.ToList(),
+                    Okullar = db.Okullar/*.Where(x=>x.OkulServisleri.Where(y=>y.Araclar.FirmaAraclari.Where(z=>z.firId==firId).Count()>0).Count() > 0)*/.ToList(),
                     OkulServisleri = db.OkulServisleri.ToList(),
-                    //Rotalar = db.Rotalar.Where(x => x.Okullar.OkulServisleri.Where(y => y.Servisler.FirmaServisleri.Where(z => z.firId == firId).Count() > 0).Count() > 0).ToList(),
-                    Servisler = db.Servisler.ToList(),
-                    //ServistekiOgrenciler = db.ServistekiOgrenciler.ToList(),
-                    ServisSoforleri = db.ServisSoforleri.ToList(),
+                    Araclar = db.Araclar.ToList(),
+                    AracSoforleri = db.AracSoforleri.ToList(),
                     Soforler = db.Soforler.ToList(),
-                    FirmaServisleri = db.FirmaServisleri.ToList()
-                    //Veliler = db.Veliler.Where(x=>x.OgrenciVelileri.Where(y=>y.Ogrenciler.ServistekiOgrenciler.Servisler.FirmaServisleri.Where(z => z.firId == firId).Count() > 0).Count()>0).ToList()
+                    FirmaAraclari = db.FirmaAraclari.ToList()
                 };
                 return View(vm);
             }
@@ -385,10 +349,10 @@ namespace ServisTakip.Controllers
         }
         #endregion
 
-        #region // Servisler
+        #region // Araclar
         [HttpPost]
         [Attributes.FirmaRoleControl]
-        public ActionResult ServisEkle(Servisler servisBilgisi, int firId, int sofId, int? yedekId)
+        public ActionResult ServisEkle(Araclar servisBilgisi, int firId, int sofId, int? yedekId)
         {
             if (firId == (int)Session["firId"])
             {
@@ -396,35 +360,35 @@ namespace ServisTakip.Controllers
                 //{
                     try
                     {
-                        if(db.Servisler.Where(x=>x.plaka == servisBilgisi.plaka).Count() > 0)
+                        if(db.Araclar.Where(x=>x.plaka == servisBilgisi.plaka).Count() > 0)
                         {
                             TempData["Mesaj"] = "Bu plaka daha önce kullanılmış.";
-                            return RedirectToAction("Servisler", "Firma");
+                            return RedirectToAction("Araclar", "Firma");
                         }
-                        if (db.Servisler.Where(x => x.sicilNo == servisBilgisi.sicilNo).Count() > 0)
+                        if (db.Araclar.Where(x => x.sicilNo == servisBilgisi.sicilNo).Count() > 0)
                         {
                             TempData["Mesaj"] = "Bu sicil no daha önce kullanılmış.";
-                            return RedirectToAction("Servisler", "Firma");
+                            return RedirectToAction("Araclar", "Firma");
                         }
-                        Random rand = new Random();
-                        servisBilgisi.authCode = (servisBilgisi.servisId + "_" + servisBilgisi.plaka + "_" + rand.Next(100000, 999999)).ToSHA(Crypto.SHA_Type.SHA256);
-                        var yeniServis = db.Servisler.Add(servisBilgisi);
-                        db.ServisSoforleri.RemoveRange(db.ServisSoforleri.Where(x => x.servisId == yeniServis.servisId));
-                    db.FirmaServisleri.Add(new FirmaServisleri { firId = firId, servisId = yeniServis.servisId });
-                        db.ServisSoforleri.Add(new ServisSoforleri { servisId = yeniServis.servisId, sofId = sofId, yedekMi = false });
+                        Random rand = new();
+                        servisBilgisi.authCode = (servisBilgisi.aracId + "_" + servisBilgisi.plaka + "_" + rand.Next(100000, 999999)).ToSHA(Crypto.SHA_Type.SHA256);
+                        var yeniServis = db.Araclar.Add(servisBilgisi);
+                        db.AracSoforleri.RemoveRange(db.AracSoforleri.Where(x => x.aracId == yeniServis.aracId));
+                    db.FirmaAraclari.Add(new FirmaAraclari { firId = firId, aracId = yeniServis.aracId });
+                        db.AracSoforleri.Add(new AracSoforleri { aracId = yeniServis.aracId, sofId = sofId, yedekMi = false });
                         if (yedekId.HasValue)
-                            db.ServisSoforleri.Add(new ServisSoforleri { servisId = yeniServis.servisId, sofId = yedekId.Value, yedekMi = true });
+                            db.AracSoforleri.Add(new AracSoforleri { aracId = yeniServis.aracId, sofId = yedekId.Value, yedekMi = true });
 
                         db.SaveChanges();
                         TempData["Mesaj"] = "İşlem Başarılı.";
-                        return RedirectToAction("Servisler", "Firma");
+                        return RedirectToAction("Araclar", "Firma");
                         //return Json(0, JsonRequestBehavior.AllowGet);
                     }
                     catch (Exception e)
                     {
                         Console.Write(e);
                         TempData["Mesaj"] = "Bir hata oluştu. Lütfen tekrar deneyiniz.";
-                        return RedirectToAction("Servisler", "Firma");
+                        return RedirectToAction("Araclar", "Firma");
                         //return Json(1, JsonRequestBehavior.AllowGet);
                     }
 
@@ -432,7 +396,7 @@ namespace ServisTakip.Controllers
                 else
                 {
                     TempData["Mesaj"] = "Lütfen gerekli tüm alanları doldurunuz.";
-                    return RedirectToAction("Servisler", "Firma");
+                    return RedirectToAction("Araclar", "Firma");
                 }*/
             }
             else
@@ -446,29 +410,29 @@ namespace ServisTakip.Controllers
 
         [HttpPost]
         [Attributes.FirmaRoleControl]
-        public ActionResult ServisGuncelle(Servisler servisBilgisi, int firId)
+        public ActionResult ServisGuncelle(Araclar servisBilgisi, int firId)
         {
             if (firId == (int)Session["firId"])
             {
                 try
                 {
-                    Random rand = new Random();
-                    var servis = db.Servisler.Where(x => x.servisId == servisBilgisi.servisId).First();
+                    Random rand = new();
+                    var servis = db.Araclar.Where(x => x.aracId == servisBilgisi.aracId).First();
                     servis.plaka = servisBilgisi.plaka;
                     servis.sonMuayeneTarih = servisBilgisi.sonMuayeneTarih;
                     servis.iseGirisTarih = servis.iseGirisTarih;
                     servis.sicilNo = servisBilgisi.sicilNo;
                     servis.aktifMi = servisBilgisi.aktifMi;
-                    servis.authCode = (servisBilgisi.servisId + "_" + servisBilgisi.plaka + "_" + rand.Next(100000,999999)).ToSHA(Crypto.SHA_Type.SHA256);
+                    servis.authCode = (servisBilgisi.aracId + "_" + servisBilgisi.plaka + "_" + rand.Next(100000,999999)).ToSHA(Crypto.SHA_Type.SHA256);
                     db.SaveChanges();
                     TempData["Mesaj"] = "İşlem Başarılı.";
-                    return RedirectToAction("Servisler", "Firma");
+                    return RedirectToAction("Araclar", "Firma");
                     //return Json(0, JsonRequestBehavior.AllowGet);
                 }
                 catch
                 {
                     TempData["Mesaj"] = "Bir hata oluştu. Lütfen tekrar deneyiniz.";
-                    return RedirectToAction("Servisler", "Firma");
+                    return RedirectToAction("Araclar", "Firma");
                     //return Json(1, JsonRequestBehavior.AllowGet);
                 }
             }
@@ -483,7 +447,7 @@ namespace ServisTakip.Controllers
 
         [HttpPost]
         [Attributes.FirmaRoleControl]
-        public ActionResult ServisSoforleriGuncelle(int sofId, int? yedekId, int firId, int servisId)
+        public ActionResult ServisSoforleriGuncelle(int sofId, int? yedekId, int firId, int aracId)
         {
             if (firId == (int)Session["firId"])
             {
@@ -492,35 +456,35 @@ namespace ServisTakip.Controllers
                     try
                     {
                         
-                        db.ServisSoforleri.RemoveRange(db.ServisSoforleri.Where(x => x.servisId == servisId));
-                        db.ServisSoforleri.Add(new ServisSoforleri { servisId = servisId, sofId = sofId, yedekMi = false });
+                        db.AracSoforleri.RemoveRange(db.AracSoforleri.Where(x => x.aracId == aracId));
+                        db.AracSoforleri.Add(new AracSoforleri { aracId = aracId, sofId = sofId, yedekMi = false });
                         if (yedekId.HasValue)
                         {
                             if (sofId == yedekId.Value)
                             {
                                 TempData["Mesaj"] = "Asil ve Yedek Şoför Aynı Kişi Olamaz. Lütfen liste içerisinden YEDEK ŞOFÖR YOK seçeneğini seçiniz.";
-                                return RedirectToAction("Servisler", "Firma");
+                                return RedirectToAction("Araclar", "Firma");
                             }
-                            db.ServisSoforleri.Add(new ServisSoforleri { servisId = servisId, sofId = yedekId.Value, yedekMi = true });
+                            db.AracSoforleri.Add(new AracSoforleri { aracId = aracId, sofId = yedekId.Value, yedekMi = true });
                         }
 
                         db.SaveChanges();
                         TempData["Mesaj"] = "İşlem Başarılı.";
-                        return RedirectToAction("Servisler", "Firma");
+                        return RedirectToAction("Araclar", "Firma");
                         //return Json(0, JsonRequestBehavior.AllowGet);
                     }
                     catch(Exception e)
                     {
                         Console.Write(e);
                         TempData["Mesaj"] = "Bir hata oluştu. Lütfen tekrar deneyiniz.";
-                        return RedirectToAction("Servisler", "Firma");
+                        return RedirectToAction("Araclar", "Firma");
                         //return Json(1, JsonRequestBehavior.AllowGet);
                     }
                 }
                 else
                 {
                     TempData["Mesaj"] = "Lütfen gerekli tüm alanları doldurunuz.";
-                    return RedirectToAction("Servisler", "Firma");
+                    return RedirectToAction("Araclar", "Firma");
                 }
             }
             else
@@ -534,27 +498,27 @@ namespace ServisTakip.Controllers
 
         [HttpGet]
         [Attributes.FirmaRoleControl]
-        public ActionResult ServisSil(int servisId, int firId)
+        public ActionResult ServisSil(int aracId, int firId)
         {
             if (firId == (int)Session["firId"])
             {
                 try
                 {
-                    db.FirmaServisleri.RemoveRange(db.FirmaServisleri.Where(d => d.servisId == servisId));
-                    db.ServistekiOgrenciler.RemoveRange(db.ServistekiOgrenciler.Where(d => d.OkulServisleri.servisId == servisId));
-                    db.ServisSoforleri.RemoveRange(db.ServisSoforleri.Where(d => d.servisId == servisId));
-                    db.OkulServisleri.RemoveRange(db.OkulServisleri.Where(d => d.servisId == servisId));
-                    db.Servisler.RemoveRange(db.Servisler.Where(d => d.servisId == servisId));
+                    db.FirmaAraclari.RemoveRange(db.FirmaAraclari.Where(d => d.aracId == aracId));
+                    db.ServistekiOgrenciler.RemoveRange(db.ServistekiOgrenciler.Where(d => d.OkulServisleri.aracId == aracId));
+                    db.AracSoforleri.RemoveRange(db.AracSoforleri.Where(d => d.aracId == aracId));
+                    db.OkulServisleri.RemoveRange(db.OkulServisleri.Where(d => d.aracId == aracId));
+                    db.Araclar.RemoveRange(db.Araclar.Where(d => d.aracId == aracId));
                     db.SaveChanges();
                     TempData["Mesaj"] = "İşlem Başarılı.";
-                    return RedirectToAction("Servisler", "Firma");
+                    return RedirectToAction("Araclar", "Firma");
                     //return Json(0, JsonRequestBehavior.AllowGet);
                 }
                 catch (Exception e)
                 {
                     Console.Write(e);
                     TempData["Mesaj"] = "Bir hata oluştu. Lütfen tekrar deneyiniz.";
-                    return RedirectToAction("Servisler", "Firma");
+                    return RedirectToAction("Araclar", "Firma");
                     //return Json(1, JsonRequestBehavior.AllowGet);
                 }
             }
@@ -600,13 +564,13 @@ namespace ServisTakip.Controllers
         }
         [HttpGet]
         [Attributes.FirmaRoleControl]
-        public ActionResult OkulServisSil(int okulServisId, int firId)
+        public ActionResult OkulServisSil(int okulAracId, int firId)
         {
             if (firId == (int)Session["firId"])
             {
                 try
                 {
-                    db.OkulServisleri.RemoveRange(db.OkulServisleri.Where(d => d.okulServisId == okulServisId));
+                    db.OkulServisleri.RemoveRange(db.OkulServisleri.Where(d => d.okulAracId == okulAracId));
                     db.SaveChanges();
                     TempData["Mesaj"] = "İşlem Başarılı.";
                     return RedirectToAction("Okullar", "Firma");
@@ -637,11 +601,11 @@ namespace ServisTakip.Controllers
             {
                 try
                 {
-                    foreach(var firmaServisi in db.FirmaServisleri.Where(x => x.firId == firId))
+                    foreach(var firmaServisi in db.FirmaAraclari.Where(x => x.firId == firId))
                     {
-                        foreach(var servis in db.Servisler.Where(x=>x.servisId == firmaServisi.servisId))
+                        foreach(var servis in db.Araclar.Where(x=>x.aracId == firmaServisi.aracId))
                         {
-                            db.OkulServisleri.RemoveRange(db.OkulServisleri.Where(d => d.okulId == okulId && d.servisId==servis.servisId));
+                            db.OkulServisleri.RemoveRange(db.OkulServisleri.Where(d => d.okulId == okulId && d.aracId==servis.aracId));
                         }
                     }
 

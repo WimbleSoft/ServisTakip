@@ -17,7 +17,7 @@ namespace ServisTakip
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Firmalar()
         {
-            this.FirmaServisleri = new HashSet<FirmaServisleri>();
+            this.FirmaAraclari = new HashSet<FirmaAraclari>();
             this.FirmaSoforleri = new HashSet<FirmaSoforleri>();
         }
     
@@ -31,9 +31,9 @@ namespace ServisTakip
         public string firAdres { get; set; }
         public int ilce_id { get; set; }
     
-        public virtual Ilceler Ilceler { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<FirmaServisleri> FirmaServisleri { get; set; }
+        public virtual ICollection<FirmaAraclari> FirmaAraclari { get; set; }
+        public virtual Ilceler Ilceler { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FirmaSoforleri> FirmaSoforleri { get; set; }
     }

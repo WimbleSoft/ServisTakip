@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Servisler";
+    ViewBag.Title = "Araclar";
     Layout = "~/Views/Shared/Firma_Layout.cshtml";
     int firId = (int)Session["firId"];
 }
@@ -14,7 +14,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Servisler 
+                Araclar 
                 @if (TempData["mesaj"] != null)
                 {
                     <a class="btn btn-grad btn-md btn-info" value="@TempData["mesaj"]" onclick="$(this).remove()">@TempData["mesaj"]</a>
@@ -22,7 +22,7 @@
             </h1>
             <ol class="breadcrumb">
                 <li class="active"><a href="#"><i class="fa fa-dashboard"></i> Anasayfa</a></li>
-                <li><a href="#">Servisler</a></li>
+                <li><a href="#">Araclar</a></li>
             </ol>
         </section>
 
@@ -78,7 +78,7 @@
                                                     <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                                         <label>Şoför</label>
                                                         <select id="sofId" name="sofId" class="select2 form-control" required style="width:100% !important;">
-                                                            @foreach (var sofor in Model.FirmaSoforleri.Where(x=> x.firId == firId && x.Soforler.ServisSoforleri.Where(y=>y.yedekMi==false).Count() == 0))
+                                                            @foreach (var sofor in Model.FirmaSoforleri.Where(x=> x.firId == firId && x.Soforler.AracSoforleri.Where(y=>y.yedekMi==false).Count() == 0))
                                                             {
                                                                 <option value="@sofor.sofId">@sofor.Soforler.sofAd @sofor.Soforler.sofSoyad / @sofor.Soforler.sofGsm</option>
                                                             }
@@ -119,18 +119,18 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach (var firmaServisi in Model.FirmaServisleri)
+                                        @foreach (var firmaServisi in Model.FirmaAraclari)
                                         {
                                             <tr>
-                                                <td>@firmaServisi.servisId</td>
-                                                <td>@firmaServisi.Servisler.plaka</td>
-                                                <td>@firmaServisi.Servisler.sicilNo</td>
-                                                <td>@firmaServisi.Servisler.authCode</td>
+                                                <td>@firmaServisi.aracId</td>
+                                                <td>@firmaServisi.Araclar.plaka</td>
+                                                <td>@firmaServisi.Araclar.sicilNo</td>
+                                                <td>@firmaServisi.Araclar.authCode</td>
                                                 <td>
                                                     <span class="button-group">
-                                                        <button type="button" class="btn btn-primary fa fa-user" data-toggle="modal" data-target="#servisSoforleri_@firmaServisi.servisId"></button>
-                                                        <button type="button" class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="#myModalId_@firmaServisi.servisId"></button>
-                                                        <a href="/Firma/ServisSil?firId=@((int)Session["firId"])&servisId=@firmaServisi.servisId" name="@firmaServisi.servisId" onclick="confirm('Emin Misiniz?')" class="btn btn-danger btn-md btn-grad fa fa-trash"></a>
+                                                        <button type="button" class="btn btn-primary fa fa-user" data-toggle="modal" data-target="#servisSoforleri_@firmaServisi.aracId"></button>
+                                                        <button type="button" class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="#myModalId_@firmaServisi.aracId"></button>
+                                                        <a href="/Firma/ServisSil?firId=@((int)Session["firId"])&aracId=@firmaServisi.aracId" name="@firmaServisi.aracId" onclick="confirm('Emin Misiniz?')" class="btn btn-danger btn-md btn-grad fa fa-trash"></a>
                                                     </span>
                                                 </td>
                                             </tr>
@@ -139,12 +139,12 @@
                                 </table>
                             </div>
                         </div>
-                        @foreach (var servis in Model.Servisler)
+                        @foreach (var servis in Model.Araclar)
                         {
-                            foreach (var firmaServisleri in servis.FirmaServisleri)
+                            foreach (var firmaServisleri in servis.FirmaAraclari)
                             {
                             <!-- SERVİS DÜZENLEME -->
-                            <div class="modal fade bs-example-modal-lg" id="myModalId_@firmaServisleri.servisId" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal fade bs-example-modal-lg" id="myModalId_@firmaServisleri.aracId" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -157,17 +157,17 @@
                                                     <div class="form-group">
                                                         <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                                             <label>Plaka</label>
-                                                            <input name="plaka" required type="text" id="plaka_@firmaServisleri.servisId" class="form-control" placeholder="Plaka Girin" value="@firmaServisleri.Servisler.plaka">
-                                                            <input name="servisId" type="text" id="servisId_@firmaServisleri.servisId" hidden="hidden" value="@firmaServisleri.servisId">
+                                                            <input name="plaka" required type="text" id="plaka_@firmaServisleri.aracId" class="form-control" placeholder="Plaka Girin" value="@firmaServisleri.Araclar.plaka">
+                                                            <input name="aracId" type="text" id="servisId_@firmaServisleri.aracId" hidden="hidden" value="@firmaServisleri.aracId">
                                                             <input name="firId" type="text" id="firId" hidden="hidden" value="@Session["firId"]">
                                                         </div>
                                                         <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                                             <label>Son Muayene Tarihi</label>
-                                                            <input name="sonMuayeneTarih" required type="date" id="sonMuayeneTarih_@firmaServisleri.Servisler.servisId" class="form-control" placeholder="Son Muayene Tarihini Girin" 
+                                                            <input name="sonMuayeneTarih" required type="date" id="sonMuayeneTarih_@firmaServisleri.Araclar.aracId" class="form-control" placeholder="Son Muayene Tarihini Girin" 
                                                                 value="@{
-                                                                if (firmaServisleri.Servisler.sonMuayeneTarih != null)
+                                                                if (firmaServisleri.Araclar.sonMuayeneTarih != null)
                                                                     { 
-                                                                        <text> @firmaServisleri.Servisler.sonMuayeneTarih.Value.ToString("yyyy-MM-dd") </text> 
+                                                                        <text> @firmaServisleri.Araclar.sonMuayeneTarih.Value.ToString("yyyy-MM-dd") </text> 
                                                                     }
                                                                     else
                                                                     {
@@ -180,11 +180,11 @@
                                                     <div class="form-group">
                                                         <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                                             <label>İşe Giriş Tarihi</label>
-                                                            <input name="iseGirisTarih" required type="date" id="iseGirisTarih_@firmaServisleri.Servisler.servisId" class="form-control" placeholder="İşe Giriş Tarihini Girin"  
+                                                            <input name="iseGirisTarih" required type="date" id="iseGirisTarih_@firmaServisleri.Araclar.aracId" class="form-control" placeholder="İşe Giriş Tarihini Girin"  
                                                                 value="@{
-                                                                if (firmaServisleri.Servisler.iseGirisTarih != null)
+                                                                if (firmaServisleri.Araclar.iseGirisTarih != null)
                                                                     { 
-                                                                        <text> @firmaServisleri.Servisler.iseGirisTarih.Value.ToString("yyyy-MM-dd") </text> 
+                                                                        <text> @firmaServisleri.Araclar.iseGirisTarih.Value.ToString("yyyy-MM-dd") </text> 
                                                                     }
                                                                     else
                                                                     {
@@ -195,7 +195,7 @@
                                                         </div>
                                                         <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                                             <label>Sicil No</label>
-                                                            <input name="sicilNo" required type="text" id="sicilNo_@firmaServisleri.Servisler.servisId" class="form-control" placeholder="Sicil No Girin" value="@firmaServisleri.Servisler.sicilNo">
+                                                            <input name="sicilNo" required type="text" id="sicilNo_@firmaServisleri.Araclar.aracId" class="form-control" placeholder="Sicil No Girin" value="@firmaServisleri.Araclar.sicilNo">
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
@@ -205,7 +205,7 @@
                                                             </label>
                                                             <div class="checkbox">
                                                                 <label>
-                                                                    <input id="aktifMi" name="aktifMi" type="checkbox" @if (firmaServisleri.Servisler.aktifMi == true) { <text>checked="checked"</text> } />
+                                                                    <input id="aktifMi" name="aktifMi" type="checkbox" @if (firmaServisleri.Araclar.aktifMi == true) { <text>checked="checked"</text> } />
                                                                     <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
                                                                     Servis Aktif Mi?
                                                                 </label>
@@ -220,7 +220,7 @@
                                                                     <button type="button" class="btn btn-default btn-md btn-grad form-control " data-dismiss="modal">İptal</button>
                                                                 </div>
                                                                 <div class="col-md-6 col-lg-6 col-xs-6 col-sm-6">
-                                                                    <button type="submit" name="@firmaServisleri.Servisler.servisId" class="btn btn-warning btn-md btn-grad form-control">Kaydet</button>
+                                                                    <button type="submit" name="@firmaServisleri.Araclar.aracId" class="btn btn-warning btn-md btn-grad form-control">Kaydet</button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -233,10 +233,10 @@
                             </div>
                             }
                         }
-                        @foreach (var servis in Model.Servisler)
+                        @foreach (var servis in Model.Araclar)
                         {
                             <!-- SERVİS ŞOFÖRLERİ DÜZENLEME -->
-                            <div class="modal fade bs-example-modal-lg" id="servisSoforleri_@servis.servisId" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal fade bs-example-modal-lg" id="servisSoforleri_@servis.aracId" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -247,20 +247,20 @@
                                             <div class="row">
                                                 <form action="/Firma/ServisSoforleriGuncelle" onsubmit="if($('#sofId').val() == $('#yedekId').val()) { alert('') } else { }" method="post" enctype="application/x-www-form-urlencoded">
                                                     <div class="form-group">
-                                                        @foreach(var servisSofor in Model.ServisSoforleri.Where(x => x.servisId == servis.servisId && x.yedekMi==false))
+                                                        @foreach(var servisSofor in Model.AracSoforleri.Where(x => x.aracId == servis.aracId && x.yedekMi==false))
                                                         {
                                                             <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                                                 <label>Şoför</label>
                                                                 <select name="sofId" id="sofId" required="required" class="select2 form-control">
                                                                     <option selected="selected" value="@servisSofor.sofId">@servisSofor.Soforler.sofAd @servisSofor.Soforler.sofSoyad / @servisSofor.Soforler.sofGsm</option>
-                                                                    @foreach (var sofor in Model.Soforler.Where(x => x.sofId != servisSofor.sofId && x.ServisSoforleri.Where(y => y.yedekMi == false).Count() == 0))
+                                                                    @foreach (var sofor in Model.Soforler.Where(x => x.sofId != servisSofor.sofId && x.AracSoforleri.Where(y => y.yedekMi == false).Count() == 0))
                                                                     {
                                                                         <option value="@sofor.sofId">@sofor.sofAd @sofor.sofSoyad / @sofor.sofGsm</option>
                                                                     }
                                                                 </select>
                                                             </div>
                                                         }
-                                                        @if (Model.ServisSoforleri.Where(x => x.servisId == servis.servisId && x.yedekMi == false).Count() == 0)
+                                                        @if (Model.AracSoforleri.Where(x => x.aracId == servis.aracId && x.yedekMi == false).Count() == 0)
                                                         {
                                                             <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                                                 <label>Şoför</label>
@@ -272,14 +272,14 @@
                                                                 </select>
                                                             </div>
                                                         }
-                                                        @foreach (var servisSofor in Model.ServisSoforleri.Where(x => x.servisId == servis.servisId && x.yedekMi == true))
+                                                        @foreach (var servisSofor in Model.AracSoforleri.Where(x => x.aracId == servis.aracId && x.yedekMi == true))
                                                         {
                                                             <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                                                 <label>Yedek Şoför</label>
                                                                 <select name="yedekId" id="yedekId" class="select2 form-control">
                                                                     <option value="">Yedek Şoför Yok</option>
                                                                     <option selected="selected" value="@servisSofor.sofId">@servisSofor.Soforler.sofAd @servisSofor.Soforler.sofSoyad / @servisSofor.Soforler.sofGsm</option>
-                                                                    @foreach (var sofor in Model.Soforler.Where(x=>x.sofId != servisSofor.sofId && x.ServisSoforleri.Where(y=>y.yedekMi==false).Count() == 0))
+                                                                    @foreach (var sofor in Model.Soforler.Where(x=>x.sofId != servisSofor.sofId && x.AracSoforleri.Where(y=>y.yedekMi==false).Count() == 0))
                                                                     {
                                                                         <option value="@sofor.sofId">@sofor.sofAd @sofor.sofSoyad / @sofor.sofGsm</option>
                                                                     }
@@ -287,7 +287,7 @@
 
                                                             </div>
                                                         }
-                                                        @if (Model.ServisSoforleri.Where(x => x.servisId == servis.servisId && x.yedekMi == true).Count()==0)
+                                                        @if (Model.AracSoforleri.Where(x => x.aracId == servis.aracId && x.yedekMi == true).Count()==0)
                                                         {
                                                             <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                                                 <label>Yedek Şoför</label>
@@ -300,7 +300,7 @@
                                                                 </select>
                                                             </div>
                                                         }
-                                                        <input name="servisId" type="text" id="servisId" hidden="hidden" value="@servis.servisId">
+                                                        <input name="aracId" type="text" id="aracId" hidden="hidden" value="@servis.aracId">
                                                         <input name="firId" type="text" id="firId" hidden="hidden" value="@Session["firId"]">
                                                     </div>
                                                     <div class="form-group">
@@ -311,7 +311,7 @@
                                                                     <button type="button" class="btn btn-default btn-md btn-grad form-control " data-dismiss="modal">İptal</button>
                                                                 </div>
                                                                 <div class="col-md-6 col-lg-6 col-xs-6 col-sm-6">
-                                                                    <button type="submit" name="@servis.servisId" class="btn btn-warning btn-md btn-grad form-control">Kaydet</button>
+                                                                    <button type="submit" name="@servis.aracId" class="btn btn-warning btn-md btn-grad form-control">Kaydet</button>
                                                                 </div>
                                                             </div>
                                                         </div>

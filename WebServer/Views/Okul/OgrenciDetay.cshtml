@@ -69,7 +69,7 @@
                                 {
                                     foreach (var servistekiOgrenci in Model.ServistekiOgrenciler.Where(x => x.ogrId == ogrenci.ogrId))
                                     {
-                                        foreach (var okulServisi in Model.OkulServisleri.Where(x => x.okulServisId == servistekiOgrenci.okulServisId))
+                                        foreach (var okulServisi in Model.OkulServisleri.Where(x => x.okulAracId == servistekiOgrenci.okulAracId))
                                         {
 
                                         }
@@ -90,7 +90,7 @@ function getLatLng() {
         type: 'post',
         async: false,
         dataType: 'json',
-        data: { servisId: @ViewBag.servisId, okulId: @okulId },
+        data: { aracId: @ViewBag.aracId, okulId: @okulId },
         success: function (servisKonum) {
             if (servisKonum != -1 || servisKonum != 1) {
                 return servisKonum;
@@ -126,7 +126,7 @@ function getLatLng() {
         ymaps.route([
             /*İLK NOKTA OKUL*/
             [@ViewBag.okulLatitude, @ViewBag.okulLongitude]
-            @foreach (var servistekiOgrenci in Model.ServistekiOgrenciler.Where(x => x.okulServisId == Model.ServistekiOgrenciler.Find(y => y.ogrId == ogrId).okulServisId))
+            @foreach (var servistekiOgrenci in Model.ServistekiOgrenciler.Where(x => x.okulAracId == Model.ServistekiOgrenciler.Find(y => y.ogrId == ogrId).okulAracId))
             {
                 <text>, [@servistekiOgrenci.Ogrenciler.geoX, @servistekiOgrenci.Ogrenciler.geoY]</text>
             }
@@ -140,7 +140,7 @@ function getLatLng() {
             points.get(0).properties.set('iconContent', '@Model.Okullar.First().okulAdi');
 
             @{int count = 0; }
-            @foreach(var servistekiOgrenci in Model.ServistekiOgrenciler.Where(x => x.okulServisId == Model.ServistekiOgrenciler.Find(y=>y.ogrId==ogrId).okulServisId))
+            @foreach(var servistekiOgrenci in Model.ServistekiOgrenciler.Where(x => x.okulAracId == Model.ServistekiOgrenciler.Find(y=>y.ogrId==ogrId).okulAracId))
                 {
                     count++;
                     <text>

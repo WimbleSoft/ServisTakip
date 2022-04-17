@@ -20,7 +20,8 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44325</IISExpressSSLPort>
+    <IISExpressSSLPort>
+    </IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -143,6 +144,12 @@
     <Compile Include="App_Start\RazorGeneratorMvcStart.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Araclar.cs">
+      <DependentUpon>ServisTakipDatabaseModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AracSoforleri.cs">
+      <DependentUpon>ServisTakipDatabaseModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Atrributes\MyAttributes.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SoforController.cs" />
@@ -153,10 +160,10 @@
     <Compile Include="Faturalar.cs">
       <DependentUpon>ServisTakipDatabaseModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Firmalar.cs">
+    <Compile Include="FirmaAraclari.cs">
       <DependentUpon>ServisTakipDatabaseModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="FirmaServisleri.cs">
+    <Compile Include="Firmalar.cs">
       <DependentUpon>ServisTakipDatabaseModel.tt</DependentUpon>
     </Compile>
     <Compile Include="FirmaSoforleri.cs">
@@ -208,12 +215,6 @@
     <Compile Include="Rotalar.cs">
       <DependentUpon>ServisTakipDatabaseModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Servisler.cs">
-      <DependentUpon>ServisTakipDatabaseModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ServisSoforleri.cs">
-      <DependentUpon>ServisTakipDatabaseModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="ServisTakipDatabaseModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -233,9 +234,6 @@
       <DependentUpon>ServisTakipDatabaseModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Soforler.cs">
-      <DependentUpon>ServisTakipDatabaseModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="sysdiagrams.cs">
       <DependentUpon>ServisTakipDatabaseModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Veliler.cs">
@@ -338,7 +336,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\Firma_Layout.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\Sofor_Layout.cshtml" />
     <Content Include="Views\Shared\Okul_Layout.cshtml" />
     <Content Include="Views\Firma\Anasayfa.cshtml" />
@@ -408,7 +405,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>51379</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:51379/</IISUrl>
+          <IISUrl>http://localhost:50000/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

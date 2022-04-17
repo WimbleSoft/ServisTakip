@@ -21,7 +21,7 @@ namespace ServisTakip
         }
     
         public int rotaId { get; set; }
-        public int okulServisId { get; set; }
+        public int okulAracId { get; set; }
         public int okulId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

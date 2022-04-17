@@ -1,6 +1,6 @@
 ﻿@model ServisTakip.Models.ViewModel
 @{
-    ViewBag.Title = "Servisler";
+    ViewBag.Title = "Araclar";
     Layout = "~/Views/Shared/Veli_Layout.cshtml";
     int veliId = (int)Session["veliId"];
 }
@@ -16,10 +16,10 @@
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>Servisler</h1>
+            <h1>Araclar</h1>
             <ol class="breadcrumb">
                 <li class="active"><a href="#"><i class="fa fa-dashboard"></i> Anasayfa </a></li>
-                <li><a href="#">Servisler</a></li>
+                <li><a href="#">Araclar</a></li>
             </ol>
         </section>
         <section class="content">
@@ -27,7 +27,7 @@
                 <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h2 class="box-title">Servisler</h2>
+                            <h2 class="box-title">Araclar</h2>
                         </div>
                         <div class="box-body">
                             <div class="table-responsive">
@@ -46,11 +46,11 @@
                                         foreach (var servistekiOgrenciler in Model.ServistekiOgrenciler.Where(x => x.ogrId == ogrenciVeli.ogrId))
                                         {
                                     <tr>
-                                        <td>@servistekiOgrenciler.OkulServisleri.Servisler.plaka</td>
+                                        <td>@servistekiOgrenciler.OkulServisleri.Araclar.plaka</td>
                                         <td>
-                                            @if (servistekiOgrenciler.OkulServisleri.Servisler.sonMuayeneTarih.HasValue)
+                                            @if (servistekiOgrenciler.OkulServisleri.Araclar.sonMuayeneTarih.HasValue)
                                                     {
-                                                    <text>@servistekiOgrenciler.OkulServisleri.Servisler.sonMuayeneTarih.Value.Date</text>
+                                                    <text>@servistekiOgrenciler.OkulServisleri.Araclar.sonMuayeneTarih.Value.Date</text>
                                                     }
                                                     else
                                                     {
@@ -58,7 +58,7 @@
                                                     }
                                         </td>
                                         <td>
-                                            @if (servistekiOgrenciler.OkulServisleri.Servisler.aktifMi)
+                                            @if (servistekiOgrenciler.OkulServisleri.Araclar.aktifMi)
                                                     {
                                                     <text>Aktif</text>
                                                     }
@@ -68,9 +68,9 @@
                                                     }
                                         </td>
                                         <td>
-                                            @if (Model.FirmaServisleri.Where(x => x.servisId == servistekiOgrenciler.OkulServisleri.Servisler.servisId).Count() > 0)
+                                            @if (Model.FirmaAraclari.Where(x => x.aracId == servistekiOgrenciler.OkulServisleri.Araclar.aracId).Count() > 0)
                                                     {
-                                                    <text>@servistekiOgrenciler.OkulServisleri.Servisler.FirmaServisleri.First().Firmalar.firAd | @servistekiOgrenciler.OkulServisleri.Servisler.FirmaServisleri.First().Firmalar.firTel</text>
+                                                    <text>@servistekiOgrenciler.OkulServisleri.Araclar.FirmaAraclari.First().Firmalar.firAd | @servistekiOgrenciler.OkulServisleri.Araclar.FirmaAraclari.First().Firmalar.firTel</text>
                                                     }
                                                     else
                                                     {
@@ -412,7 +412,7 @@
                                                                     {
                                                                     <tr>
                                                                         <td>@fatura.faturaId</td>
-                                                                        <td>@fatura.OkulServisleri.Servisler.plaka</td>
+                                                                        <td>@fatura.OkulServisleri.Araclar.plaka</td>
                                                                         <td>
                                                                             @if (fatura.kullanimDurumu)
                                                                                 {
@@ -472,14 +472,14 @@
     };
 </script>
 <script>
-    function haritaYukle(servisId, servisPlaka) {
+    function haritaYukle(aracId, servisPlaka) {
         setInterval(function () {
             $.ajax({
             url: '/Veli/ServisKonumGetir',
             type: 'post',
             async: false,
             dataType: 'json',
-            data: { servisId: servisId, veliId: @((int)Session["veliId"]) },
+            data: { aracId: aracId, veliId: @((int)Session["veliId"]) },
             success:
                 function (servisKonum)
                 {

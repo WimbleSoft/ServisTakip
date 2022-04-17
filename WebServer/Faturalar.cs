@@ -22,7 +22,7 @@ namespace ServisTakip
     
         public int faturaId { get; set; }
         public int ogrId { get; set; }
-        public int okulServisId { get; set; }
+        public int okulAracId { get; set; }
         public System.DateTime kayitTarihi { get; set; }
         public bool kullanimDurumu { get; set; }
         public int servistekiOgrenciId { get; set; }

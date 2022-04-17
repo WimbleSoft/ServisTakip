@@ -35,7 +35,7 @@ namespace ServisTakip.Controllers
                 var sofor = db.Soforler.Where(x => x.sofEmail == sofEmail && x.sofParola == sofParola).FirstOrDefault();
                 if (sofor != null)
                 {
-                    var servisSoforu = db.ServisSoforleri.Where(x => x.sofId == sofor.sofId && x.Servisler.plaka == plaka);
+                    var servisSoforu = db.AracSoforleri.Where(x => x.sofId == sofor.sofId && x.Araclar.plaka == plaka);
                     if (servisSoforu.Count()>0)
                     {
                         soforCookie.CookieSil();
@@ -50,7 +50,7 @@ namespace ServisTakip.Controllers
 
                         Session["sofAd"] = sofor.sofAd;
                         Session["sofSoyad"] = sofor.sofSoyad;
-                        Session["servisId"] = servisSoforu.First().servisId;
+                        Session["aracId"] = servisSoforu.First().aracId;
                         Session["girenid"] = sofor.sofId;
                         Session["sofId"] = sofor.sofId;
                         Session["sofEmail"] = sofor.sofEmail;
@@ -86,7 +86,7 @@ namespace ServisTakip.Controllers
                     var sofor = db.Soforler.Where(x => x.sofEmail == LoginModel.sofEmail && x.sofParola == sofParola).FirstOrDefault();
                     if (sofor != null)
                     {
-                        var servisSoforu = db.ServisSoforleri.Where(x => x.sofId == sofor.sofId && x.Servisler.plaka == LoginModel.plaka);
+                        var servisSoforu = db.AracSoforleri.Where(x => x.sofId == sofor.sofId && x.Araclar.plaka == LoginModel.plaka);
                         if (servisSoforu.Count() > 0)
                         {
                             soforCookie.CookieSil();
@@ -101,7 +101,7 @@ namespace ServisTakip.Controllers
                             Session["sofAd"] = sofor.sofAd;
                             Session["sofSoyad"] = sofor.sofSoyad;
                             Session["girenid"] = sofor.sofId;
-                            Session["servisId"] = servisSoforu.First().servisId;
+                            Session["aracId"] = servisSoforu.First().aracId;
                             Session["sofId"] = sofor.sofId;
                             Session["sofEmail"] = sofor.sofEmail;
                             Session["soforLogin"] = true;
@@ -135,48 +135,48 @@ namespace ServisTakip.Controllers
         }
 
         [Attributes.SoforRoleControl]
-        public ActionResult Servis(int? okulServisId, short? okuldanEveEvdenOkula)
+        public ActionResult Servis(int? okulAracId, short? okuldanEveEvdenOkula)
         {
-            if (okulServisId.HasValue && okuldanEveEvdenOkula.HasValue)
+            if (okulAracId.HasValue && okuldanEveEvdenOkula.HasValue)
             {
                 int sofId = (int)Session["sofId"];
-                var okulServisi = db.OkulServisleri.Find(okulServisId.Value);
-                int servisId = okulServisi.servisId;
+                var okulServisi = db.OkulServisleri.Find(okulAracId.Value);
+                int aracId = okulServisi.aracId;
                 int okulId = okulServisi.okulId;
                 ViewModel vm = new ViewModel
                 {
-                    Duraklar = db.Duraklar.Where(x => x.Rotalar.OkulServisleri.servisId == servisId).ToList(),
-                    Faturalar = db.Faturalar.Where(x => x.okulServisId == okulServisId).ToList(),
+                    Duraklar = db.Duraklar.Where(x => x.Rotalar.OkulServisleri.aracId == aracId).ToList(),
+                    Faturalar = db.Faturalar.Where(x => x.okulAracId == okulAracId).ToList(),
                     Firmalar = db.Firmalar.ToList(),
                     FirmaSoforleri = db.FirmaSoforleri.Where(x => x.sofId == sofId).ToList(),
                     Ilceler = db.Ilceler.ToList(),
                     Iller = db.Iller.ToList(),
                     IndiBindiler = db.IndiBindiler.ToList(),
                     Mudurler = db.Mudurler.ToList(),
-                    Odemeler = db.Odemeler.Where(x=>x.Faturalar.ServistekiOgrenciler.okulServisId==okulServisId).ToList(),
+                    Odemeler = db.Odemeler.Where(x=>x.Faturalar.ServistekiOgrenciler.okulAracId==okulAracId).ToList(),
                     Ogrenciler = db.Ogrenciler.ToList(),
                     OgrenciVelileri = db.OgrenciVelileri.ToList(),
                     OkulCinsleri = db.OkulCinsleri.ToList(),
                     OkulTurleri = db.OkulTurleri.ToList(),
                     Okullar = db.Okullar.Where(x => x.okulId == okulId).ToList(),
-                    OkulServisleri = db.OkulServisleri.Where(x => x.servisId == servisId).ToList(),
-                    Rotalar = db.Rotalar.Where(x => x.okulServisId == okulServisId.Value).ToList(),
-                    Servisler = db.Servisler.Where(x => x.servisId == servisId).ToList(),
-                    ServistekiOgrenciler = db.ServistekiOgrenciler.Where(x => x.okulServisId == okulServisId.Value).ToList(),
-                    ServisSoforleri = db.ServisSoforleri.Where(x => x.servisId == servisId).ToList(),
+                    OkulServisleri = db.OkulServisleri.Where(x => x.aracId == aracId).ToList(),
+                    Rotalar = db.Rotalar.Where(x => x.okulAracId == okulAracId.Value).ToList(),
+                    Araclar = db.Araclar.Where(x => x.aracId == aracId).ToList(),
+                    ServistekiOgrenciler = db.ServistekiOgrenciler.Where(x => x.okulAracId == okulAracId.Value).ToList(),
+                    AracSoforleri = db.AracSoforleri.Where(x => x.aracId == aracId).ToList(),
                     Soforler = db.Soforler.Where(x => x.sofId == sofId).ToList(),
-                    FirmaServisleri = db.FirmaServisleri.Where(x => x.servisId == servisId).ToList(),
+                    FirmaAraclari = db.FirmaAraclari.Where(x => x.aracId == aracId).ToList(),
                     Veliler = db.Veliler.ToList()
                 };
-                ViewBag.authCode = okulServisi.Servisler.authCode;
+                ViewBag.authCode = okulServisi.Araclar.authCode;
                 ViewBag.okuldanEveEvdenOkula = okuldanEveEvdenOkula;
                 ViewBag.sofId = sofId;
-                ViewBag.servisId = servisId;
-                ViewBag.okulServisId = okulServisId;
-                ViewBag.latitude = db.Servisler.Find(servisId).latitude;
-                ViewBag.longitude = db.Servisler.Find(servisId).longitude;
-                ViewBag.okulLatitude = db.OkulServisleri.Find(okulServisId.Value).Okullar.latitude;
-                ViewBag.okulLongitude = db.OkulServisleri.Find(okulServisId.Value).Okullar.longitude;
+                ViewBag.aracId = aracId;
+                ViewBag.okulAracId = okulAracId;
+                ViewBag.latitude = db.Araclar.Find(aracId).latitude;
+                ViewBag.longitude = db.Araclar.Find(aracId).longitude;
+                ViewBag.okulLatitude = db.OkulServisleri.Find(okulAracId.Value).Okullar.latitude;
+                ViewBag.okulLongitude = db.OkulServisleri.Find(okulAracId.Value).Okullar.longitude;
                 return View(vm);
             }
             else
@@ -188,7 +188,7 @@ namespace ServisTakip.Controllers
         public ActionResult Okullar()
         {
             int sofId = (int)Session["sofId"];
-            int servisId = (int)Session["servisId"];
+            int aracId = (int)Session["aracId"];
             ViewModel vm = new ViewModel
             {
                 Duraklar = db.Duraklar.ToList(),
@@ -205,13 +205,13 @@ namespace ServisTakip.Controllers
                 OkulCinsleri = db.OkulCinsleri.ToList(),
                 OkulTurleri = db.OkulTurleri.ToList(),
                 Okullar = db.Okullar.ToList(),
-                OkulServisleri = db.OkulServisleri.Where(x => x.servisId == servisId).ToList(),
-                Rotalar = db.Rotalar.Where(x => x.OkulServisleri.servisId == servisId).ToList(),
-                Servisler = db.Servisler.Where(x => x.servisId == servisId).ToList(),
-                ServistekiOgrenciler = db.ServistekiOgrenciler.Where(x => x.OkulServisleri.servisId == servisId).ToList(),
-                ServisSoforleri = db.ServisSoforleri.Where(x => x.servisId == servisId).ToList(),
+                OkulServisleri = db.OkulServisleri.Where(x => x.aracId == aracId).ToList(),
+                Rotalar = db.Rotalar.Where(x => x.OkulServisleri.aracId == aracId).ToList(),
+                Araclar = db.Araclar.Where(x => x.aracId == aracId).ToList(),
+                ServistekiOgrenciler = db.ServistekiOgrenciler.Where(x => x.OkulServisleri.aracId == aracId).ToList(),
+                AracSoforleri = db.AracSoforleri.Where(x => x.aracId == aracId).ToList(),
                 Soforler = db.Soforler.Where(x => x.sofId == sofId).ToList(),
-                FirmaServisleri = db.FirmaServisleri.Where(x => x.servisId == servisId).ToList(),
+                FirmaAraclari = db.FirmaAraclari.Where(x => x.aracId == aracId).ToList(),
                 Veliler = db.Veliler.ToList()
             };
             return View(vm);
@@ -220,21 +220,21 @@ namespace ServisTakip.Controllers
 
         #region //Asenkron Sorgular
         [HttpPost]
-        public ActionResult ServistekiOgrenciEkle(int okulServisId, int okulId, string ogrAd, string ogrSoyad, double ogrTCno, decimal ucret, TimeSpan alimZamani, TimeSpan teslimZamani, DateTime kayitTarihi, short ogretimTuru, short okuldanEveEvdenOkula)
+        public ActionResult ServistekiOgrenciEkle(int okulAracId, int okulId, string ogrAd, string ogrSoyad, double ogrTCno, decimal ucret, TimeSpan alimZamani, TimeSpan teslimZamani, DateTime kayitTarihi, short ogretimTuru, short okuldanEveEvdenOkula)
         {
             try
             {
                 if(db.Ogrenciler.Where(x=>x.okulId==okulId && x.ogrTCno==ogrTCno && x.ogrAd==ogrAd && x.ogrSoyad==ogrSoyad).Count() > 0)
                 {
                     var ogrenci = db.Ogrenciler.Where(x => x.okulId == okulId && x.ogrTCno == ogrTCno && x.ogrAd == ogrAd && x.ogrSoyad == ogrSoyad).First();
-                    if(db.ServistekiOgrenciler.Where(x => x.ogrId == ogrenci.ogrId && x.okulServisId!=okulServisId).Count() > 0)
+                    if(db.ServistekiOgrenciler.Where(x => x.ogrId == ogrenci.ogrId && x.okulAracId!=okulAracId).Count() > 0)
                     {
                         TempData["Mesaj"] = "Bilgilerini girmiş olduğunuz öğrenci başka bir servisi kullanmaktadır.";
                         TempData["btn-renk"] = "btn-danger";
                     }
                     else
                     {
-                        if (db.ServistekiOgrenciler.Where(x => x.ogrId == ogrenci.ogrId && x.okulServisId == okulServisId).Count() == 0)
+                        if (db.ServistekiOgrenciler.Where(x => x.ogrId == ogrenci.ogrId && x.okulAracId == okulAracId).Count() == 0)
                         {
                             db.ServistekiOgrenciler.Add(new ServistekiOgrenciler
                             {
@@ -243,7 +243,7 @@ namespace ServisTakip.Controllers
                                 kayitTarihi = kayitTarihi,
                                 ogrId = ogrenci.ogrId,
                                 ogretimTuru = ogretimTuru,
-                                okulServisId = okulServisId,
+                                okulAracId = okulAracId,
                                 ucret = ucret
                             });
                             db.SaveChanges();
@@ -266,18 +266,18 @@ namespace ServisTakip.Controllers
                 
                
                 //return Json(true, JsonRequestBehavior.AllowGet);
-                return RedirectToAction("Servis","Sofor",new { okulServisId = okulServisId, okuldanEveEvdenOkula = okuldanEveEvdenOkula });
+                return RedirectToAction("Servis","Sofor",new { okulAracId = okulAracId, okuldanEveEvdenOkula = okuldanEveEvdenOkula });
             }
             catch
             {
                 TempData["Mesaj"] = "Bir hata olustu. Lutfen tekrar deneyiniz.";
                 TempData["btn-renk"] = "btn-danger";
                 //return Json(TempData["Mesaj"], JsonRequestBehavior.AllowGet);
-                return RedirectToAction("Servis", "Sofor", new { okulServisId = okulServisId, okuldanEveEvdenOkula = okuldanEveEvdenOkula });
+                return RedirectToAction("Servis", "Sofor", new { okulAracId = okulAracId, okuldanEveEvdenOkula = okuldanEveEvdenOkula });
             }
         }
         [HttpPost]
-        public ActionResult ServistekiOgrenciGuncelle(int okulServisId, int servistekiOgrenciId, decimal ucret, TimeSpan alimZamani, TimeSpan teslimZamani, short ogretimTuru, short okuldanEveEvdenOkula)
+        public ActionResult ServistekiOgrenciGuncelle(int okulAracId, int servistekiOgrenciId, decimal ucret, TimeSpan alimZamani, TimeSpan teslimZamani, short ogretimTuru, short okuldanEveEvdenOkula)
         {
             try
             {
@@ -298,18 +298,18 @@ namespace ServisTakip.Controllers
 
 
                 //return Json(true, JsonRequestBehavior.AllowGet);
-                return RedirectToAction("Servis", "Sofor", new { okulServisId = okulServisId, okuldanEveEvdenOkula = okuldanEveEvdenOkula });
+                return RedirectToAction("Servis", "Sofor", new { okulAracId = okulAracId, okuldanEveEvdenOkula = okuldanEveEvdenOkula });
             }
             catch
             {
                 TempData["Mesaj"] = "Bir hata olustu. Lutfen tekrar deneyiniz.";
                 TempData["btn-renk"] = "btn-danger";
                 //return Json(TempData["Mesaj"], JsonRequestBehavior.AllowGet);
-                return RedirectToAction("Servis", "Sofor", new { okulServisId = okulServisId, okuldanEveEvdenOkula = okuldanEveEvdenOkula });
+                return RedirectToAction("Servis", "Sofor", new { okulAracId = okulAracId, okuldanEveEvdenOkula = okuldanEveEvdenOkula });
             }
         }
         [HttpGet]
-        public ActionResult ServistekiOgrenciSil(int okulServisId, int servistekiOgrenciId, int sofId, short okuldanEveEvdenOkula)
+        public ActionResult ServistekiOgrenciSil(int okulAracId, int servistekiOgrenciId, int sofId, short okuldanEveEvdenOkula)
         {
             if(sofId == (int)Session["sofId"])
             {
@@ -331,14 +331,14 @@ namespace ServisTakip.Controllers
                         TempData["btn-renk"] = "btn-warning";
                     }
                     //return Json(true, JsonRequestBehavior.AllowGet);
-                    return RedirectToAction("Servis", "Sofor", new { okulServisId = okulServisId, okuldanEveEvdenOkula = okuldanEveEvdenOkula });
+                    return RedirectToAction("Servis", "Sofor", new { okulAracId = okulAracId, okuldanEveEvdenOkula = okuldanEveEvdenOkula });
                 }
                 catch
                 {
                     TempData["Mesaj"] = "Bir hata olustu. Lutfen tekrar deneyiniz.";
                     TempData["btn-renk"] = "btn-danger";
                     //return Json(TempData["Mesaj"], JsonRequestBehavior.AllowGet);
-                    return RedirectToAction("Servis", "Sofor", new { okulServisId = okulServisId, okuldanEveEvdenOkula = okuldanEveEvdenOkula });
+                    return RedirectToAction("Servis", "Sofor", new { okulAracId = okulAracId, okuldanEveEvdenOkula = okuldanEveEvdenOkula });
                 }
             }
             else
@@ -351,7 +351,7 @@ namespace ServisTakip.Controllers
 
 
         [HttpPost]
-        public ActionResult AylikFaturaCikart(int okulServisId, List<int> servistekiOgrIdleri, short okuldanEveEvdenOkula)
+        public ActionResult AylikFaturaCikart(int okulAracId, List<int> servistekiOgrIdleri, short okuldanEveEvdenOkula)
         {
             try
             {
@@ -365,7 +365,7 @@ namespace ServisTakip.Controllers
                             kayitTarihi=DateTime.Now,
                             servistekiOgrenciId=servistekiOgrId,
                             kullanimDurumu=true,
-                            okulServisId= servistekiOgrenci.okulServisId,
+                            okulAracId= servistekiOgrenci.okulAracId,
                             ogrId = servistekiOgrenci.ogrId,
                             faturaTutari = servistekiOgrenci.ucret
                         });
@@ -379,18 +379,18 @@ namespace ServisTakip.Controllers
                         TempData["btn-renk"] = "btn-warning";
                     }
                 }
-                return RedirectToAction("Servis", "Sofor", new { okulServisId = okulServisId, okuldanEveEvdenOkula = okuldanEveEvdenOkula });
+                return RedirectToAction("Servis", "Sofor", new { okulAracId = okulAracId, okuldanEveEvdenOkula = okuldanEveEvdenOkula });
             }
             catch
             {
                 TempData["Mesaj"] = "Bir hata olustu. Lutfen tekrar deneyiniz.";
                 TempData["btn-renk"] = "btn-danger";
                 //return Json(TempData["Mesaj"], JsonRequestBehavior.AllowGet);
-                return RedirectToAction("Servis", "Sofor", new { okulServisId = okulServisId, okuldanEveEvdenOkula = okuldanEveEvdenOkula });
+                return RedirectToAction("Servis", "Sofor", new { okulAracId = okulAracId, okuldanEveEvdenOkula = okuldanEveEvdenOkula });
             }
         }
         [HttpPost]
-        public ActionResult AylikOdemeAl(int okulServisId, int servistekiOgrenciId, decimal ucret, short okuldanEveEvdenOkula)
+        public ActionResult AylikOdemeAl(int okulAracId, int servistekiOgrenciId, decimal ucret, short okuldanEveEvdenOkula)
         {
             try
             {
@@ -448,7 +448,7 @@ namespace ServisTakip.Controllers
                     TempData["Mesaj"] = "Geçerli bir ücret girmediniz.";
                     TempData["btn-renk"] = "btn-warning";
                 }
-                return RedirectToAction("Servis", "Sofor", new { okulServisId = okulServisId, okuldanEveEvdenOkula = okuldanEveEvdenOkula });
+                return RedirectToAction("Servis", "Sofor", new { okulAracId = okulAracId, okuldanEveEvdenOkula = okuldanEveEvdenOkula });
             }
             catch(Exception e)
             {
@@ -456,11 +456,11 @@ namespace ServisTakip.Controllers
                 TempData["Mesaj"] = "Bir hata olustu. Lutfen tekrar deneyiniz.";
                 TempData["btn-renk"] = "btn-danger";
                 //return Json(TempData["Mesaj"], JsonRequestBehavior.AllowGet);
-                return RedirectToAction("Servis", "Sofor", new { okulServisId = okulServisId, okuldanEveEvdenOkula = okuldanEveEvdenOkula });
+                return RedirectToAction("Servis", "Sofor", new { okulAracId = okulAracId, okuldanEveEvdenOkula = okuldanEveEvdenOkula });
             }
         }
         [HttpGet]
-        public ActionResult ServiseBindir(int okulServisId, int servistekiOgrenciId, short okuldanEveEvdenOkula)
+        public ActionResult ServiseBindir(int okulAracId, int servistekiOgrenciId, short okuldanEveEvdenOkula)
         {
             var date = DateTime.Now.Date;
             try
@@ -505,7 +505,7 @@ namespace ServisTakip.Controllers
                     }
                 }
                 db.SaveChanges();
-                return RedirectToAction("Servis", "Sofor", new { okulServisId = okulServisId, okuldanEveEvdenOkula = okuldanEveEvdenOkula });
+                return RedirectToAction("Servis", "Sofor", new { okulAracId = okulAracId, okuldanEveEvdenOkula = okuldanEveEvdenOkula });
             }
             catch (Exception e)
             {
@@ -513,11 +513,11 @@ namespace ServisTakip.Controllers
                 TempData["Mesaj"] = "Bir hata olustu. Lutfen tekrar deneyiniz.";
                 TempData["btn-renk"] = "btn-danger";
                 //return Json(TempData["Mesaj"], JsonRequestBehavior.AllowGet);
-                return RedirectToAction("Servis", "Sofor", new { okulServisId = okulServisId, okuldanEveEvdenOkula = okuldanEveEvdenOkula });
+                return RedirectToAction("Servis", "Sofor", new { okulAracId = okulAracId, okuldanEveEvdenOkula = okuldanEveEvdenOkula });
             }
         }
         [HttpGet]
-        public ActionResult ServistenIndir(int okulServisId, int servistekiOgrenciId, short okuldanEveEvdenOkula)
+        public ActionResult ServistenIndir(int okulAracId, int servistekiOgrenciId, short okuldanEveEvdenOkula)
         {
             var date = DateTime.Now.Date;
             try
@@ -551,7 +551,7 @@ namespace ServisTakip.Controllers
                 }
                 db.SaveChanges();
                 
-                return RedirectToAction("Servis", "Sofor", new { okulServisId = okulServisId, okuldanEveEvdenOkula = okuldanEveEvdenOkula });
+                return RedirectToAction("Servis", "Sofor", new { okulAracId = okulAracId, okuldanEveEvdenOkula = okuldanEveEvdenOkula });
             }
             catch (Exception e)
             {
@@ -559,21 +559,21 @@ namespace ServisTakip.Controllers
                 TempData["Mesaj"] = "Bir hata olustu. Lutfen tekrar deneyiniz.";
                 TempData["btn-renk"] = "btn-danger";
                 //return Json(TempData["Mesaj"], JsonRequestBehavior.AllowGet);
-                return RedirectToAction("Servis", "Sofor", new { okulServisId = okulServisId, okuldanEveEvdenOkula = okuldanEveEvdenOkula });
+                return RedirectToAction("Servis", "Sofor", new { okulAracId = okulAracId, okuldanEveEvdenOkula = okuldanEveEvdenOkula });
             }
         }
 
         [HttpPost]
         [Attributes.SoforRoleControl]
-        public JsonResult ServisKonumGetir(int sofId, int servisId)
+        public JsonResult ServisKonumGetir(int sofId, int aracId)
         {
             if (sofId == Convert.ToInt32(Session["sofId"]))
             {
                 try
                 {
-                    if (db.Servisler.Where(x => x.servisId == servisId).Count() > 0)
+                    if (db.Araclar.Where(x => x.aracId == aracId).Count() > 0)
                     {
-                        var servis = db.Servisler.Find(servisId);
+                        var servis = db.Araclar.Find(aracId);
                         LatLng latlng = new LatLng
                         {
                             lat = servis.latitude,
@@ -622,10 +622,10 @@ namespace ServisTakip.Controllers
                 if (sofor.Count()==1)
                 {
                     int sofId = sofor.First().sofId;
-                    var servisSoforu = db.ServisSoforleri.Where(x => x.sofId == sofId && x.Servisler.plaka == plaka);
+                    var servisSoforu = db.AracSoforleri.Where(x => x.sofId == sofId && x.Araclar.plaka == plaka);
                     if (servisSoforu.Count()==1)
                     {
-                        return Json(servisSoforu.First().Servisler.authCode,JsonRequestBehavior.AllowGet);
+                        return Json(servisSoforu.First().Araclar.authCode,JsonRequestBehavior.AllowGet);
                     }
                     else
                     {
@@ -644,16 +644,16 @@ namespace ServisTakip.Controllers
         }
 
         [HttpPost]
-        public JsonResult ServisKonumGuncelle(string authCode, int servisId, string latitude, string longitude, int sofId)
+        public JsonResult ServisKonumGuncelle(string authCode, int aracId, string latitude, string longitude, int sofId)
         {
             if(sofId == (int)Session["sofId"])
             {
                 try
                 {
-                    var servisSoforu = db.ServisSoforleri.Where(x => x.servisId == servisId && x.sofId == sofId);
+                    var servisSoforu = db.AracSoforleri.Where(x => x.aracId == aracId && x.sofId == sofId);
                     if (servisSoforu.Count() == 1)
                     {
-                        var servis = db.Servisler.Where(x => x.servisId == servisId && x.authCode == authCode);
+                        var servis = db.Araclar.Where(x => x.aracId == aracId && x.authCode == authCode);
                         if (servis.Count() == 1)
                         {
                             latitude = latitude.Substring(0, 10);
@@ -690,7 +690,7 @@ namespace ServisTakip.Controllers
         {
             try
             {
-                var servis = db.Servisler.Where(x => x.authCode == authCode);
+                var servis = db.Araclar.Where(x => x.authCode == authCode);
                 if (servis.Count() == 1)
                 {
                     latitude = latitude.Substring(0, 10);

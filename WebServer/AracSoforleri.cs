@@ -12,14 +12,14 @@ namespace ServisTakip
     using System;
     using System.Collections.Generic;
     
-    public partial class ServisSoforleri
+    public partial class AracSoforleri
     {
         public int servisSoforId { get; set; }
-        public int servisId { get; set; }
+        public int aracId { get; set; }
         public int sofId { get; set; }
         public bool yedekMi { get; set; }
     
-        public virtual Servisler Servisler { get; set; }
+        public virtual Araclar Araclar { get; set; }
         public virtual Soforler Soforler { get; set; }
     }
 }

@@ -12,13 +12,13 @@ namespace ServisTakip
     using System;
     using System.Collections.Generic;
     
-    public partial class FirmaServisleri
+    public partial class FirmaAraclari
     {
-        public int firmaServisId { get; set; }
+        public int firmaAracId { get; set; }
         public int firId { get; set; }
-        public int servisId { get; set; }
+        public int aracId { get; set; }
     
+        public virtual Araclar Araclar { get; set; }
         public virtual Firmalar Firmalar { get; set; }
-        public virtual Servisler Servisler { get; set; }
     }
 }

@@ -12,17 +12,17 @@ namespace ServisTakip
     using System;
     using System.Collections.Generic;
     
-    public partial class Servisler
+    public partial class Araclar
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Servisler()
+        public Araclar()
         {
-            this.FirmaServisleri = new HashSet<FirmaServisleri>();
+            this.FirmaAraclari = new HashSet<FirmaAraclari>();
             this.OkulServisleri = new HashSet<OkulServisleri>();
-            this.ServisSoforleri = new HashSet<ServisSoforleri>();
+            this.AracSoforleri = new HashSet<AracSoforleri>();
         }
     
-        public int servisId { get; set; }
+        public int aracId { get; set; }
         public string plaka { get; set; }
         public Nullable<System.DateTime> sonMuayeneTarih { get; set; }
         public Nullable<System.DateTime> iseGirisTarih { get; set; }
@@ -33,10 +33,10 @@ namespace ServisTakip
         public string longitude { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<FirmaServisleri> FirmaServisleri { get; set; }
+        public virtual ICollection<FirmaAraclari> FirmaAraclari { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OkulServisleri> OkulServisleri { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ServisSoforleri> ServisSoforleri { get; set; }
+        public virtual ICollection<AracSoforleri> AracSoforleri { get; set; }
     }
 }

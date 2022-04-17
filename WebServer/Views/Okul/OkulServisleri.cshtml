@@ -14,7 +14,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Servisler
+                Araclar
                 @if (TempData["mesaj"] != null)
                 {
                     <a class="btn btn-grad btn-md btn-info" value="@TempData["mesaj"]" onclick="$(this).remove()">@TempData["mesaj"]</a>
@@ -48,11 +48,11 @@
                                                 <form action="~/Okul/OkulServisEkle" method="post" role="form" enctype="multipart/form-data">
                                                     <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                                         <label>Servis</label>
-                                                        <select id="servisId" name="servisId" class="select2 form-control" required style="width:100% !important;">
+                                                        <select id="aracId" name="aracId" class="select2 form-control" required style="width:100% !important;">
                                                             <!--.Where(x=>x.Firmalar.Ilceler.il_id == Model.Okullar.Where(x=>x.okulId==okulId).First().Ilceler.Iller.il_id)-->
-                                                            @foreach (var firmaServisleri in Model.FirmaServisleri.Where(x => x.Servisler.aktifMi == true /*&& Model.OkulServisleri.Where(y=>y.okulId==okulId).First().servisId!=x.servisId*/))
+                                                            @foreach (var firmaServisleri in Model.FirmaAraclari.Where(x => x.Araclar.aktifMi == true /*&& Model.OkulServisleri.Where(y=>y.okulId==okulId).First().aracId!=x.aracId*/))
                                                             {
-                                                                <option value="@firmaServisleri.servisId">@firmaServisleri.Servisler.plaka | @firmaServisleri.Servisler.sicilNo | @firmaServisleri.Firmalar.firAd</option>
+                                                                <option value="@firmaServisleri.aracId">@firmaServisleri.Araclar.plaka | @firmaServisleri.Araclar.sicilNo | @firmaServisleri.Firmalar.firAd</option>
                                                             }
                                                         </select>
                                                     </div>
@@ -88,15 +88,15 @@
                                         @foreach (var okulServisi in Model.OkulServisleri.Where(x => x.okulId == okulId))
                                         {
                                             <tr>
-                                                <td>@okulServisi.okulServisId</td>
-                                                <td>@okulServisi.Servisler.plaka</td>
-                                                <td>@okulServisi.Servisler.sicilNo</td>
-                                                <td>@Model.FirmaServisleri.Where(x => x.servisId == okulServisi.servisId).First().Firmalar.firAd</td>
+                                                <td>@okulServisi.okulAracId</td>
+                                                <td>@okulServisi.Araclar.plaka</td>
+                                                <td>@okulServisi.Araclar.sicilNo</td>
+                                                <td>@Model.FirmaAraclari.Where(x => x.aracId == okulServisi.aracId).First().Firmalar.firAd</td>
                                                 <td>
                                                     <span class="button-group">
-                                                        <button type="button" class="btn btn-info fa fa-globe" data-toggle="modal" data-target="#okulServisleri" onclick="haritaYukle('@okulServisi.servisId' , '@okulServisi.Servisler.plaka')"></button>
+                                                        <button type="button" class="btn btn-info fa fa-globe" data-toggle="modal" data-target="#okulServisleri" onclick="haritaYukle('@okulServisi.aracId' , '@okulServisi.Araclar.plaka')"></button>
 
-                                                        <a href="/Okul/OkulServisSil?okulId=@((int)Session["okulId"])&okulServisId=@okulServisi.okulServisId" name="@okulServisi.servisId" onclick="return confirm('Emin Misiniz?')" class="btn btn-danger btn-md btn-grad fa fa-trash"></a>
+                                                        <a href="/Okul/OkulServisSil?okulId=@((int)Session["okulId"])&okulAracId=@okulServisi.okulAracId" name="@okulServisi.aracId" onclick="return confirm('Emin Misiniz?')" class="btn btn-danger btn-md btn-grad fa fa-trash"></a>
                                                     </span>
                                                 </td>
                                             </tr>
@@ -147,7 +147,7 @@
 </script>
 
 <script>
-    function haritaYukle(servisId, servisPlaka) {
+    function haritaYukle(aracId, servisPlaka) {
         $('#map').empty();
         googleMap = null;
         googleMap = new google.maps.Map(document.getElementById('map'), {
@@ -161,7 +161,7 @@
             type: 'post',
             async: false,
             dataType: 'json',
-            data: { servisId: servisId, okulId: okulId },
+            data: { aracId: aracId, okulId: okulId },
             success:
                 function (servisKonum)
                 {

@@ -20,7 +20,7 @@ namespace ServisTakip.Attributes
             if (HttpContext.Current.Session["firmaLogin"] == null || HttpContext.Current.Session["GirilenYer"].ToString() != "Firma")
             {//SESSİON YOKSA COOKİE KONTROL ET
                
-                filterContext.HttpContext.Response.Redirect("~/Firma/FirmaGiris?returnUrl=" + filterContext.HttpContext.Request.FilePath.Substring(7).ToString());
+                filterContext.Result = new RedirectResult("~/Firma/FirmaGiris?returnUrl=" + filterContext.HttpContext.Request.FilePath.Substring(7).ToString());
             }
             else
             {
@@ -30,7 +30,7 @@ namespace ServisTakip.Attributes
                 var firma_rol = servisSistem.Firmalar.Where(x =>x.firId == firId).FirstOrDefault();
                 if (firma_rol == null)
                 {
-                    filterContext.HttpContext.Response.Redirect("~/Firma/Anasayfa");
+                    filterContext.Result = new RedirectResult("~/Firma/Anasayfa");
                     //(string)filterContext.RouteData.Values.Values.LastOrDefault();
                 }
             }
@@ -52,8 +52,8 @@ namespace ServisTakip.Attributes
 
             if (HttpContext.Current.Session["okulLogin"] == null || HttpContext.Current.Session["GirilenYer"].ToString() != "Okul")
             {//SESSİON YOKSA COOKİE KONTROL ET
-                
-                filterContext.HttpContext.Response.Redirect("~/Okul/OkulGiris?returnUrl=" + filterContext.HttpContext.Request.FilePath.Substring(6).ToString());
+
+                filterContext.Result = new RedirectResult("~/Okul/OkulGiris?returnUrl=" + filterContext.HttpContext.Request.FilePath.Substring(6).ToString());
             }
             else
             {
@@ -63,7 +63,7 @@ namespace ServisTakip.Attributes
                 var mudur_rol = servisSistem.Mudurler.Where(x => x.mudurId == mudurId).FirstOrDefault();
                 if (mudur_rol == null)
                 {
-                    filterContext.HttpContext.Response.Redirect("~/Okul/Anasayfa");
+                    filterContext.Result = new RedirectResult("~/Okul/Anasayfa");
                     //(string)filterContext.RouteData.Values.Values.LastOrDefault();
                 }
             }
@@ -87,7 +87,7 @@ namespace ServisTakip.Attributes
             if (HttpContext.Current.Session["soforLogin"] == null || HttpContext.Current.Session["GirilenYer"].ToString() != "Sofor")
             {//SESSİON YOKSA COOKİE KONTROL ET
 
-                filterContext.HttpContext.Response.Redirect("~/Sofor/SoforGiris?returnUrl=" + filterContext.HttpContext.Request.FilePath.Substring(7).ToString());
+                filterContext.Result = new RedirectResult("~/Sofor/SoforGiris?returnUrl=" + filterContext.HttpContext.Request.FilePath.Substring(7).ToString());
             }
             else
             {
@@ -97,7 +97,7 @@ namespace ServisTakip.Attributes
                 var sofor_rol = servisSistem.Soforler.Where(x => x.sofId == sofId).FirstOrDefault();
                 if (sofor_rol == null)
                 {
-                    filterContext.HttpContext.Response.Redirect("~/Sofor/Okullar");
+                    filterContext.Result = new RedirectResult("~/Sofor/Okullar");
                     //(string)filterContext.RouteData.Values.Values.LastOrDefault();
                 }
             }

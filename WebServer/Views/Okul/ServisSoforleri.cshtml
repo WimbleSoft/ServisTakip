@@ -45,15 +45,15 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach (var servisSoforu in Model.ServisSoforleri.Where(x => x.Servisler.OkulServisleri.Where(y => y.okulId == okulId).Count() != 0))
+                                        @foreach (var servisSoforu in Model.AracSoforleri.Where(x => x.Araclar.OkulServisleri.Where(y => y.okulId == okulId).Count() != 0))
                                         {
                                             <tr>
                                                 <td>@servisSoforu.servisSoforId</td>
                                                 <td>@servisSoforu.Soforler.sofAd @servisSoforu.Soforler.sofSoyad</td>
                                                 <td>@servisSoforu.Soforler.sofEmail</td>
                                                 <td>@servisSoforu.Soforler.sofGsm</td>
-                                                <td><a href="/Okul/OkulServisleri" class="btn btn-info">@servisSoforu.Servisler.plaka</a></td>
-                                                <td>@Model.FirmaServisleri.Where(x => x.servisId == servisSoforu.servisId).First().Firmalar.firAd</td>
+                                                <td><a href="/Okul/OkulServisleri" class="btn btn-info">@servisSoforu.Araclar.plaka</a></td>
+                                                <td>@Model.FirmaAraclari.Where(x => x.aracId == servisSoforu.aracId).First().Firmalar.firAd</td>
                                             </tr>
                                         }
                                     </tbody>

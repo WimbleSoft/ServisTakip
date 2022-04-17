@@ -168,14 +168,14 @@ namespace ServisTakip.Controllers
                 ViewModel vm = new ViewModel
                 {
                     Duraklar = db.Duraklar.ToList(),
-                    //Faturalar = db.Faturalar.Where(x=>x.Servisler.FirmaServisleri.Where(y=>y.firId==firId).Count()>0).ToList(),
+                    //Faturalar = db.Faturalar.Where(x=>x.Araclar.FirmaAraclari.Where(y=>y.firId==firId).Count()>0).ToList(),
                     Firmalar = db.Firmalar.ToList(),
                     FirmaSoforleri = db.FirmaSoforleri.ToList(),
                     Ilceler = db.Ilceler.ToList(),
                     Iller = db.Iller.ToList(),
                     IndiBindiler = db.IndiBindiler.ToList(),
                     Mudurler = db.Mudurler.ToList(),
-                    //Odemeler = db.Odemeler.Where(x=>x.Faturalar.Servisler.FirmaServisleri.Where(y=>y.firId == firId).Count()>0).ToList(),
+                    //Odemeler = db.Odemeler.Where(x=>x.Faturalar.Araclar.FirmaAraclari.Where(y=>y.firId == firId).Count()>0).ToList(),
                     Ogrenciler = db.Ogrenciler.ToList(),
                     OgrenciVelileri = db.OgrenciVelileri.ToList(),
                     OkulCinsleri = db.OkulCinsleri.ToList(),
@@ -183,11 +183,11 @@ namespace ServisTakip.Controllers
                     Okullar = db.Okullar.Where(x => x.okulId == okulId).ToList(),
                     OkulServisleri = db.OkulServisleri.ToList(),
                     Rotalar = db.Rotalar.ToList(),
-                    Servisler = db.Servisler.ToList(),
+                    Araclar = db.Araclar.ToList(),
                     ServistekiOgrenciler = db.ServistekiOgrenciler.ToList(),
-                    ServisSoforleri = db.ServisSoforleri.ToList(),
+                    AracSoforleri = db.AracSoforleri.ToList(),
                     Soforler = db.Soforler.ToList(),
-                    FirmaServisleri = db.FirmaServisleri.ToList(),
+                    FirmaAraclari = db.FirmaAraclari.ToList(),
                     Veliler = db.Veliler.ToList()
                 };
                 return View(vm);
@@ -204,14 +204,14 @@ namespace ServisTakip.Controllers
                 ViewModel vm = new ViewModel
                 {
                     Duraklar = db.Duraklar.ToList(),
-                    //Faturalar = db.Faturalar.Where(x=>x.Servisler.FirmaServisleri.Where(y=>y.firId==firId).Count()>0).ToList(),
+                    //Faturalar = db.Faturalar.Where(x=>x.Araclar.FirmaAraclari.Where(y=>y.firId==firId).Count()>0).ToList(),
                     Firmalar = db.Firmalar.ToList(),
                     FirmaSoforleri = db.FirmaSoforleri.ToList(),
                     Ilceler = db.Ilceler.ToList(),
                     Iller = db.Iller.ToList(),
                     IndiBindiler = db.IndiBindiler.ToList(),
                     Mudurler = db.Mudurler.Where(x => x.okulId == okulId).ToList(),
-                    //Odemeler = db.Odemeler.Where(x=>x.Faturalar.Servisler.FirmaServisleri.Where(y=>y.firId == firId).Count()>0).ToList(),
+                    //Odemeler = db.Odemeler.Where(x=>x.Faturalar.Araclar.FirmaAraclari.Where(y=>y.firId == firId).Count()>0).ToList(),
                     Ogrenciler = db.Ogrenciler.Where(x => x.okulId == okulId).ToList(),
                     OgrenciVelileri = db.OgrenciVelileri.ToList(),
                     OkulCinsleri = db.OkulCinsleri.ToList(),
@@ -219,11 +219,11 @@ namespace ServisTakip.Controllers
                     Okullar = db.Okullar.Where(x => x.okulId == okulId).ToList(),
                     OkulServisleri = db.OkulServisleri.Where(x => x.okulId == okulId).ToList(),
                     Rotalar = db.Rotalar.ToList(),
-                    Servisler = db.Servisler.ToList(),
+                    Araclar = db.Araclar.ToList(),
                     ServistekiOgrenciler = db.ServistekiOgrenciler.ToList(),
-                    ServisSoforleri = db.ServisSoforleri.ToList(),
+                    AracSoforleri = db.AracSoforleri.ToList(),
                     Soforler = db.Soforler.ToList(),
-                    FirmaServisleri = db.FirmaServisleri.ToList(),
+                    FirmaAraclari = db.FirmaAraclari.ToList(),
                     Veliler = db.Veliler.ToList()
                 };
                 ViewBag.okulLatitude = db.Okullar.Find(okulId).latitude;
@@ -242,14 +242,14 @@ namespace ServisTakip.Controllers
                 ViewModel vm = new ViewModel
                 {
                     Duraklar = db.Duraklar.ToList(),
-                    //Faturalar = db.Faturalar.Where(x=>x.Servisler.FirmaServisleri.Where(y=>y.firId==firId).Count()>0).ToList(),
+                    //Faturalar = db.Faturalar.Where(x=>x.Araclar.FirmaAraclari.Where(y=>y.firId==firId).Count()>0).ToList(),
                     Firmalar = db.Firmalar.ToList(),
                     FirmaSoforleri = db.FirmaSoforleri.ToList(),
                     Ilceler = db.Ilceler.ToList(),
                     Iller = db.Iller.ToList(),
                     IndiBindiler = db.IndiBindiler.ToList(),
                     Mudurler = db.Mudurler.Where(x => x.okulId == okulId).ToList(),
-                    //Odemeler = db.Odemeler.Where(x=>x.Faturalar.Servisler.FirmaServisleri.Where(y=>y.firId == firId).Count()>0).ToList(),
+                    //Odemeler = db.Odemeler.Where(x=>x.Faturalar.Araclar.FirmaAraclari.Where(y=>y.firId == firId).Count()>0).ToList(),
                     Ogrenciler = db.Ogrenciler.Where(x => x.okulId == okulId).ToList(),
                     OgrenciVelileri = db.OgrenciVelileri.ToList(),
                     OkulCinsleri = db.OkulCinsleri.ToList(),
@@ -257,11 +257,11 @@ namespace ServisTakip.Controllers
                     Okullar = db.Okullar.Where(x => x.okulId == okulId).ToList(),
                     OkulServisleri = db.OkulServisleri.Where(x => x.okulId == okulId).ToList(),
                     Rotalar = db.Rotalar.ToList(),
-                    Servisler = db.Servisler.ToList(),
+                    Araclar = db.Araclar.ToList(),
                     ServistekiOgrenciler = db.ServistekiOgrenciler.ToList(),
-                    ServisSoforleri = db.ServisSoforleri.ToList(),
+                    AracSoforleri = db.AracSoforleri.ToList(),
                     Soforler = db.Soforler.ToList(),
-                    FirmaServisleri = db.FirmaServisleri.ToList(),
+                    FirmaAraclari = db.FirmaAraclari.ToList(),
                     Veliler = db.Veliler.ToList()
                 };
                 return View(vm);
@@ -280,7 +280,7 @@ namespace ServisTakip.Controllers
                     ViewModel vm = new ViewModel
                     {
                         Duraklar = db.Duraklar.Where(x => x.ogrId == ogrId).ToList(),
-                        //Faturalar = db.Faturalar.Where(x=>x.Servisler.FirmaServisleri.Where(y=>y.firId==firId).Count()>0).ToList(),
+                        //Faturalar = db.Faturalar.Where(x=>x.Araclar.FirmaAraclari.Where(y=>y.firId==firId).Count()>0).ToList(),
                         Firmalar = db.Firmalar.ToList(),
                         FirmaSoforleri = db.FirmaSoforleri.ToList(),
                         Ilceler = db.Ilceler.ToList(),
@@ -294,19 +294,19 @@ namespace ServisTakip.Controllers
                         Okullar = db.Okullar.Where(x => x.okulId == okulId).ToList(),
                         OkulServisleri = db.OkulServisleri.Where(x => x.okulId == okulId).ToList(),
                         Rotalar = db.Rotalar.ToList(),
-                        Servisler = db.Servisler.ToList(),
+                        Araclar = db.Araclar.ToList(),
                         ServistekiOgrenciler = db.ServistekiOgrenciler.ToList(),
-                        ServisSoforleri = db.ServisSoforleri.ToList(),
+                        AracSoforleri = db.AracSoforleri.ToList(),
                         Soforler = db.Soforler.ToList(),
-                        FirmaServisleri = db.FirmaServisleri.ToList(),
+                        FirmaAraclari = db.FirmaAraclari.ToList(),
                         Veliler = db.Veliler.ToList()
                     };
                     ViewBag.ogrId = ogrId;
                     ViewBag.okulLatitude = db.Okullar.Find(okulId).latitude;
                     ViewBag.okulLongitude = db.Okullar.Find(okulId).longitude;
-                    ViewBag.servisLatitude = db.ServistekiOgrenciler.Where(x=>x.ogrId==ogrId).First().OkulServisleri.Servisler.latitude;
-                    ViewBag.servisLongitude = db.ServistekiOgrenciler.Where(x => x.ogrId == ogrId).First().OkulServisleri.Servisler.longitude;
-                    ViewBag.servisId = db.ServistekiOgrenciler.Where(x => x.ogrId == ogrId).First().OkulServisleri.servisId;
+                    ViewBag.servisLatitude = db.ServistekiOgrenciler.Where(x=>x.ogrId==ogrId).First().OkulServisleri.Araclar.latitude;
+                    ViewBag.servisLongitude = db.ServistekiOgrenciler.Where(x => x.ogrId == ogrId).First().OkulServisleri.Araclar.longitude;
+                    ViewBag.aracId = db.ServistekiOgrenciler.Where(x => x.ogrId == ogrId).First().OkulServisleri.aracId;
                     return View(vm);
                 }
                 else
@@ -328,14 +328,14 @@ namespace ServisTakip.Controllers
                 ViewModel vm = new ViewModel
                 {
                     Duraklar = db.Duraklar.ToList(),
-                    //Faturalar = db.Faturalar.Where(x=>x.Servisler.FirmaServisleri.Where(y=>y.firId==firId).Count()>0).ToList(),
+                    //Faturalar = db.Faturalar.Where(x=>x.Araclar.FirmaAraclari.Where(y=>y.firId==firId).Count()>0).ToList(),
                     Firmalar = db.Firmalar.ToList(),
                     FirmaSoforleri = db.FirmaSoforleri.ToList(),
                     Ilceler = db.Ilceler.ToList(),
                     Iller = db.Iller.ToList(),
                     IndiBindiler = db.IndiBindiler.ToList(),
                     Mudurler = db.Mudurler.Where(x => x.okulId == okulId).ToList(),
-                    //Odemeler = db.Odemeler.Where(x=>x.Faturalar.Servisler.FirmaServisleri.Where(y=>y.firId == firId).Count()>0).ToList(),
+                    //Odemeler = db.Odemeler.Where(x=>x.Faturalar.Araclar.FirmaAraclari.Where(y=>y.firId == firId).Count()>0).ToList(),
                     Ogrenciler = db.Ogrenciler.Where(x => x.okulId == okulId).ToList(),
                     OgrenciVelileri = db.OgrenciVelileri.ToList(),
                     OkulCinsleri = db.OkulCinsleri.ToList(),
@@ -343,11 +343,11 @@ namespace ServisTakip.Controllers
                     Okullar = db.Okullar.Where(x => x.okulId == okulId).ToList(),
                     OkulServisleri = db.OkulServisleri.Where(x => x.okulId == okulId).ToList(),
                     Rotalar = db.Rotalar.ToList(),
-                    Servisler = db.Servisler.ToList(),
+                    Araclar = db.Araclar.ToList(),
                     ServistekiOgrenciler = db.ServistekiOgrenciler.ToList(),
-                    ServisSoforleri = db.ServisSoforleri.ToList(),
+                    AracSoforleri = db.AracSoforleri.ToList(),
                     Soforler = db.Soforler.ToList(),
-                    FirmaServisleri = db.FirmaServisleri.ToList(),
+                    FirmaAraclari = db.FirmaAraclari.ToList(),
                     Veliler = db.Veliler.ToList()
                 };
                 ViewBag.okulId = okulId;
@@ -357,7 +357,7 @@ namespace ServisTakip.Controllers
         }
 
         [Attributes.OkulRoleControl]
-        public ActionResult ServisSoforleri()
+        public ActionResult AracSoforleri()
         {
             int okulId = (int)Session["okulId"];
             if (true == (bool)Session["okulLogin"])
@@ -365,14 +365,14 @@ namespace ServisTakip.Controllers
                 ViewModel vm = new ViewModel
                 {
                     Duraklar = db.Duraklar.ToList(),
-                    //Faturalar = db.Faturalar.Where(x=>x.Servisler.FirmaServisleri.Where(y=>y.firId==firId).Count()>0).ToList(),
+                    //Faturalar = db.Faturalar.Where(x=>x.Araclar.FirmaAraclari.Where(y=>y.firId==firId).Count()>0).ToList(),
                     Firmalar = db.Firmalar.ToList(),
                     FirmaSoforleri = db.FirmaSoforleri.ToList(),
                     Ilceler = db.Ilceler.ToList(),
                     Iller = db.Iller.ToList(),
                     IndiBindiler = db.IndiBindiler.ToList(),
                     Mudurler = db.Mudurler.ToList(),
-                    //Odemeler = db.Odemeler.Where(x=>x.Faturalar.Servisler.FirmaServisleri.Where(y=>y.firId == firId).Count()>0).ToList(),
+                    //Odemeler = db.Odemeler.Where(x=>x.Faturalar.Araclar.FirmaAraclari.Where(y=>y.firId == firId).Count()>0).ToList(),
                     Ogrenciler = db.Ogrenciler.ToList(),
                     OgrenciVelileri = db.OgrenciVelileri.ToList(),
                     OkulCinsleri = db.OkulCinsleri.ToList(),
@@ -380,11 +380,11 @@ namespace ServisTakip.Controllers
                     Okullar = db.Okullar.Where(x => x.okulId == okulId).ToList(),
                     OkulServisleri = db.OkulServisleri.ToList(),
                     Rotalar = db.Rotalar.ToList(),
-                    Servisler = db.Servisler.ToList(),
+                    Araclar = db.Araclar.ToList(),
                     ServistekiOgrenciler = db.ServistekiOgrenciler.ToList(),
-                    ServisSoforleri = db.ServisSoforleri.ToList(),
+                    AracSoforleri = db.AracSoforleri.ToList(),
                     Soforler = db.Soforler.ToList(),
-                    FirmaServisleri = db.FirmaServisleri.ToList(),
+                    FirmaAraclari = db.FirmaAraclari.ToList(),
                     Veliler = db.Veliler.ToList()
                 };
                 return View(vm);
@@ -404,7 +404,7 @@ namespace ServisTakip.Controllers
             {
                 try
                 {
-                    if (db.Servisler.Where(x => x.servisId == okulServisleri.servisId && x.authCode == authCode).Count() > 0)
+                    if (db.Araclar.Where(x => x.aracId == okulServisleri.aracId && x.authCode == authCode).Count() > 0)
                     {
                         db.OkulServisleri.Add(okulServisleri);
                         db.SaveChanges();
@@ -438,13 +438,13 @@ namespace ServisTakip.Controllers
 
         [HttpGet]
         [Attributes.OkulRoleControl]
-        public ActionResult OkulServisSil(int okulServisId, int okulId)
+        public ActionResult OkulServisSil(int okulAracId, int okulId)
         {
             if (okulId == (int)Session["okulId"])
             {
                 try
                 {
-                    db.OkulServisleri.RemoveRange(db.OkulServisleri.Where(d => d.okulServisId == okulServisId));
+                    db.OkulServisleri.RemoveRange(db.OkulServisleri.Where(d => d.okulAracId == okulAracId));
                     db.SaveChanges();
                     TempData["Mesaj"] = "İşlem Başarılı."; TempData["Btn-Renk"] = "btn-info";
                     return RedirectToAction("OkulServisleri", "Okul");
@@ -469,15 +469,15 @@ namespace ServisTakip.Controllers
 
         [HttpPost]
         [Attributes.OkulRoleControl]
-        public JsonResult ServisKonumGetir(int okulId, int servisId)
+        public JsonResult ServisKonumGetir(int okulId, int aracId)
         {
             if (okulId == (int)Session["okulId"])
             {
                 try
                 {
-                    if (db.Servisler.Where(x=>x.servisId==servisId).Count()> 0)
+                    if (db.Araclar.Where(x=>x.aracId==aracId).Count()> 0)
                     {
-                        var servis = db.Servisler.Find(servisId);
+                        var servis = db.Araclar.Find(aracId);
                         LatLng latlng = new LatLng
                         {
                             lat = servis.latitude,

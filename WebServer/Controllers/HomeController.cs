@@ -32,11 +32,11 @@ namespace ServisTakip.Controllers
                 Okullar = db.Okullar.ToList(),
                 OkulServisleri = db.OkulServisleri.ToList(),
                 Rotalar = db.Rotalar.ToList(),
-                Servisler = db.Servisler.ToList(),
+                Araclar = db.Araclar.ToList(),
                 ServistekiOgrenciler = db.ServistekiOgrenciler.ToList(),
-                ServisSoforleri = db.ServisSoforleri.ToList(),
+                AracSoforleri = db.AracSoforleri.ToList(),
                 Soforler = db.Soforler.ToList(),
-                FirmaServisleri = db.FirmaServisleri.ToList(),
+                FirmaAraclari = db.FirmaAraclari.ToList(),
                 Veliler = db.Veliler.ToList()
             };
             return View(vm);
@@ -61,11 +61,11 @@ namespace ServisTakip.Controllers
                 Okullar = db.Okullar.ToList(),
                 OkulServisleri = db.OkulServisleri.ToList(),
                 Rotalar = db.Rotalar.ToList(),
-                Servisler = db.Servisler.ToList(),
+                Araclar = db.Araclar.ToList(),
                 ServistekiOgrenciler = db.ServistekiOgrenciler.ToList(),
-                ServisSoforleri = db.ServisSoforleri.ToList(),
+                AracSoforleri = db.AracSoforleri.ToList(),
                 Soforler = db.Soforler.ToList(),
-                FirmaServisleri = db.FirmaServisleri.ToList(),
+                FirmaAraclari = db.FirmaAraclari.ToList(),
                 Veliler = db.Veliler.ToList()
             };
             return View(vm);
@@ -91,11 +91,11 @@ namespace ServisTakip.Controllers
                 Okullar = db.Okullar.ToList(),
                 OkulServisleri = db.OkulServisleri.ToList(),
                 Rotalar = db.Rotalar.ToList(),
-                Servisler = db.Servisler.ToList(),
+                Araclar = db.Araclar.ToList(),
                 ServistekiOgrenciler = db.ServistekiOgrenciler.ToList(),
-                ServisSoforleri = db.ServisSoforleri.ToList(),
+                AracSoforleri = db.AracSoforleri.ToList(),
                 Soforler = db.Soforler.ToList(),
-                FirmaServisleri = db.FirmaServisleri.ToList(),
+                FirmaAraclari = db.FirmaAraclari.ToList(),
                 Veliler = db.Veliler.ToList()
             };
             return View(vm);

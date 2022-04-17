@@ -148,7 +148,7 @@
                                                             if (Model.IndiBindiler.Where(x => x.servistekiOgrenciId == servistekiOgrenci.servistekiOgrenciId && x.okuldanEveEvdenOkula == 1 && x.bindiTarihi.Date == DateTime.Now.Date).Count() == 0 && Model.IndiBindiler.Where(x => x.servistekiOgrenciId == servistekiOgrenci.servistekiOgrenciId && x.okuldanEveEvdenOkula == 0 && x.bindiTarihi.Date == DateTime.Now.Date).Count() == 0)
                                                             {//Bugün hiç evden çıkış yoksa
                                                                 <a style="font-size:18px !important; color:forestgreen;" class="btn btn-default btn-sm"
-                                                                    href="/Sofor/ServiseBindir?servistekiOgrenciId=@servistekiOgrenci.servistekiOgrenciId&okulServisId=@servistekiOgrenci.okulServisId&okuldanEveEvdenOkula=1">
+                                                                    href="/Sofor/ServiseBindir?servistekiOgrenciId=@servistekiOgrenci.servistekiOgrenciId&okulAracId=@servistekiOgrenci.okulAracId&okuldanEveEvdenOkula=1">
                                                                     Evden Okula Servise Bindir <i class="fa fa-arrow-circle-o-up"></i>
                                                                 </a>
                                                             }
@@ -167,7 +167,7 @@
                                                             if (Model.IndiBindiler.Where(x => x.servistekiOgrenciId == servistekiOgrenci.servistekiOgrenciId && x.okuldanEveEvdenOkula == 1 && x.bindiTarihi.Date == DateTime.Now.Date && x.indiTarihi.Date != DateTime.Now.Date).Count() == 1)
                                                             {//servise binmişse ve henüz inmemişse servistedir ve servisten okula inmelidir
                                                                 <a style="font-size:18px !important;" class="btn btn-default btn-sm"
-                                                                   href="/Sofor/ServistenIndir?servistekiOgrenciId=@servistekiOgrenci.servistekiOgrenciId&okulServisId=@servistekiOgrenci.okulServisId&okuldanEveEvdenOkula=1">
+                                                                   href="/Sofor/ServistenIndir?servistekiOgrenciId=@servistekiOgrenci.servistekiOgrenciId&okulAracId=@servistekiOgrenci.okulAracId&okuldanEveEvdenOkula=1">
                                                                     Servisten Okula İndir <i class="fa fa-arrow-circle-o-down"></i>
                                                                 </a>
                                                             }
@@ -183,7 +183,7 @@
                                                             if (Model.IndiBindiler.Where(x => x.servistekiOgrenciId == servistekiOgrenci.servistekiOgrenciId && x.okuldanEveEvdenOkula == 1 && x.bindiTarihi.Date == DateTime.Now.Date && x.indiTarihi.Date == DateTime.Now.Date).Count() == 1)
                                                             {//evden çıktı okula indi ise sabah servis kullanmıştır okuldan eve servise binebilir
                                                                 <a style="font-size:18px !important; color:forestgreen;" class="btn btn-default btn-sm"
-                                                                    href="/Sofor/ServiseBindir?servistekiOgrenciId=@servistekiOgrenci.servistekiOgrenciId&okulServisId=@servistekiOgrenci.okulServisId&okuldanEveEvdenOkula=0">
+                                                                    href="/Sofor/ServiseBindir?servistekiOgrenciId=@servistekiOgrenci.servistekiOgrenciId&okulAracId=@servistekiOgrenci.okulAracId&okuldanEveEvdenOkula=0">
                                                                     Evden Servisle Geldi, Okuldan Servise Bindir <i class="fa fa-arrow-circle-o-up"></i>
                                                                 </a>
                                                             }
@@ -197,14 +197,14 @@
                                                             if (Model.IndiBindiler.Where(x => x.servistekiOgrenciId == servistekiOgrenci.servistekiOgrenciId && x.okuldanEveEvdenOkula == 0 && x.bindiTarihi.Date == DateTime.Now.Date && x.indiTarihi.Date != DateTime.Now.Date).Count() == 1)
                                                             {//servise binmişse ve henüz inmemişse servistedir ve servisten eve inmelidir
                                                                 <a style="font-size:18px !important;" class="btn btn-default btn-sm"
-                                                                    href="/Sofor/ServistenIndir?servistekiOgrenciId=@servistekiOgrenci.servistekiOgrenciId&okulServisId=@servistekiOgrenci.okulServisId&okuldanEveEvdenOkula=0">
+                                                                    href="/Sofor/ServistenIndir?servistekiOgrenciId=@servistekiOgrenci.servistekiOgrenciId&okulAracId=@servistekiOgrenci.okulAracId&okuldanEveEvdenOkula=0">
                                                                     Servisten Eve İndir <i class="fa fa-arrow-circle-o-down"></i>
                                                                 </a>
                                                             }
                                                             if (Model.IndiBindiler.Where(x => x.servistekiOgrenciId == servistekiOgrenci.servistekiOgrenciId && x.okuldanEveEvdenOkula == 1 && x.bindiTarihi.Date == DateTime.Now.Date).Count() == 0 && Model.IndiBindiler.Where(x => x.servistekiOgrenciId == servistekiOgrenci.servistekiOgrenciId && x.okuldanEveEvdenOkula == 0 && x.bindiTarihi.Date == DateTime.Now.Date).Count() == 0)
                                                             {//evden okula hiç çıkmadıysa sabah servis kullanmamıştır ve okuldan eve servise binebilir
                                                                 <a style="font-size:18px !important; color:forestgreen;" class="btn btn-default btn-sm"
-                                                                   href="/Sofor/ServiseBindir?servistekiOgrenciId=@servistekiOgrenci.servistekiOgrenciId&okulServisId=@servistekiOgrenci.okulServisId&okuldanEveEvdenOkula=0">
+                                                                   href="/Sofor/ServiseBindir?servistekiOgrenciId=@servistekiOgrenci.servistekiOgrenciId&okulAracId=@servistekiOgrenci.okulAracId&okuldanEveEvdenOkula=0">
                                                                     Evden Servise Binmedi, Servise Bindir <i class="fa fa-arrow-circle-o-up"></i>
                                                                 </a>
                                                             }
@@ -398,11 +398,11 @@
                             </div>
                             <div class="box-body bg-gray-active">
                                 <form action="~/Sofor/ServistekiOgrenciEkle" method="post" role="form" enctype="multipart/form-data">
-                                    <input name="okulServisId" required type="text" id="okulServisId" hidden="hidden" value="@ViewBag.okulServisId">
+                                    <input name="okulAracId" required type="text" id="okulAracId" hidden="hidden" value="@ViewBag.okulAracId">
                                     <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                         <label>Okul</label>
                                         <select id="okulId" name="okulId" class="select2 form-control" required style="width:100% !important;">
-                                            @foreach (var okulServisi in Model.OkulServisleri.Where(x => x.servisId == ViewBag.servisId))
+                                            @foreach (var okulServisi in Model.OkulServisleri.Where(x => x.aracId == ViewBag.aracId))
                                             {
                                                 foreach (var okul in Model.Okullar.Where(x => x.okulId == okulServisi.okulId))
                                                 {
@@ -480,7 +480,7 @@
                                         <td>
                                             <form action="~/Sofor/ServistekiOgrenciGuncelle" method="post" role="form" enctype="multipart/form-data">
                                                 <input name="servistekiOgrenciId" required type="text" hidden="hidden" value="@servistekiOgrenci.servistekiOgrenciId">
-                                                <input name="okulServisId" required type="text" hidden="hidden" value="@servistekiOgrenci.okulServisId">
+                                                <input name="okulAracId" required type="text" hidden="hidden" value="@servistekiOgrenci.okulAracId">
 
                                                 <div class="col-md-2 col-lg-2 col-sm-12 col-xs-12">
                                                     <span>Teslim</span>
@@ -510,7 +510,7 @@
                                                     <br>
                                                     <div class="btn-group">
                                                         <button type="submit" class="btn btn-md btn-info">Güncelle</button>
-                                                        <a href="/Sofor/ServistekiOgrenciSil?servistekiOgrenciId=@servistekiOgrenci.servistekiOgrenciId&sofId=@((int)Session["sofId"])&okulServisId=@ViewBag.okulServisId" class="btn btn-md btn-danger" onclick="return confirm('Öğrenciyi servisten kaldırmak istediğinize emin misiniz?')">Öğrenci Sil</a>
+                                                        <a href="/Sofor/ServistekiOgrenciSil?servistekiOgrenciId=@servistekiOgrenci.servistekiOgrenciId&sofId=@((int)Session["sofId"])&okulAracId=@ViewBag.okulAracId" class="btn btn-md btn-danger" onclick="return confirm('Öğrenciyi servisten kaldırmak istediğinize emin misiniz?')">Öğrenci Sil</a>
                                                     </div>
                                                 </div>
                                             </form>
@@ -542,7 +542,7 @@
                                 <div class="box-body bg-gray-active">
                                     <div class="row">
                                         <form action="~/Sofor/AylikFaturaCikart" method="post" role="form" enctype="multipart/form-data">
-                                            <input name="okulServisId" required type="text" id="okulServisId" hidden="hidden" value="@ViewBag.okulServisId"/>
+                                            <input name="okulAracId" required type="text" id="okulAracId" hidden="hidden" value="@ViewBag.okulAracId"/>
                                             <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                                 <h4 style="color:red;">Bu ay fatura çıkartılmamış öğrenciler listeleniyor.</h4>
                                                 <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
@@ -563,7 +563,7 @@
                                     </div>
                                     <div class="row">
                                         <form action="~/Sofor/AylikOdemeAl" method="post" role="form" enctype="multipart/form-data">
-                                            <input name="okulServisId" required type="text" id="okulServisId" hidden="hidden" value="@ViewBag.okulServisId">
+                                            <input name="okulAracId" required type="text" id="okulAracId" hidden="hidden" value="@ViewBag.okulAracId">
                                             <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                                 <h4 style="color:red;">Bu ay faturası olup ücretinin tamamı ödenmemiş öğrenciler listeleniyor.</h4>
                                                 <div class="col-md-9 col-lg-9 col-xs-12 col-sm-12">
@@ -693,7 +693,7 @@ function getLatLng() {
         type: 'post',
         async: false,
         dataType: 'json',
-        data: { servisId: @((int)Session["servisId"]), sofId: @((int)Session["sofId"]) },
+        data: { aracId: @((int)Session["aracId"]), sofId: @((int)Session["sofId"]) },
         success: function (servisKonum) {
             if (servisKonum != -1 || servisKonum != 1) {
                 return servisKonum;
@@ -765,7 +765,7 @@ function getLatLng() {
         type: 'post',
         async: false,
         dataType: 'json',
-        data: { servisId: @((int)Session["servisId"]), sofId: @((int)Session["sofId"]) },
+        data: { aracId: @((int)Session["aracId"]), sofId: @((int)Session["sofId"]) },
         success: function (servisKonum) {
             if (servisKonum != -1 || servisKonum != 1) {
                     placemarq = new ymaps.Placemark([servisKonum.lat, servisKonum.lng], {}, {

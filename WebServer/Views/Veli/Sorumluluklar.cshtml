@@ -55,7 +55,7 @@
                                                 <td>@ogrenciVeli.Ogrenciler.ogrGsm</td>
                                                 <td>
                                                     <span class="button-group">
-                                                        <button type="button" class="btn btn-info fa fa-plus" data-toggle="modal" data-target="#myModalAnlikDurum_@ogrenciVeli.ogrId" @{ if (ogrenciVeli.Ogrenciler.ServistekiOgrenciler.First() != null) { <text> onclick="haritaYukle('@ogrenciVeli.Ogrenciler.ServistekiOgrenciler.First().OkulServisleri.servisId' , '@ogrenciVeli.Ogrenciler.ServistekiOgrenciler.First().OkulServisleri.Servisler.plaka')" </text> } }></button>
+                                                        <button type="button" class="btn btn-info fa fa-plus" data-toggle="modal" data-target="#myModalAnlikDurum_@ogrenciVeli.ogrId" @{ if (ogrenciVeli.Ogrenciler.ServistekiOgrenciler.First() != null) { <text> onclick="haritaYukle('@ogrenciVeli.Ogrenciler.ServistekiOgrenciler.First().OkulServisleri.aracId' , '@ogrenciVeli.Ogrenciler.ServistekiOgrenciler.First().OkulServisleri.Araclar.plaka')" </text> } }></button>
                                                         <button type="button" class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="#myModalOgrenciDuzenle_@ogrenciVeli.ogrId"></button>
                                                         <button type="button" class="btn btn-danger fa fa-question" data-toggle="modal" data-target="#myModalDetay_@ogrenciVeli.ogrId"></button>
                                                         <button type="button" class="btn btn-success fa fa-credit-card" data-toggle="modal" data-target="#myModalFaturalar_@ogrenciVeli.ogrId"></button>
@@ -412,7 +412,7 @@
                                                                     {
                                                                     <tr>
                                                                         <td>@fatura.faturaId</td>
-                                                                        <td>@fatura.OkulServisleri.Servisler.plaka</td>
+                                                                        <td>@fatura.OkulServisleri.Araclar.plaka</td>
                                                                         <td>
                                                                             @if (fatura.kullanimDurumu)
                                                                                 {
@@ -473,7 +473,7 @@
     };
 </script>
 <script>
-    function haritaYukle(servisId, servisPlaka) {
+    function haritaYukle(aracId, servisPlaka) {
         $('#map').empty();
         googleMap = new google.maps.Map(document.getElementsByName('map')[0], {
             zoom: 11,
@@ -486,7 +486,7 @@
             type: 'post',
             async: false,
             dataType: 'json',
-            data: { servisId: servisId, veliId: @((int)Session["veliId"]) },
+            data: { aracId: aracId, veliId: @((int)Session["veliId"]) },
             success:
                 function (servisKonum)
                 {

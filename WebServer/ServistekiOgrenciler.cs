@@ -23,7 +23,7 @@ namespace ServisTakip
     
         public int servistekiOgrenciId { get; set; }
         public int ogrId { get; set; }
-        public int okulServisId { get; set; }
+        public int okulAracId { get; set; }
         public System.TimeSpan alimZamani { get; set; }
         public System.TimeSpan teslimZamani { get; set; }
         public decimal ucret { get; set; }

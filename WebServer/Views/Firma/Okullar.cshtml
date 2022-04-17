@@ -89,10 +89,10 @@
                                                     <div class="form-group">
                                                         <div class="col-md-9 col-lg-9 col-xs-12 col-sm-12">
                                                             <label>Servis</label>
-                                                            <select name="servisId" id="servisId" required="required" class="select2 form-control">
-                                                                @foreach (var servis in Model.Servisler.Where(x => x.aktifMi == true && x.OkulServisleri.Where(y=>y.servisId == x.servisId).Count()==0))
+                                                            <select name="aracId" id="aracId" required="required" class="select2 form-control">
+                                                                @foreach (var servis in Model.Araclar.Where(x => x.aktifMi == true && x.OkulServisleri.Where(y=>y.aracId == x.aracId).Count()==0))
                                                                 {
-                                                                    <option value="@servis.servisId">@servis.plaka | @servis.sicilNo</option>
+                                                                    <option value="@servis.aracId">@servis.plaka | @servis.sicilNo</option>
                                                                 }
                                                             </select>
                                                         </div>
@@ -119,11 +119,11 @@
                                                     @foreach (var okulServisi in Model.OkulServisleri.Where(x=>x.okulId==okul.okulId))
                                                     {
                                                         <tr>
-                                                            <td>@okulServisi.okulServisId</td>
-                                                            <td>@okulServisi.Servisler.plaka</td>
+                                                            <td>@okulServisi.okulAracId</td>
+                                                            <td>@okulServisi.Araclar.plaka</td>
                                                             <td>
                                                                 <span class="button-group">
-                                                                    <a href="/Firma/OkulServisSil?okulServisId=@okulServisi.okulServisId&firId=@((int)Session["firId"])" name="@okulServisi.okulServisId" onclick="confirm('Emin misiniz?')" class="btn btn-danger btn-md btn-grad fa fa-trash"></a>
+                                                                    <a href="/Firma/OkulServisSil?okulAracId=@okulServisi.okulAracId&firId=@((int)Session["firId"])" name="@okulServisi.okulAracId" onclick="confirm('Emin misiniz?')" class="btn btn-danger btn-md btn-grad fa fa-trash"></a>
                                                                 </span>
                                                             </td>
                                                         </tr>

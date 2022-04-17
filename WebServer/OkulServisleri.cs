@@ -22,14 +22,14 @@ namespace ServisTakip
             this.ServistekiOgrenciler = new HashSet<ServistekiOgrenciler>();
         }
     
-        public int okulServisId { get; set; }
+        public int okulAracId { get; set; }
         public int okulId { get; set; }
-        public int servisId { get; set; }
+        public int aracId { get; set; }
     
+        public virtual Araclar Araclar { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Faturalar> Faturalar { get; set; }
         public virtual Okullar Okullar { get; set; }
-        public virtual Servisler Servisler { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Rotalar> Rotalar { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

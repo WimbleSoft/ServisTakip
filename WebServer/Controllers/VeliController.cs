@@ -138,11 +138,11 @@ namespace ServisTakip.Controllers
                     Okullar = db.Okullar.ToList(),
                     OkulServisleri = db.OkulServisleri.ToList(),
                     Rotalar = db.Rotalar.ToList(),
-                    Servisler = db.Servisler.ToList(),
+                    Araclar = db.Araclar.ToList(),
                     ServistekiOgrenciler = db.ServistekiOgrenciler.ToList(),
-                    ServisSoforleri = db.ServisSoforleri.ToList(),
+                    AracSoforleri = db.AracSoforleri.ToList(),
                     Soforler = db.Soforler.ToList(),
-                    FirmaServisleri = db.FirmaServisleri.ToList(),
+                    FirmaAraclari = db.FirmaAraclari.ToList(),
                     Veliler = db.Veliler.Where(x=>x.veliId==veliId).ToList()
                 };
                 return View(vm);
@@ -173,11 +173,11 @@ namespace ServisTakip.Controllers
                     Okullar = db.Okullar.ToList(),
                     OkulServisleri = db.OkulServisleri.ToList(),
                     Rotalar = db.Rotalar.ToList(),
-                    Servisler = db.Servisler.ToList(),
+                    Araclar = db.Araclar.ToList(),
                     ServistekiOgrenciler = db.ServistekiOgrenciler.ToList(),
-                    ServisSoforleri = db.ServisSoforleri.ToList(),
+                    AracSoforleri = db.AracSoforleri.ToList(),
                     Soforler = db.Soforler.ToList(),
-                    FirmaServisleri = db.FirmaServisleri.ToList(),
+                    FirmaAraclari = db.FirmaAraclari.ToList(),
                     Veliler = db.Veliler.Where(x => x.veliId == veliId).ToList()
                 };
                 return View(vm);
@@ -186,7 +186,7 @@ namespace ServisTakip.Controllers
         }
 
         [Attributes.VeliRoleControl]
-        public ActionResult Servisler()
+        public ActionResult Araclar()
         {
             int veliId = (int)Session["veliId"];
             if (true == (bool)Session["veliLogin"])
@@ -209,11 +209,11 @@ namespace ServisTakip.Controllers
                     Okullar = db.Okullar.ToList(),
                     OkulServisleri = db.OkulServisleri.ToList(),
                     Rotalar = db.Rotalar.ToList(),
-                    Servisler = db.Servisler.ToList(),
+                    Araclar = db.Araclar.ToList(),
                     ServistekiOgrenciler = db.ServistekiOgrenciler.ToList(),
-                    ServisSoforleri = db.ServisSoforleri.ToList(),
+                    AracSoforleri = db.AracSoforleri.ToList(),
                     Soforler = db.Soforler.ToList(),
-                    FirmaServisleri = db.FirmaServisleri.ToList(),
+                    FirmaAraclari = db.FirmaAraclari.ToList(),
                     Veliler = db.Veliler.Where(x => x.veliId == veliId).ToList()
                 };
                 return View(vm);
@@ -269,15 +269,15 @@ namespace ServisTakip.Controllers
 
         [HttpPost]
         [Attributes.VeliRoleControl]
-        public JsonResult ServisKonumGetir(int veliId, int servisId)
+        public JsonResult ServisKonumGetir(int veliId, int aracId)
         {
             if (veliId == Convert.ToInt32(Session["veliId"]))
             {
                 try
                 {
-                    if (db.Servisler.Where(x => x.servisId == servisId).Count() > 0)
+                    if (db.Araclar.Where(x => x.aracId == aracId).Count() > 0)
                     {
-                        var servis = db.Servisler.Find(servisId);
+                        var servis = db.Araclar.Find(aracId);
                         LatLng latlng = new LatLng
                         {
                             lat = servis.latitude,
